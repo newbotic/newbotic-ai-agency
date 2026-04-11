@@ -52,7 +52,8 @@ export default function AIChatBot() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 animate-pulse-glow"
-        aria-label="Open chat"
+        aria-label={isOpen ? "Close chat" : "Open chat"}
+        aria-expanded={isOpen}
       >
         {isOpen ? (
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -12,6 +12,7 @@ export default function Home() {
         <section id="hero" className="container py-12 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
             
+            {/* Logo/Brand Badge */}
             <div className="flex justify-center mb-6">
               <div className="bg-white/10 backdrop-blur-lg px-6 py-3 rounded-xl border border-white/20 inline-flex items-center gap-2">
                 <span className="text-2xl font-bold">NEWBOTIC</span>
@@ -20,6 +21,7 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Status Badges */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
               <span className="status-badge status-badge-warning text-sm px-4 py-2">
                 🔥 50% OFF - Limited Time
@@ -33,6 +35,7 @@ export default function Home() {
               </span>
             </div>
 
+            {/* Main Heading */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               AI-Powered Business
               <br />
@@ -47,6 +50,7 @@ export default function Home() {
               <span className="text-blue-300 font-medium">Limited 50% OFF - Starting from £75</span>
             </p>
 
+            {/* Timer */}
             <div className="bg-white/5 rounded-xl p-4 mb-8 inline-block border border-slate-700">
               <p className="text-sm text-gray-400 mb-2">⏰ Limited Time Offer</p>
               <div className="flex gap-4 justify-center">
@@ -67,6 +71,7 @@ export default function Home() {
               </div>
             </div>
 
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
                 href="https://calendly.com/hello-newbotic/30min" 
@@ -84,6 +89,7 @@ export default function Home() {
               </a>
             </div>
 
+            {/* Trust Indicators */}
             <div className="flex flex-wrap justify-center gap-6 mt-10 text-sm text-gray-400">
               <span className="flex items-center gap-1">✅ 15+ Businesses Served</span>
               <span className="flex items-center gap-1">⭐ 5.0 Rating</span>
@@ -516,7 +522,7 @@ export default function Home() {
                   </div>
                   <span className="status-badge status-badge-success">Completed</span>
                 </div>
-                <h4 className="font-bold mb-2">Cafe Website with Menu</h4>
+                <h3 className="font-bold mb-2">Cafe Website with Menu</h3>
                 <p className="text-sm text-gray-400 mb-3">Full responsive website with online menu and booking</p>
                 <div className="text-xs text-blue-400 flex items-center gap-1">
                   <span>✓</span> Delivered in 5 days
@@ -531,7 +537,7 @@ export default function Home() {
                   </div>
                   <span className="status-badge status-badge-success">Completed</span>
                 </div>
-                <h4 className="font-bold mb-2">SEO Audit + Optimization</h4>
+                <h3 className="font-bold mb-2">SEO Audit + Optimization</h3>
                 <p className="text-sm text-gray-400 mb-3">Complete technical audit with local SEO strategy</p>
                 <div className="text-xs text-blue-400 flex items-center gap-1">
                   <span>✓</span> Delivered in 3 days
@@ -546,7 +552,7 @@ export default function Home() {
                   </div>
                   <span className="status-badge status-badge-warning">In Progress</span>
                 </div>
-                <h4 className="font-bold mb-2">E-commerce Website</h4>
+                <h3 className="font-bold mb-2">E-commerce Website</h3>
                 <p className="text-sm text-gray-400 mb-3">Custom design with product showcase and contact forms</p>
                 <div className="w-full bg-slate-700 rounded-full h-1.5 mt-2">
                   <div className="bg-yellow-500 h-1.5 rounded-full w-3/4"></div>
@@ -579,7 +585,7 @@ export default function Home() {
               <a href="https://wa.me/447891897558" target="_blank" className="glass-card p-4 hover:bg-white/10 transition-all flex items-center justify-center gap-3 group border-green-500/30">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.32-1.4c1.45.79 3.08 1.21 4.77 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.9-9.91-9.9zM12 20.09c-1.49 0-2.95-.4-4.23-1.15l-.3-.18-3.16.83.84-3.08-.2-.31c-.82-1.32-1.26-2.84-1.26-4.42 0-4.58 3.73-8.31 8.31-8.31s8.31 3.73 8.31 8.31-3.73 8.31-8.31 8.31z"/>
+                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.32-1.4c1.45.79 3.08 1.21 4.77 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.9-9.91-9.9z"/>
                   </svg>
                 </div>
                 <span className="text-sm">WhatsApp</span>
@@ -608,7 +614,16 @@ export default function Home() {
             <form id="contactForm" className="space-y-4">
               <input type="text" name="name" id="name" placeholder="Your name" required className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-all" />
               <input type="email" name="email" id="email" placeholder="Your email" required className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-all" />
-              <select name="service" id="service" className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-blue-500 transition-all">
+              
+              <label htmlFor="service" className="sr-only">Select a service</label>
+              <select 
+                name="service" 
+                id="service" 
+                required
+                aria-required="true"
+                aria-label="Select a service"
+                className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-blue-500 transition-all"
+              >
                 <option value="">Select service</option>
                 <option value="audit">Website Audit (£75)</option>
                 <option value="email">Email Marketing AI (£149/mo)</option>
@@ -618,6 +633,7 @@ export default function Home() {
                 <option value="chatbot">AI Chatbot (£119/mo)</option>
                 <option value="suite">AI Suite Complete (£499/mo)</option>
               </select>
+              
               <textarea name="message" id="message" placeholder="Tell me about your project..." rows={4} required className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-all"></textarea>
               <button type="submit" id="submitBtn" className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 p-4 rounded-xl font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
                 Send Message → I&apos;ll reply within 24h
