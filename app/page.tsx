@@ -1,13 +1,13 @@
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import AIChatBot from './components/AIChatBot';
+import ChatBotWrapper from './components/ChatBotWrapper';
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white pt-20 md:pt-24">
-        
+        {/* ... TOT CONTINUTUL RAMANE NESCHIMBAT ... */}
         {/* HERO Section */}
         <section id="hero" className="container py-12 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
@@ -503,8 +503,6 @@ export default function Home() {
         </section>
 
         {/* RECENT WORK - Activity Feed */}
-     
-        {/* RECENT WORK - Activity Feed */}
         <section id="work" className="container py-16">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -564,7 +562,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
 
         {/* CONTACT Section */}
         <section id="contact" className="container py-16 bg-white/5">
@@ -659,9 +656,9 @@ export default function Home() {
           </div>
         </div>
 
-      </main>
+           </main>
       <Footer />
-      <AIChatBot />
+      <ChatBotWrapper />
 
       {/* Form submission script */}
       <script dangerouslySetInnerHTML={{

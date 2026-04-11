@@ -27,6 +27,5 @@ Disallow: /
 
 User-agent: *
 Allow: /
-Content-Signal: search=yes,ai-train=no
 
 Sitemap: https://www.newbotic.co.uk/sitemap.xml
