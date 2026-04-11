@@ -38,4 +38,21 @@
       "last 1 safari version"
     ]
   }
+
+}{
+  "name": "newbotic-website-v2",
+  ...
+  "browserslist": {
+    "production": [
+      "chrome >= 100",
+      "firefox >= 100",
+      "safari >= 15",
+      "edge >= 100"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
