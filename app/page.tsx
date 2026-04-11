@@ -503,6 +503,8 @@ export default function Home() {
         </section>
 
         {/* RECENT WORK - Activity Feed */}
+     
+        {/* RECENT WORK - Activity Feed */}
         <section id="work" className="container py-16">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -562,6 +564,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        
 
         {/* CONTACT Section */}
         <section id="contact" className="container py-16 bg-white/5">
