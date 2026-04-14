@@ -1,4 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+/* Font-face pentru Syne */
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/syne/v22/8vIH7w4qzmVxm2NL9G78HEZnMg.woff2) format('woff2');
+}
+
+/* Font-face pentru DM Sans */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/dmsans/v15/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu6-K6z9mXgjU0.woff2) format('woff2');
+}
 
 @tailwind base;
 @tailwind components;

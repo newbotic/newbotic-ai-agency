@@ -6,6 +6,7 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
   display: 'swap',
+  preload: true,
   variable: '--font-inter',
 });
 
@@ -31,6 +32,14 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        
+        {/* Preconnect pentru font-uri și resurse externe */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Preload font-uri critice */}
+        <link rel="preload" as="font" href="https://fonts.gstatic.com/s/syne/v22/8vIH7w4qzmVxm2NL9G78HEZnMg.woff2" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" as="font" href="https://fonts.gstatic.com/s/dmsans/v15/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu6-K6z9mXgjU0.woff2" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body className={`${inter.className} antialiased`}>
         {children}
