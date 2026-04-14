@@ -626,7 +626,7 @@ export default function Home() {
                 submitBtn.innerHTML = 'Analyzing...';
                 submitBtn.disabled = true;
                 try {
-                  const response = await fetch('https://your-n8n-webhook-url.com/webhook/audit', {
+                  const response = await fetch('https://newbotic.app.n8n.cloud/webhook/audit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ website, email })
