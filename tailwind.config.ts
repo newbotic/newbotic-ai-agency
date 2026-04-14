@@ -6,59 +6,29 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
+      fontFamily: {
+        syne: ['Syne', 'sans-serif'],
+        dm: ['DM Sans', 'sans-serif'],
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      colors: {
+        ink: '#0a0a0f',
+        'ink-2': '#3a3a4a',
+        'ink-3': '#7a7a8a',
+        surface: '#f8f8fc',
+        card: '#ffffff',
+        accent: '#2a5cff',
+        'accent-2': '#00e5a0',
+        'accent-3': '#ff4d6d',
+        border: 'rgba(10, 10, 15, 0.08)',
       },
       animation: {
-        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "float": "float 3s ease-in-out infinite",
-        "gradient": "gradient 6s ease infinite",
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" },
-          "50%": { boxShadow: "0 0 30px rgba(59, 130, 246, 0.5)" },
+        pulse: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.4 },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
-        "gradient": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-      },
-      backgroundSize: {
-        "gradient-size": "200% 200%",
       },
     },
   },
