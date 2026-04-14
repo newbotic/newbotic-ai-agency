@@ -29,8 +29,12 @@ export default function Navbar() {
     }`}>
       <div className="container">
         <div className="flex justify-between items-center">
-          <Link href="/" className="font-['Syne'] font-extrabold text-xl tracking-tight text-[#1e3a5f]">
-            NEW<span className="text-[#2a5cff]">BOTIC</span>
+          <Link href="/" className="flex items-center gap-1 group">
+            <span className="text-[#2a5cff] font-['Syne'] font-bold text-xl">&lt;</span>
+            <span className="font-['Syne'] font-extrabold text-xl tracking-tight text-[#1e3a5f]">
+              NEW<span className="text-[#2a5cff]">BOTIC</span>
+            </span>
+            <span className="text-[#2a5cff] font-['Syne'] font-bold text-xl">/&gt;</span>
           </Link>
           
           {/* Desktop Navigation */}

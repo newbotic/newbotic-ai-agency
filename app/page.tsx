@@ -784,66 +784,98 @@ export default function Home() {
                 24h
               </p>
             </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
               <a
                 href="tel:+4407891897558"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#2a5cff] group"
+                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
               >
-                <div className="w-10 h-10 bg-[#2a5cff] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="1.5"
-                  >
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                  </svg>
-                </div>
-                <span className="text-sm text-[#1e3a5f]">Call Us</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1e3a5f"
+                  strokeWidth="1.5"
+                  className="group-hover:stroke-[#2a5cff] transition-colors"
+                >
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                </svg>
+                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
+                  Call Us
+                </span>
               </a>
 
               <a
                 href="https://wa.me/447891897558"
                 target="_blank"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#2a5cff] group"
+                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
               >
-                <div className="w-10 h-10 bg-[#25D366] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.32-1.4c1.45.79 3.08 1.21 4.77 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.9-9.91-9.9z" />
-                  </svg>
-                </div>
-                <span className="text-sm text-[#1e3a5f]">WhatsApp</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1e3a5f"
+                  strokeWidth="1.5"
+                  className="group-hover:stroke-[#2a5cff] transition-colors"
+                >
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.32-1.4c1.45.79 3.08 1.21 4.77 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.9-9.91-9.9z" />
+                </svg>
+                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
+                  WhatsApp
+                </span>
               </a>
 
               <a
                 href="https://instagram.com/newbotic"
                 target="_blank"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#2a5cff] group"
+                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
               >
-                <div className="w-10 h-10 bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                    <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2C5.6 4 4 5.6 4 7.6v8.8C4 18.4 5.6 20 7.6 20h8.8c2 0 3.6-1.6 3.6-3.6V7.6C20 5.6 18.4 4 16.4 4H7.6zm9.65 1.5c.47 0 .85.38.85.85s-.38.85-.85.85-.85-.38-.85-.85.38-.85.85-.85zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 2c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
-                  </svg>
-                </div>
-                <span className="text-sm text-[#1e3a5f]">@newbotic</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1e3a5f"
+                  strokeWidth="1.5"
+                  className="group-hover:stroke-[#2a5cff] transition-colors"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="4" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="1.5"
+                    fill="#1e3a5f"
+                    className="group-hover:fill-[#2a5cff] transition-colors"
+                  />
+                </svg>
+                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
+                  @newbotic
+                </span>
               </a>
 
               <a
                 href="mailto:hello@newbotic.co.uk"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#2a5cff] group"
+                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
               >
-                <div className="w-10 h-10 bg-[#EA4335] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                  </svg>
-                </div>
-                <span className="text-sm text-[#1e3a5f]">Email Us</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1e3a5f"
+                  strokeWidth="1.5"
+                  className="group-hover:stroke-[#2a5cff] transition-colors"
+                >
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
+                  Email Us
+                </span>
               </a>
             </div>
-
             <form id="contactForm" className="space-y-4">
               <input
                 type="text"
@@ -851,7 +883,7 @@ export default function Home() {
                 id="name"
                 placeholder="Your name"
                 required
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
               />
               <input
                 type="email"
@@ -859,7 +891,7 @@ export default function Home() {
                 id="email"
                 placeholder="Your email"
                 required
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
               />
               <label htmlFor="service" className="sr-only">
                 Select a service
@@ -869,7 +901,7 @@ export default function Home() {
                 id="service"
                 required
                 aria-label="Select a service"
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
               >
                 <option value="">Select service</option>
                 <option value="audit">Website Audit (£75)</option>
@@ -885,14 +917,14 @@ export default function Home() {
                 placeholder="Tell me about your project..."
                 rows={4}
                 required
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
               ></textarea>
               <button
                 type="submit"
                 id="submitBtn"
                 className="w-full bg-[#1e3a5f] hover:bg-[#1e40af] text-white font-['Syne'] font-bold text-sm py-4 rounded-full transition"
               >
-                Send Message → I&apos;ll reply within 24h
+                Send Message → I'll reply within 24h
               </button>
             </form>
           </div>

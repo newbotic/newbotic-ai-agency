@@ -214,3 +214,25 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
+
+/* Force form text colors */
+input,
+select,
+textarea {
+  color: #1e3a5f !important;
+}
+
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+  color: #7a7a8a !important;
+  opacity: 1 !important;
+}
+
+select option {
+  color: #1e3a5f !important;
+}
+
+select option:first-child {
+  color: #7a7a8a !important;
+}

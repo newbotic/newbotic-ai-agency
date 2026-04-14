@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: "NewBotic | AI Automation for Local Businesses",
@@ -20,12 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className="antialiased">
+      <body className={`${inter.className} antialiased`}>
         {children}
       </body>
       <GoogleAnalytics gaId="G-7K2R84JWGV" />
