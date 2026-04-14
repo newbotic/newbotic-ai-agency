@@ -47,10 +47,10 @@ export default function AIChatBot() {
 
   return (
     <>
-      {/* Chat Button - Minimalist Light Theme */}
+      {/* Chat Button - Navy Blue */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-[#0a0a0f] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-50 bg-[#1e3a5f] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:bg-[#1e40af] transition-all duration-300"
         aria-label={isOpen ? "Close chat" : "Open chat"}
         aria-expanded={isOpen}
       >
@@ -65,11 +65,11 @@ export default function AIChatBot() {
         )}
       </button>
 
-      {/* Chat Window - Light Theme */}
+      {/* Chat Window - Light Theme with Navy Accents */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-[#0a0a0f]/10 overflow-hidden">
-          {/* Header */}
-          <div className="bg-[#0a0a0f] p-4">
+        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-[#1e3a5f]/10 overflow-hidden">
+          {/* Header - Navy Blue */}
+          <div className="bg-[#1e3a5f] p-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white text-xl">
                 🤖
@@ -92,7 +92,7 @@ export default function AIChatBot() {
                   className={`max-w-[80%] p-3 rounded-xl text-sm ${
                     msg.isUser
                       ? 'bg-[#2a5cff] text-white rounded-br-none'
-                      : 'bg-white text-[#0a0a0f] rounded-bl-none border border-[#0a0a0f]/10'
+                      : 'bg-white text-[#1e3a5f] rounded-bl-none border border-[#1e3a5f]/10'
                   }`}
                 >
                   {msg.text}
@@ -101,11 +101,11 @@ export default function AIChatBot() {
             ))}
             {isTyping && (
               <div className="flex justify-start">
-                <div className="bg-white p-3 rounded-xl rounded-bl-none border border-[#0a0a0f]/10">
+                <div className="bg-white p-3 rounded-xl rounded-bl-none border border-[#1e3a5f]/10">
                   <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-[#7a7a8a] rounded-full animate-bounce"></span>
-                    <span className="w-2 h-2 bg-[#7a7a8a] rounded-full animate-bounce delay-100"></span>
-                    <span className="w-2 h-2 bg-[#7a7a8a] rounded-full animate-bounce delay-200"></span>
+                    <span className="w-2 h-2 bg-[#1e3a5f]/40 rounded-full animate-bounce"></span>
+                    <span className="w-2 h-2 bg-[#1e3a5f]/40 rounded-full animate-bounce delay-100"></span>
+                    <span className="w-2 h-2 bg-[#1e3a5f]/40 rounded-full animate-bounce delay-200"></span>
                   </div>
                 </div>
               </div>
@@ -113,12 +113,12 @@ export default function AIChatBot() {
           </div>
 
           {/* Quick Replies */}
-          <div className="p-2 bg-white border-t border-[#0a0a0f]/10 flex flex-wrap gap-1">
+          <div className="p-2 bg-white border-t border-[#1e3a5f]/10 flex flex-wrap gap-1">
             {quickReplies.map((reply) => (
               <button
                 key={reply}
                 onClick={() => handleSendMessage(reply)}
-                className="text-xs bg-[#f8f8fc] hover:bg-[#eef3ff] text-[#0a0a0f] px-3 py-1.5 rounded-full transition border border-[#0a0a0f]/10"
+                className="text-xs bg-[#f8f8fc] hover:bg-[#eef3ff] text-[#1e3a5f] px-3 py-1.5 rounded-full transition border border-[#1e3a5f]/10"
               >
                 {reply}
               </button>
@@ -126,7 +126,7 @@ export default function AIChatBot() {
           </div>
 
           {/* Input */}
-          <div className="p-3 bg-white border-t border-[#0a0a0f]/10">
+          <div className="p-3 bg-white border-t border-[#1e3a5f]/10">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -139,12 +139,12 @@ export default function AIChatBot() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Type your message..."
-                className="flex-1 p-2 bg-[#f8f8fc] border border-[#0a0a0f]/10 rounded-lg text-[#0a0a0f] text-sm focus:outline-none focus:border-[#2a5cff]"
+                className="flex-1 p-2 bg-[#f8f8fc] border border-[#1e3a5f]/10 rounded-lg text-[#1e3a5f] text-sm focus:outline-none focus:border-[#2a5cff]"
                 aria-label="Chat message"
               />
               <button
                 type="submit"
-                className="bg-[#0a0a0f] hover:bg-[#3a3a4a] text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+                className="bg-[#1e3a5f] hover:bg-[#1e40af] text-white px-4 py-2 rounded-lg text-sm font-medium transition"
                 aria-label="Send message"
               >
                 Send

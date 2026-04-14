@@ -6,15 +6,15 @@
 
 @layer base {
   :root {
-    --ink: #0a0a0f;
-    --ink2: #3a3a4a;
+    --ink: #1e3a5f;
+    --ink2: #1e40af;
     --ink3: #7a7a8a;
     --surface: #f8f8fc;
     --card: #ffffff;
     --accent: #2a5cff;
     --accent2: #00e5a0;
     --accent3: #ff4d6d;
-    --border: rgba(10, 10, 15, 0.08);
+    --border: rgba(30, 58, 95, 0.08);
   }
 
   * {
@@ -45,7 +45,7 @@
   }
 
   .btn-primary {
-    background: #0a0a0f;
+    background: #1e3a5f;
     color: white;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
@@ -59,26 +59,26 @@
   }
 
   .btn-primary:hover {
-    background: #3a3a4a;
+    background: #1e40af;
   }
 
   .btn-secondary {
     background: transparent;
-    color: #0a0a0f;
+    color: #1e3a5f;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: 0.875rem;
     padding: 0.85rem 1.75rem;
     border-radius: 100px;
     text-decoration: none;
-    border: 1.5px solid #0a0a0f;
+    border: 1.5px solid #1e3a5f;
     letter-spacing: 0.01em;
     display: inline-block;
     transition: all 0.2s;
   }
 
   .btn-secondary:hover {
-    background: #0a0a0f;
+    background: #1e3a5f;
     color: white;
   }
 
@@ -96,14 +96,14 @@
     font-size: 2.25rem;
     font-weight: 800;
     letter-spacing: -0.025em;
-    color: #0a0a0f;
+    color: #1e3a5f;
     margin-bottom: 0.75rem;
     line-height: 1.15;
   }
 
   .section-sub {
     font-size: 1rem;
-    color: #3a3a4a;
+    color: #1e40af;
     font-weight: 300;
     max-width: 500px;
     line-height: 1.7;
@@ -111,7 +111,7 @@
 
   .glass-card {
     background: #ffffff;
-    border: 0.5px solid rgba(10, 10, 15, 0.08);
+    border: 0.5px solid rgba(30, 58, 95, 0.08);
     border-radius: 16px;
     padding: 1.5rem;
     transition: border-color 0.2s, transform 0.2s;
@@ -161,7 +161,7 @@
   }
 
   .stats-bar {
-    background: #0a0a0f;
+    background: #1e3a5f;
     padding: 1.5rem 2.5rem;
     display: flex;
     justify-content: center;
@@ -192,12 +192,12 @@
     align-items: center;
     gap: 0.5rem;
     background: white;
-    border: 0.5px solid rgba(10, 10, 15, 0.08);
+    border: 0.5px solid rgba(30, 58, 95, 0.08);
     border-radius: 100px;
     padding: 0.35rem 0.85rem;
     font-size: 0.75rem;
     font-weight: 500;
-    color: #3a3a4a;
+    color: #1e40af;
     margin-bottom: 1.5rem;
   }
 

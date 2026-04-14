@@ -15,29 +15,30 @@ export default function Home() {
                 <div className="hero-badge">
                   <span className="badge-dot"></span>7 spots left this week
                 </div>
-                <h1 className="font-['Syne'] text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-[-0.03em] text-[#0a0a0f] mb-5">
+                <h1 className="font-['Syne'] text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-[-0.03em] text-[#1e3a5f] mb-5">
                   AI that runs
                   <br />
                   your business
                   <br />
                   <span className="text-[#2a5cff]">24/7</span>
                 </h1>
-                <p className="text-lg text-[#3a3a4a] font-light leading-relaxed mb-8 max-w-md">
-                  Email automation, lead qualification, social media AI — all
-                  running in the background while you focus on growth.
+                <p className="text-lg text-[#1e40af] font-light leading-relaxed mb-8 max-w-md">
+                  Your Business, On Autopilot — email automation, lead
+                  qualification, social media AI. All running while you focus on
+                  growth.
                 </p>
                 <div className="flex flex-wrap gap-3 mb-10">
                   <a
                     href="https://calendly.com/hello-newbotic/30min"
                     target="_blank"
-                    className="btn-primary"
+                    className="btn-primary bg-[#1e3a5f] hover:bg-[#1e40af]"
                   >
                     Book Free Strategy Call
                   </a>
                   <a
                     href="https://wa.me/447891897558"
                     target="_blank"
-                    className="btn-secondary"
+                    className="btn-secondary border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white"
                   >
                     WhatsApp Us
                   </a>
@@ -90,7 +91,7 @@ export default function Home() {
 
               <div className="glass-card">
                 <div className="flex justify-between items-center mb-5">
-                  <span className="font-['Syne'] font-bold text-sm text-[#0a0a0f]">
+                  <span className="font-['Syne'] font-bold text-sm text-[#1e3a5f]">
                     AI Dashboard
                   </span>
                   <span className="status-badge status-badge-success flex items-center gap-1.5">
@@ -100,7 +101,7 @@ export default function Home() {
                 </div>
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   <div className="bg-[#f8f8fc] rounded-xl p-3 text-center">
-                    <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f] block">
+                    <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f] block">
                       142
                     </span>
                     <span className="text-xs text-[#7a7a8a] mt-1 block">
@@ -108,7 +109,7 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="bg-[#f8f8fc] rounded-xl p-3 text-center">
-                    <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f] block">
+                    <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f] block">
                       98%
                     </span>
                     <span className="text-xs text-[#7a7a8a] mt-1 block">
@@ -116,7 +117,7 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="bg-[#f8f8fc] rounded-xl p-3 text-center">
-                    <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f] block">
+                    <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f] block">
                       £8.4k
                     </span>
                     <span className="text-xs text-[#7a7a8a] mt-1 block">
@@ -145,7 +146,7 @@ export default function Home() {
                         />
                       </svg>
                     </div>
-                    <span className="text-xs text-[#3a3a4a] flex-1">
+                    <span className="text-xs text-[#1e3a5f] flex-1">
                       Email sent to Sarah M. — Audit inquiry
                     </span>
                     <span className="text-xs text-[#7a7a8a]">2m ago</span>
@@ -173,7 +174,7 @@ export default function Home() {
                         />
                       </svg>
                     </div>
-                    <span className="text-xs text-[#3a3a4a] flex-1">
+                    <span className="text-xs text-[#1e3a5f] flex-1">
                       Lead qualified — Plumbing Co. (Hot)
                     </span>
                     <span className="text-xs text-[#7a7a8a]">8m ago</span>
@@ -193,7 +194,7 @@ export default function Home() {
                         />
                       </svg>
                     </div>
-                    <span className="text-xs text-[#3a3a4a] flex-1">
+                    <span className="text-xs text-[#1e3a5f] flex-1">
                       Instagram DM auto-replied — @lux_cafe
                     </span>
                     <span className="text-xs text-[#7a7a8a]">12m ago</span>
@@ -205,39 +206,49 @@ export default function Home() {
         </section>
 
         {/* STATS BAR */}
-        <div className="stats-bar">
-          <div className="stat-item">
-            <span className="stat-num">7</span>
-            <span className="stat-lbl">Days delivery</span>
+        <div className="bg-[#1e3a5f] py-6 flex justify-center gap-8 flex-wrap">
+          <div className="text-center text-white">
+            <span className="font-['Syne'] font-extrabold text-2xl block">
+              7
+            </span>
+            <span className="text-xs text-white/50">Days delivery</span>
           </div>
-          <div className="stat-item">
-            <span className="stat-num">50%</span>
-            <span className="stat-lbl">Off right now</span>
+          <div className="text-center text-white">
+            <span className="font-['Syne'] font-extrabold text-2xl block">
+              50%
+            </span>
+            <span className="text-xs text-white/50">Off right now</span>
           </div>
-          <div className="stat-item">
-            <span className="stat-num">15+</span>
-            <span className="stat-lbl">Clients in 2025</span>
+          <div className="text-center text-white">
+            <span className="font-['Syne'] font-extrabold text-2xl block">
+              15+
+            </span>
+            <span className="text-xs text-white/50">Clients in 2025</span>
           </div>
-          <div className="stat-item">
-            <span className="stat-num">6</span>
-            <span className="stat-lbl">AI agents ready</span>
+          <div className="text-center text-white">
+            <span className="font-['Syne'] font-extrabold text-2xl block">
+              6
+            </span>
+            <span className="text-xs text-white/50">AI agents ready</span>
           </div>
-          <div className="stat-item">
-            <span className="stat-num">24/7</span>
-            <span className="stat-lbl">Always running</span>
+          <div className="text-center text-white">
+            <span className="font-['Syne'] font-extrabold text-2xl block">
+              24/7
+            </span>
+            <span className="text-xs text-white/50">Always running</span>
           </div>
         </div>
 
         {/* SERVICES Section */}
         <section id="services" className="py-20">
           <div className="container">
-            <p className="section-label">Services</p>
-            <h2 className="section-title">
+            <p className="section-label text-[#2a5cff]">Services</p>
+            <h2 className="section-title text-[#1e3a5f]">
               AI-powered tools
               <br />
               for local businesses
             </h2>
-            <p className="section-sub">
+            <p className="section-sub text-[#1e40af]">
               Each agent is built specifically for your business and runs
               automatically from day one.
             </p>
@@ -265,10 +276,10 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#0a0a0f] mb-1">
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
                   Website Audit
                 </h3>
-                <p className="text-sm text-[#3a3a4a] mb-4">
+                <p className="text-sm text-[#1e40af] mb-4">
                   AI-powered analysis with speed, SEO, security, and mobile
                   checks. Full PDF report.
                 </p>
@@ -280,7 +291,7 @@ export default function Home() {
                   ].map((f) => (
                     <li
                       key={f}
-                      className="flex items-center gap-2 text-xs text-[#3a3a4a]"
+                      className="flex items-center gap-2 text-xs text-[#1e40af]"
                     >
                       <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
                         <svg
@@ -303,7 +314,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f]">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
                     £75
                   </span>
                   <span className="text-sm text-[#7a7a8a] line-through ml-2">
@@ -313,7 +324,7 @@ export default function Home() {
                 <a
                   href="https://calendly.com/hello-newbotic/30min"
                   target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#0a0a0f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#0a0a0f]/10 hover:bg-[#0a0a0f] hover:text-white transition"
+                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
                 >
                   Get Audit →
                 </a>
@@ -342,10 +353,10 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#0a0a0f] mb-1">
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
                   Email Marketing AI
                 </h3>
-                <p className="text-sm text-[#3a3a4a] mb-4">
+                <p className="text-sm text-[#1e40af] mb-4">
                   Automated campaigns that nurture leads and drive sales on
                   autopilot.
                 </p>
@@ -354,7 +365,7 @@ export default function Home() {
                     (f) => (
                       <li
                         key={f}
-                        className="flex items-center gap-2 text-xs text-[#3a3a4a]"
+                        className="flex items-center gap-2 text-xs text-[#1e40af]"
                       >
                         <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
                           <svg
@@ -378,7 +389,7 @@ export default function Home() {
                   )}
                 </ul>
                 <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f]">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
                     £149
                   </span>
                   <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
@@ -386,7 +397,7 @@ export default function Home() {
                 <a
                   href="https://calendly.com/hello-newbotic/30min"
                   target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#0a0a0f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#0a0a0f]/10 hover:bg-[#0a0a0f] hover:text-white transition"
+                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
                 >
                   Get Email AI →
                 </a>
@@ -416,10 +427,10 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#0a0a0f] mb-1">
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
                   Web Page Creation
                 </h3>
-                <p className="text-sm text-[#3a3a4a] mb-4">
+                <p className="text-sm text-[#1e40af] mb-4">
                   Professional custom-designed website built and live in 7 days.
                 </p>
                 <ul className="space-y-1.5 mb-5">
@@ -427,7 +438,7 @@ export default function Home() {
                     (f) => (
                       <li
                         key={f}
-                        className="flex items-center gap-2 text-xs text-[#3a3a4a]"
+                        className="flex items-center gap-2 text-xs text-[#1e40af]"
                       >
                         <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
                           <svg
@@ -451,7 +462,7 @@ export default function Home() {
                   )}
                 </ul>
                 <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f]">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
                     £175
                   </span>
                   <span className="text-sm text-[#7a7a8a] line-through ml-2">
@@ -461,7 +472,7 @@ export default function Home() {
                 <a
                   href="https://calendly.com/hello-newbotic/30min"
                   target="_blank"
-                  className="block text-center bg-[#0a0a0f] text-white font-['Syne'] font-bold text-xs py-2.5 rounded-full hover:bg-[#3a3a4a] transition"
+                  className="block text-center bg-[#1e3a5f] text-white font-['Syne'] font-bold text-xs py-2.5 rounded-full hover:bg-[#1e40af] transition"
                 >
                   Create Website →
                 </a>
@@ -486,10 +497,10 @@ export default function Home() {
                     <circle cx="12" cy="17" r="1" fill="#a3003a" />
                   </svg>
                 </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#0a0a0f] mb-1">
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
                   Social Media AI
                 </h3>
-                <p className="text-sm text-[#3a3a4a] mb-4">
+                <p className="text-sm text-[#1e40af] mb-4">
                   Auto-reply to comments and DMs on Instagram and Facebook 24/7.
                 </p>
                 <ul className="space-y-1.5 mb-5">
@@ -500,7 +511,7 @@ export default function Home() {
                   ].map((f) => (
                     <li
                       key={f}
-                      className="flex items-center gap-2 text-xs text-[#3a3a4a]"
+                      className="flex items-center gap-2 text-xs text-[#1e40af]"
                     >
                       <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
                         <svg
@@ -523,7 +534,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f]">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
                     £129
                   </span>
                   <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
@@ -531,7 +542,7 @@ export default function Home() {
                 <a
                   href="https://calendly.com/hello-newbotic/30min"
                   target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#0a0a0f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#0a0a0f]/10 hover:bg-[#0a0a0f] hover:text-white transition"
+                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
                 >
                   Get Social AI →
                 </a>
@@ -559,10 +570,10 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#0a0a0f] mb-1">
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
                   Lead Qualifier AI
                 </h3>
-                <p className="text-sm text-[#3a3a4a] mb-4">
+                <p className="text-sm text-[#1e40af] mb-4">
                   Score and prioritize leads automatically so you focus on the
                   best ones.
                 </p>
@@ -574,7 +585,7 @@ export default function Home() {
                   ].map((f) => (
                     <li
                       key={f}
-                      className="flex items-center gap-2 text-xs text-[#3a3a4a]"
+                      className="flex items-center gap-2 text-xs text-[#1e40af]"
                     >
                       <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
                         <svg
@@ -597,7 +608,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f]">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
                     £99
                   </span>
                   <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
@@ -605,7 +616,7 @@ export default function Home() {
                 <a
                   href="https://calendly.com/hello-newbotic/30min"
                   target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#0a0a0f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#0a0a0f]/10 hover:bg-[#0a0a0f] hover:text-white transition"
+                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
                 >
                   Get Qualifier AI →
                 </a>
@@ -626,10 +637,10 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#0a0a0f] mb-1">
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
                   AI Chatbot
                 </h3>
-                <p className="text-sm text-[#3a3a4a] mb-4">
+                <p className="text-sm text-[#1e40af] mb-4">
                   Custom chatbot trained on your business, live on your site and
                   WhatsApp.
                 </p>
@@ -641,7 +652,7 @@ export default function Home() {
                   ].map((f) => (
                     <li
                       key={f}
-                      className="flex items-center gap-2 text-xs text-[#3a3a4a]"
+                      className="flex items-center gap-2 text-xs text-[#1e40af]"
                     >
                       <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
                         <svg
@@ -664,7 +675,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#0a0a0f]">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
                     £119
                   </span>
                   <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
@@ -672,7 +683,7 @@ export default function Home() {
                 <a
                   href="https://calendly.com/hello-newbotic/30min"
                   target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#0a0a0f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#0a0a0f]/10 hover:bg-[#0a0a0f] hover:text-white transition"
+                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
                 >
                   Get Chatbot →
                 </a>
@@ -684,14 +695,14 @@ export default function Home() {
         {/* PROCESS Section */}
         <section id="process" className="py-20 bg-white">
           <div className="container">
-            <p className="section-label">Process</p>
-            <h2 className="section-title">
+            <p className="section-label text-[#2a5cff]">Process</p>
+            <h2 className="section-title text-[#1e3a5f]">
               Up and running
               <br />
               in 4 simple steps
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 relative">
-              <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#0a0a0f]/10 to-transparent -z-0"></div>
+              <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#1e3a5f]/10 to-transparent -z-0"></div>
               {[
                 {
                   num: 1,
@@ -715,13 +726,13 @@ export default function Home() {
                 },
               ].map((step) => (
                 <div key={step.num} className="glass-card relative z-10">
-                  <div className="w-10 h-10 bg-[#0a0a0f] text-white font-['Syne'] font-extrabold text-base rounded-full flex items-center justify-center mb-4">
+                  <div className="w-10 h-10 bg-[#1e3a5f] text-white font-['Syne'] font-extrabold text-base rounded-full flex items-center justify-center mb-4">
                     {step.num}
                   </div>
-                  <h3 className="font-['Syne'] font-bold text-base text-[#0a0a0f] mb-1">
+                  <h3 className="font-['Syne'] font-bold text-base text-[#1e3a5f] mb-1">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-[#3a3a4a] leading-relaxed">
+                  <p className="text-sm text-[#1e40af] leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
@@ -731,30 +742,28 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20">
-          <div className="container">
-            <div className="bg-[#0a0a0f] rounded-3xl p-12 text-center">
-              <h2 className="font-['Syne'] text-4xl font-extrabold text-white mb-3 tracking-[-0.025em]">
-                Ready to automate
-                <br />
-                your business?
+        <section className="py-12 md:py-20">
+          <div className="container px-4">
+            <div className="bg-[#1e3a5f] rounded-2xl md:rounded-3xl p-6 md:p-12 text-center">
+              <h2 className="font-['Syne'] text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3 tracking-[-0.025em] leading-tight break-words">
+                Ready to automate your business?
               </h2>
-              <p className="text-white/50 font-light mb-8 text-lg">
-                Join 15+ UK businesses already running on AI. Limited spots
-                available at 50% off.
+              <p className="text-white/60 font-light mb-6 text-sm sm:text-base md:text-lg max-w-md mx-auto">
+                Join 15+ UK businesses already running on AI. Limited spots at
+                50% off.
               </p>
-              <div className="flex flex-wrap gap-3 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center max-w-sm mx-auto">
                 <a
                   href="https://calendly.com/hello-newbotic/30min"
                   target="_blank"
-                  className="bg-white text-[#0a0a0f] font-['Syne'] font-bold text-sm px-6 py-3 rounded-full hover:bg-gray-100 transition"
+                  className="bg-white text-[#1e3a5f] font-['Syne'] font-bold text-sm px-6 py-3 rounded-full hover:bg-gray-100 transition text-center"
                 >
                   Book Free Strategy Call
                 </a>
                 <a
                   href="https://wa.me/447891897558"
                   target="_blank"
-                  className="bg-transparent text-white font-['Syne'] font-bold text-sm px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition"
+                  className="bg-transparent text-white font-['Syne'] font-bold text-sm px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition text-center"
                 >
                   Chat on WhatsApp
                 </a>
@@ -762,14 +771,15 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         {/* CONTACT Section */}
         <section id="contact" className="py-20 bg-white">
           <div className="container max-w-3xl">
             <div className="text-center mb-10">
-              <p className="section-label">Contact</p>
-              <h2 className="section-title">Start Your Project Today</h2>
-              <p className="text-[#3a3a4a]">
+              <p className="section-label text-[#2a5cff]">Contact</p>
+              <h2 className="section-title text-[#1e3a5f]">
+                Start Your Project Today
+              </h2>
+              <p className="text-[#1e40af]">
                 Book a call, WhatsApp, or fill the form — I&apos;ll reply within
                 24h
               </p>
@@ -792,7 +802,7 @@ export default function Home() {
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                   </svg>
                 </div>
-                <span className="text-sm">Call Us</span>
+                <span className="text-sm text-[#1e3a5f]">Call Us</span>
               </a>
 
               <a
@@ -805,7 +815,7 @@ export default function Home() {
                     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.32-1.4c1.45.79 3.08 1.21 4.77 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.9-9.91-9.9z" />
                   </svg>
                 </div>
-                <span className="text-sm">WhatsApp</span>
+                <span className="text-sm text-[#1e3a5f]">WhatsApp</span>
               </a>
 
               <a
@@ -818,7 +828,7 @@ export default function Home() {
                     <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2C5.6 4 4 5.6 4 7.6v8.8C4 18.4 5.6 20 7.6 20h8.8c2 0 3.6-1.6 3.6-3.6V7.6C20 5.6 18.4 4 16.4 4H7.6zm9.65 1.5c.47 0 .85.38.85.85s-.38.85-.85.85-.85-.38-.85-.85.38-.85.85-.85zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 2c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
                   </svg>
                 </div>
-                <span className="text-sm">@newbotic</span>
+                <span className="text-sm text-[#1e3a5f]">@newbotic</span>
               </a>
 
               <a
@@ -830,7 +840,7 @@ export default function Home() {
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                   </svg>
                 </div>
-                <span className="text-sm">Email Us</span>
+                <span className="text-sm text-[#1e3a5f]">Email Us</span>
               </a>
             </div>
 
@@ -841,7 +851,7 @@ export default function Home() {
                 id="name"
                 placeholder="Your name"
                 required
-                className="w-full p-4 rounded-xl bg-white border border-[#0a0a0f]/10 text-[#0a0a0f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
               />
               <input
                 type="email"
@@ -849,7 +859,7 @@ export default function Home() {
                 id="email"
                 placeholder="Your email"
                 required
-                className="w-full p-4 rounded-xl bg-white border border-[#0a0a0f]/10 text-[#0a0a0f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
               />
               <label htmlFor="service" className="sr-only">
                 Select a service
@@ -859,7 +869,7 @@ export default function Home() {
                 id="service"
                 required
                 aria-label="Select a service"
-                className="w-full p-4 rounded-xl bg-white border border-[#0a0a0f]/10 text-[#0a0a0f] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] focus:outline-none focus:border-[#2a5cff] transition"
               >
                 <option value="">Select service</option>
                 <option value="audit">Website Audit (£75)</option>
@@ -875,12 +885,12 @@ export default function Home() {
                 placeholder="Tell me about your project..."
                 rows={4}
                 required
-                className="w-full p-4 rounded-xl bg-white border border-[#0a0a0f]/10 text-[#0a0a0f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
+                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#2a5cff] transition"
               ></textarea>
               <button
                 type="submit"
                 id="submitBtn"
-                className="w-full btn-primary py-4"
+                className="w-full bg-[#1e3a5f] hover:bg-[#1e40af] text-white font-['Syne'] font-bold text-sm py-4 rounded-full transition"
               >
                 Send Message → I&apos;ll reply within 24h
               </button>
@@ -896,13 +906,16 @@ export default function Home() {
           <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
             <div className="text-center">
               <div className="text-5xl mb-4">✅</div>
-              <h3 className="font-['Syne'] text-2xl font-bold text-[#0a0a0f] mb-2">
+              <h3 className="font-['Syne'] text-2xl font-bold text-[#1e3a5f] mb-2">
                 Message Sent!
               </h3>
-              <p className="text-[#3a3a4a] mb-6">
+              <p className="text-[#1e40af] mb-6">
                 Thank you for reaching out. I&apos;ll reply within 24 hours.
               </p>
-              <button id="closePopup" className="btn-primary px-8 py-2.5">
+              <button
+                id="closePopup"
+                className="bg-[#1e3a5f] hover:bg-[#1e40af] text-white font-['Syne'] font-bold text-sm px-8 py-2.5 rounded-full transition"
+              >
                 Close
               </button>
             </div>
