@@ -953,6 +953,70 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {/* Exit Intent Popup - Free Website Audit */}
+        <div
+          id="exitPopup"
+          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 hidden transition-all duration-300"
+        >
+          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl border border-[#1e3a5f]/10 relative">
+            <button
+              id="closeExitPopup"
+              className="absolute top-4 right-4 text-[#7a7a8a] hover:text-[#1e3a5f] transition"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="text-center">
+              <span className="text-4xl mb-4 block">🔍</span>
+              <h3 className="font-['Syne'] text-2xl font-bold text-[#1e3a5f] mb-2">
+                Wait! Get a Free Website Audit
+              </h3>
+              <p className="text-[#1e40af] mb-6">
+                Enter your website URL and email. We'll send you a professional
+                audit report in 60 seconds.
+              </p>
+
+              <form id="exitAuditForm" className="space-y-3">
+                <input
+                  type="url"
+                  name="website"
+                  id="exitWebsite"
+                  placeholder="https://your-website.com"
+                  required
+                  className="w-full p-3 rounded-xl bg-[#f8f8fc] border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#1e3a5f] transition"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  id="exitEmail"
+                  placeholder="Your email"
+                  required
+                  className="w-full p-3 rounded-xl bg-[#f8f8fc] border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#1e3a5f] transition"
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-[#1e3a5f] hover:bg-[#1e40af] text-white font-['Syne'] font-bold text-sm py-3 rounded-full transition"
+                >
+                  Get Free Audit Report →
+                </button>
+              </form>
+
+              <p className="text-xs text-[#7a7a8a] mt-4">
+                We'll analyze your site and send the report to your email. No
+                spam.
+              </p>
+            </div>
+          </div>
+        </div>
       </main>
       <Footer />
       <ChatBotWrapper />
@@ -992,6 +1056,115 @@ export default function Home() {
         `,
         }}
       />
+      {/* Exit Intent Script */}
+     {/* Exit Intent Script - Works on Desktop & Mobile */}
+<script dangerouslySetInnerHTML={{
+  __html: `
+    (function() {
+      const popup = document.getElementById('exitPopup');
+      const closeBtn = document.getElementById('closeExitPopup');
+      const form = document.getElementById('exitAuditForm');
+      let shown = false;
+      
+      // Desktop: mouseleave
+      document.addEventListener('mouseleave', function(e) {
+        if (e.clientY < 0 && !shown && popup) {
+          popup.classList.remove('hidden');
+          shown = true;
+        }
+      });
+      
+      // Mobile: scroll up detection
+      let lastScrollTop = 0;
+      let scrollUpCount = 0;
+      
+      window.addEventListener('scroll', function() {
+        const st = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (st < lastScrollTop) {
+          scrollUpCount++;
+          if (scrollUpCount >= 3 && !shown && popup) {
+            popup.classList.remove('hidden');
+            shown = true;
+          }
+        }
+        
+        lastScrollTop = st <= 0 ? 0 : st;
+      }, { passive: true });
+      
+      // Mobile: back button
+      history.pushState(null, '', location.href);
+      window.addEventListener('popstate', function() {
+        if (!shown && popup) {
+          popup.classList.remove('hidden');
+          shown = true;
+        }
+      });
+      
+      // Mobile: 30s inactivity
+      let inactivityTimer;
+      function resetTimer() {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(function() {
+          if (!shown && popup) {
+            popup.classList.remove('hidden');
+            shown = true;
+          }
+        }, 30000);
+      }
+      ['mousemove', 'keydown', 'scroll', 'click'].forEach(e => window.addEventListener(e, resetTimer));
+      resetTimer();
+      
+      // Close popup
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => popup.classList.add('hidden'));
+      }
+      if (popup) {
+        popup.addEventListener('click', e => { if (e.target === popup) popup.classList.add('hidden'); });
+      }
+      
+      // Form submit
+      if (form) {
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const website = document.getElementById('exitWebsite')?.value;
+          const email = document.getElementById('exitEmail')?.value;
+          const submitBtn = form.querySelector('button[type="submit"]');
+          
+          if (!website || !email) { alert('Please fill in all fields.'); return; }
+          
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = 'Analyzing...';
+          submitBtn.disabled = true;
+          
+          try {
+            const response = await fetch('/api/audit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ website, email })
+            });
+            
+            if (response.ok) {
+              submitBtn.innerHTML = '✓ Report Sent!';
+              setTimeout(() => {
+                popup.classList.add('hidden');
+                form.reset();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+              }, 2000);
+            } else {
+              throw new Error('Failed');
+            }
+          } catch (error) {
+            alert('Something went wrong. Please try again.');
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+          }
+        });
+      }
+    })();
+  `
+}} />
     </>
   );
 }

@@ -1,0 +1,20 @@
+* [33mf244a29[m[33m ([m[1;31morigin/test-api-audit[m[33m, [m[1;31morigin/minimalist-redesign[m[33m, [m[1;32mtest-api-audit[m[33m)[m Complete audit system: API route, exit popup, email, Google Sheets
+[31m|[m * [33me3b024e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m Connect exit intent form to n8n webhook
+[31m|[m * [33mb537404[m Update webhook URL for exit intent popup
+[31m|[m * [33m03e2a65[m Fix build error - remove optimizeCss
+[31m|[m * [33m6f9ffe9[m Add exit intent popup for free website audit
+[31m|[m * [33m02f608c[m Performance optimizations: font preload, preconnect, browserslist
+[31m|[m[31m/[m  
+* [33mf60ee4f[m[33m ([m[1;36mHEAD -> [m[1;32mminimalist-redesign[m[33m)[m Complete update: bracket logo, navy theme, form fixes, mobile responsive
+* [33mf3974ce[m Complete minimalist redesign - navy blue theme, mobile responsive, new slogan, updated chatbot
+* [33m83daa58[m Change Work link to Contact in navbar
+* [33mee188ea[m Final performance optimizations: remove unused preconnect, add browserslist
+* [33m558bd6e[m Fix lazy load with client component wrapper for AIChatBot
+* [33m95db808[m Final SEO and performance optimizations: robots.txt, heading hierarchy, preconnect
+* [33m2b3f381[m SEO and accessibility improvements: robots.txt, heading hierarchy, aria labels
+* [33md3e0efc[m Fix: Add Google Analytics tracking code
+* [33m0624db1[m Complete NewBotic AI Agency - 6 services, modern logo, social icons
+* [33mc9c4d85[m Trigger redeploy
+* [33m4ff2df9[m Disable unescaped entities ESLint rule
+* [33ma15ccc9[m Security fixes: Next.js 15.5.9 + React 19 + 0 vulnerabilities
+* [33m914a8b5[m Initial commit - NewBotic AI Agency clean design
