@@ -18,6 +18,7 @@ async function sendAuditEmail(
   priority: string,
 ) {
   try {
+    console.log("📧 Attempting to send email to:", email);
     const { data, error } = await resend.emails.send({
       from: "NewBotic <audit@newbotic.co.uk>",
       to: [email],
@@ -63,27 +64,82 @@ async function sendAuditEmail(
 }
 
 async function appendToSheet(data: any) {
-  console.log("📊 appendToSheet called");
-  console.log("🔑 GOOGLE_CLIENT_EMAIL exists:", !!process.env.GOOGLE_CLIENT_EMAIL);
-  console.log("🔑 GOOGLE_PRIVATE_KEY exists:", !!process.env.GOOGLE_PRIVATE_KEY);
+  console.log("📊 ========== appendToSheet START ==========");
+  console.log("📊 Timestamp:", new Date().toISOString());
   
-  if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY) {
-    console.error("❌ Missing Google credentials in environment");
+  // 1. Verifică variabilele de mediu
+  console.log("🔑 GOOGLE_CLIENT_EMAIL exists:", !!process.env.GOOGLE_CLIENT_EMAIL);
+  console.log("🔑 GOOGLE_CLIENT_EMAIL value:", process.env.GOOGLE_CLIENT_EMAIL ? process.env.GOOGLE_CLIENT_EMAIL.substring(0, 30) + "..." : "MISSING");
+  console.log("🔑 GOOGLE_PRIVATE_KEY exists:", !!process.env.GOOGLE_PRIVATE_KEY);
+  console.log("🔑 GOOGLE_PRIVATE_KEY length:", process.env.GOOGLE_PRIVATE_KEY?.length || 0);
+  console.log("🔑 GOOGLE_PRIVATE_KEY starts with:", process.env.GOOGLE_PRIVATE_KEY?.substring(0, 30) || "MISSING");
+  console.log("🔑 GOOGLE_PRIVATE_KEY contains BEGIN:", process.env.GOOGLE_PRIVATE_KEY?.includes("BEGIN") || false);
+  console.log("🔑 GOOGLE_PRIVATE_KEY contains END:", process.env.GOOGLE_PRIVATE_KEY?.includes("END") || false);
+  
+  // 2. Verifică toate variabilele de mediu disponibile
+  const allEnvKeys = Object.keys(process.env);
+  const relevantKeys = allEnvKeys.filter(k => 
+    k.includes("GOOGLE") || 
+    k.includes("PAGESPEED") || 
+    k.includes("RESEND") || 
+    k.includes("SHEET")
+  );
+  console.log("📋 Relevant env keys found:", relevantKeys);
+  
+  // 3. Verifică valorile efective (parțial, pentru securitate)
+  relevantKeys.forEach(key => {
+    const value = process.env[key];
+    if (value) {
+      console.log(`   - ${key}: ${value.substring(0, 20)}... (length: ${value.length})`);
+    } else {
+      console.log(`   - ${key}: MISSING`);
+    }
+  });
+  
+  if (!process.env.GOOGLE_CLIENT_EMAIL) {
+    console.error("❌ GOOGLE_CLIENT_EMAIL is MISSING - cannot proceed");
+    return;
+  }
+  
+  if (!process.env.GOOGLE_PRIVATE_KEY) {
+    console.error("❌ GOOGLE_PRIVATE_KEY is MISSING - cannot proceed");
     return;
   }
 
   try {
+    console.log("🔄 Creating Google Auth client...");
+    
+    // Încearcă să parseze private key
+    let privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    console.log("🔄 Private key before replace - contains \\n:", privateKey.includes("\\n"));
+    
+    // Înlocuiește \n literal cu newline real
+    privateKey = privateKey.replace(/\\n/g, '\n');
+    console.log("🔄 Private key after replace - contains \\n:", privateKey.includes("\\n"));
+    console.log("🔄 Private key after replace - contains newline:", privateKey.includes("\n"));
+    
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        private_key: privateKey,
       },
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
+    console.log("🔄 Getting sheets client...");
     const sheets = google.sheets({ version: "v4", auth });
 
-    await sheets.spreadsheets.values.append({
+    console.log("🔄 Appending to sheet...");
+    console.log("📊 SHEET_ID:", SHEET_ID);
+    console.log("📊 SHEET_NAME:", SHEET_NAME);
+    console.log("📊 Data to append:", JSON.stringify({
+      timestamp: data.timestamp,
+      website: data.website,
+      email: data.email,
+      average: data.average,
+    }));
+    
+    const appendResult = await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
       range: `${SHEET_NAME}!A:J`,
       valueInputOption: "USER_ENTERED",
@@ -106,23 +162,44 @@ async function appendToSheet(data: any) {
     });
 
     console.log("✅ Saved to Google Sheets");
+    console.log("📊 Append result:", appendResult.status, appendResult.statusText);
   } catch (error) {
     console.error("❌ Google Sheets error:", error);
     if (error instanceof Error) {
-      console.error("Error message:", error.message);
-      console.error("Error stack:", error.stack);
+      console.error("📋 Error name:", error.name);
+      console.error("📋 Error message:", error.message);
+      console.error("📋 Error stack:", error.stack?.substring(0, 1000));
+      
+      // Verifică tipuri specifice de erori
+      if (error.message.includes("auth") || error.message.includes("credential")) {
+        console.error("🔐 AUTH ERROR - check credentials format");
+      }
+      if (error.message.includes("permission") || error.message.includes("access")) {
+        console.error("🚫 PERMISSION ERROR - check if sheet is shared with:", process.env.GOOGLE_CLIENT_EMAIL);
+      }
+      if (error.message.includes("invalid_grant")) {
+        console.error("🔑 INVALID GRANT - private key may be malformed");
+      }
+      if (error.message.includes("not found") || error.message.includes("404")) {
+        console.error("📁 SHEET NOT FOUND - check SHEET_ID:", SHEET_ID);
+      }
     }
   }
+  console.log("📊 ========== appendToSheet END ==========");
 }
 
 export async function POST(request: NextRequest) {
-  console.log("🚀 API /api/audit called");
+  console.log("🚀 ========== API /api/audit CALLED ==========");
+  console.log("🚀 Timestamp:", new Date().toISOString());
   
   try {
     const body = await request.json();
     const { website, email } = body;
 
+    console.log("📥 Request body:", { website, email });
+
     if (!website) {
+      console.log("❌ No website provided");
       return NextResponse.json(
         { error: "Website URL is required" },
         { status: 400 },
@@ -132,8 +209,11 @@ export async function POST(request: NextRequest) {
     console.log("🔍 Running audit for:", website);
     console.log("🔑 PAGESPEED_API_KEY exists:", !!apiKey);
     console.log("📧 RESEND_API_KEY exists:", !!process.env.RESEND_API_KEY);
+    console.log("📊 GOOGLE_CLIENT_EMAIL exists:", !!process.env.GOOGLE_CLIENT_EMAIL);
+    console.log("📊 GOOGLE_PRIVATE_KEY exists:", !!process.env.GOOGLE_PRIVATE_KEY);
 
     if (!apiKey) {
+      console.error("❌ PAGESPEED_API_KEY is missing");
       return NextResponse.json(
         { error: "API key is missing" },
         { status: 500 },
@@ -142,6 +222,7 @@ export async function POST(request: NextRequest) {
 
     const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(website)}&key=${apiKey}&strategy=desktop&category=performance&category=seo&category=accessibility&category=best-practices`;
 
+    console.log("🔄 Calling PageSpeed API...");
     const response = await fetch(url);
     const data = await response.json();
 
@@ -191,17 +272,27 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     };
 
+    console.log("📊 Audit result:", {
+      website,
+      average,
+      priority,
+    });
+
     // Salvează în Google Sheets
+    console.log("🔄 Calling appendToSheet...");
     appendToSheet(result).catch(console.error);
 
     // Trimite email cu raportul
     if (email) {
+      console.log("🔄 Calling sendAuditEmail...");
       sendAuditEmail(email, website, scores, average, priority).catch(console.error);
     }
 
+    console.log("✅ API call successful");
     return NextResponse.json(result);
   } catch (error) {
     console.error("❌ AUDIT ERROR:", error instanceof Error ? error.message : String(error));
+    console.error("❌ ERROR STACK:", error instanceof Error ? error.stack : "No stack");
     return NextResponse.json(
       {
         error: "Internal server error",
