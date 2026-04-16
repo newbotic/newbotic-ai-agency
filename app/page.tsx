@@ -771,6 +771,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+
         {/* CONTACT Section */}
         <section id="contact" className="py-20 bg-white">
           <div className="container max-w-3xl">
@@ -953,6 +954,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         {/* Exit Intent Popup - Free Website Audit */}
         <div
           id="exitPopup"
@@ -1056,115 +1058,84 @@ export default function Home() {
         `,
         }}
       />
-      {/* Exit Intent Script */}
-     {/* Exit Intent Script - Works on Desktop & Mobile */}
-<script dangerouslySetInnerHTML={{
-  __html: `
-    (function() {
-      const popup = document.getElementById('exitPopup');
-      const closeBtn = document.getElementById('closeExitPopup');
-      const form = document.getElementById('exitAuditForm');
-      let shown = false;
-      
-      // Desktop: mouseleave
-      document.addEventListener('mouseleave', function(e) {
-        if (e.clientY < 0 && !shown && popup) {
-          popup.classList.remove('hidden');
-          shown = true;
-        }
-      });
-      
-      // Mobile: scroll up detection
-      let lastScrollTop = 0;
-      let scrollUpCount = 0;
-      
-      window.addEventListener('scroll', function() {
-        const st = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (st < lastScrollTop) {
-          scrollUpCount++;
-          if (scrollUpCount >= 3 && !shown && popup) {
-            popup.classList.remove('hidden');
-            shown = true;
-          }
-        }
-        
-        lastScrollTop = st <= 0 ? 0 : st;
-      }, { passive: true });
-      
-      // Mobile: back button
-      history.pushState(null, '', location.href);
-      window.addEventListener('popstate', function() {
-        if (!shown && popup) {
-          popup.classList.remove('hidden');
-          shown = true;
-        }
-      });
-      
-      // Mobile: 30s inactivity
-      let inactivityTimer;
-      function resetTimer() {
-        clearTimeout(inactivityTimer);
-        inactivityTimer = setTimeout(function() {
-          if (!shown && popup) {
-            popup.classList.remove('hidden');
-            shown = true;
-          }
-        }, 30000);
-      }
-      ['mousemove', 'keydown', 'scroll', 'click'].forEach(e => window.addEventListener(e, resetTimer));
-      resetTimer();
-      
-      // Close popup
-      if (closeBtn) {
-        closeBtn.addEventListener('click', () => popup.classList.add('hidden'));
-      }
-      if (popup) {
-        popup.addEventListener('click', e => { if (e.target === popup) popup.classList.add('hidden'); });
-      }
-      
-      // Form submit
-      if (form) {
-        form.addEventListener('submit', async function(e) {
-          e.preventDefault();
-          const website = document.getElementById('exitWebsite')?.value;
-          const email = document.getElementById('exitEmail')?.value;
-          const submitBtn = form.querySelector('button[type="submit"]');
-          
-          if (!website || !email) { alert('Please fill in all fields.'); return; }
-          
-          const originalText = submitBtn.innerHTML;
-          submitBtn.innerHTML = 'Analyzing...';
-          submitBtn.disabled = true;
-          
-          try {
-            const response = await fetch('/api/audit', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ website, email })
+
+      {/* Exit Intent Script - ONLY on mouse leave (no timer) */}
+      <script dangerouslySetInnerHTML={{
+        __html: `
+          (function() {
+            const popup = document.getElementById('exitPopup');
+            const closeBtn = document.getElementById('closeExitPopup');
+            const form = document.getElementById('exitAuditForm');
+            let shown = false;
+            
+            // DOAR exit intent - când mouse-ul iese din pagină
+            document.addEventListener('mouseleave', function(e) {
+              if (e.clientY < 0 && !shown && popup) {
+                popup.classList.remove('hidden');
+                shown = true;
+              }
             });
             
-            if (response.ok) {
-              submitBtn.innerHTML = '✓ Report Sent!';
-              setTimeout(() => {
+            // Close popup
+            if (closeBtn) {
+              closeBtn.addEventListener('click', function() {
                 popup.classList.add('hidden');
-                form.reset();
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-              }, 2000);
-            } else {
-              throw new Error('Failed');
+              });
             }
-          } catch (error) {
-            alert('Something went wrong. Please try again.');
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-          }
-        });
-      }
-    })();
-  `
-}} />
+            
+            if (popup) {
+              popup.addEventListener('click', function(e) {
+                if (e.target === popup) {
+                  popup.classList.add('hidden');
+                }
+              });
+            }
+            
+            // Handle form submission
+            if (form) {
+              form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const website = document.getElementById('exitWebsite')?.value;
+                const email = document.getElementById('exitEmail')?.value;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                
+                if (!website || !email) { 
+                  alert('Please fill in all fields.'); 
+                  return; 
+                }
+                
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'Analyzing...';
+                submitBtn.disabled = true;
+                
+                try {
+                  const response = await fetch('/api/audit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ website, email })
+                  });
+                  
+                  if (response.ok) {
+                    submitBtn.innerHTML = '✓ Report Sent!';
+                    setTimeout(() => {
+                      popup.classList.add('hidden');
+                      form.reset();
+                      submitBtn.innerHTML = originalText;
+                      submitBtn.disabled = false;
+                    }, 2000);
+                  } else {
+                    throw new Error('Failed');
+                  }
+                } catch (error) {
+                  alert('Something went wrong. Please try again.');
+                  submitBtn.innerHTML = originalText;
+                  submitBtn.disabled = false;
+                }
+              });
+            }
+          })();
+        `
+      }} />
     </>
   );
 }
