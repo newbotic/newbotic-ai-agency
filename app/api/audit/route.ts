@@ -63,11 +63,20 @@ async function sendAuditEmail(
 }
 
 async function appendToSheet(data: any) {
+  console.log("📊 appendToSheet called");
+  console.log("🔑 GOOGLE_CLIENT_EMAIL exists:", !!process.env.GOOGLE_CLIENT_EMAIL);
+  console.log("🔑 GOOGLE_PRIVATE_KEY exists:", !!process.env.GOOGLE_PRIVATE_KEY);
+  
+  if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY) {
+    console.error("❌ Missing Google credentials in environment");
+    return;
+  }
+
   try {
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
       },
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
@@ -99,10 +108,16 @@ async function appendToSheet(data: any) {
     console.log("✅ Saved to Google Sheets");
   } catch (error) {
     console.error("❌ Google Sheets error:", error);
+    if (error instanceof Error) {
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+    }
   }
 }
 
 export async function POST(request: NextRequest) {
+  console.log("🚀 API /api/audit called");
+  
   try {
     const body = await request.json();
     const { website, email } = body;
@@ -115,7 +130,8 @@ export async function POST(request: NextRequest) {
     }
 
     console.log("🔍 Running audit for:", website);
-    console.log("🔑 Using API Key:", apiKey ? "Present" : "MISSING");
+    console.log("🔑 PAGESPEED_API_KEY exists:", !!apiKey);
+    console.log("📧 RESEND_API_KEY exists:", !!process.env.RESEND_API_KEY);
 
     if (!apiKey) {
       return NextResponse.json(
@@ -180,16 +196,12 @@ export async function POST(request: NextRequest) {
 
     // Trimite email cu raportul
     if (email) {
-      await sendAuditEmail(email, website, scores, average, priority);
+      sendAuditEmail(email, website, scores, average, priority).catch(console.error);
     }
 
     return NextResponse.json(result);
   } catch (error) {
-    console.error("❌ AUDIT ERROR FULL:", error);
-    console.error(
-      "❌ ERROR MESSAGE:",
-      error instanceof Error ? error.message : String(error),
-    );
+    console.error("❌ AUDIT ERROR:", error instanceof Error ? error.message : String(error));
     return NextResponse.json(
       {
         error: "Internal server error",
