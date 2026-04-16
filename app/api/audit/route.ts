@@ -1,19 +1,25 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { google } from 'googleapis';
-import { Resend } from 'resend';
+import { NextRequest, NextResponse } from "next/server";
+import { google } from "googleapis";
+import { Resend } from "resend";
 
 // Folosește variabile de mediu
 const apiKey = process.env.PAGESPEED_API_KEY;
-const SHEET_NAME = 'Sheet1';
-const SHEET_ID = '100SwBN-fqrpbUcpAiS8fRuA5BVDHeKWy7MgMpkF1Kjk';
+const SHEET_NAME = "Sheet1";
+const SHEET_ID = "100SwBN-fqrpbUcpAiS8fRuA5BVDHeKWy7MgMpkF1Kjk";
 
 // Inițializează Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-async function sendAuditEmail(email: string, website: string, scores: any, average: number, priority: string) {
+async function sendAuditEmail(
+  email: string,
+  website: string,
+  scores: any,
+  average: number,
+  priority: string,
+) {
   try {
     const { data, error } = await resend.emails.send({
-      from: 'NewBotic <audit@newbotic.co.uk>',
+      from: "NewBotic <audit@newbotic.co.uk>",
       to: [email],
       subject: `Your Website Audit Report for ${website}`,
       html: `
@@ -47,47 +53,52 @@ async function sendAuditEmail(email: string, website: string, scores: any, avera
     });
 
     if (error) {
-      console.error('❌ Resend error:', error);
+      console.error("❌ Resend error:", error);
     } else {
-      console.log('✅ Email sent to:', email, 'ID:', data?.id);
+      console.log("✅ Email sent to:", email, "ID:", data?.id);
     }
   } catch (error) {
-    console.error('❌ Email error:', error);
+    console.error("❌ Email error:", error);
   }
 }
 
 async function appendToSheet(data: any) {
   try {
     const auth = new google.auth.GoogleAuth({
-      keyFile: './app/api/audit/credentials/service-account.json',
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      },
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
-    const sheets = google.sheets({ version: 'v4', auth });
+    const sheets = google.sheets({ version: "v4", auth });
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
       range: `${SHEET_NAME}!A:J`,
-      valueInputOption: 'USER_ENTERED',
+      valueInputOption: "USER_ENTERED",
       requestBody: {
-        values: [[
-          data.timestamp,
-          data.website,
-          data.email,
-          data.strategy,
-          data.scores.performance,
-          data.scores.seo,
-          data.scores.accessibility,
-          data.scores.bestPractices,
-          data.average,
-          data.priority,
-        ]],
+        values: [
+          [
+            data.timestamp,
+            data.website,
+            data.email,
+            data.strategy,
+            data.scores.performance,
+            data.scores.seo,
+            data.scores.accessibility,
+            data.scores.bestPractices,
+            data.average,
+            data.priority,
+          ],
+        ],
       },
     });
 
-    console.log('✅ Saved to Google Sheets');
+    console.log("✅ Saved to Google Sheets");
   } catch (error) {
-    console.error('❌ Google Sheets error:', error);
+    console.error("❌ Google Sheets error:", error);
   }
 }
 
@@ -97,29 +108,38 @@ export async function POST(request: NextRequest) {
     const { website, email } = body;
 
     if (!website) {
-      return NextResponse.json({ error: 'Website URL is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Website URL is required" },
+        { status: 400 },
+      );
     }
 
-    console.log('🔍 Running audit for:', website);
-    console.log('🔑 Using API Key:', apiKey ? 'Present' : 'MISSING');
+    console.log("🔍 Running audit for:", website);
+    console.log("🔑 Using API Key:", apiKey ? "Present" : "MISSING");
 
     if (!apiKey) {
-      return NextResponse.json({ error: 'API key is missing' }, { status: 500 });
+      return NextResponse.json(
+        { error: "API key is missing" },
+        { status: 500 },
+      );
     }
 
     const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(website)}&key=${apiKey}&strategy=desktop&category=performance&category=seo&category=accessibility&category=best-practices`;
-    
+
     const response = await fetch(url);
     const data = await response.json();
 
     if (data.error) {
-      console.error('❌ PageSpeed API error:', data.error);
+      console.error("❌ PageSpeed API error:", data.error);
       return NextResponse.json({ error: data.error.message }, { status: 500 });
     }
 
     if (!data.lighthouseResult?.categories) {
-      console.error('❌ No lighthouseResult categories');
-      return NextResponse.json({ error: 'Could not complete audit' }, { status: 500 });
+      console.error("❌ No lighthouseResult categories");
+      return NextResponse.json(
+        { error: "Could not complete audit" },
+        { status: 500 },
+      );
     }
 
     const categories = data.lighthouseResult.categories;
@@ -128,19 +148,27 @@ export async function POST(request: NextRequest) {
       performance: Math.round((categories.performance?.score || 0) * 100),
       seo: Math.round((categories.seo?.score || 0) * 100),
       accessibility: Math.round((categories.accessibility?.score || 0) * 100),
-      bestPractices: Math.round((categories['best-practices']?.score || 0) * 100),
+      bestPractices: Math.round(
+        (categories["best-practices"]?.score || 0) * 100,
+      ),
     };
 
-    const average = Math.round((scores.performance + scores.seo + scores.accessibility + scores.bestPractices) / 4);
+    const average = Math.round(
+      (scores.performance +
+        scores.seo +
+        scores.accessibility +
+        scores.bestPractices) /
+        4,
+    );
 
-    let priority = 'Low';
-    if (average < 50) priority = 'High';
-    else if (average < 75) priority = 'Medium';
+    let priority = "Low";
+    if (average < 50) priority = "High";
+    else if (average < 75) priority = "Medium";
 
     const result = {
       website,
-      email: email || 'not provided',
-      strategy: 'desktop',
+      email: email || "not provided",
+      strategy: "desktop",
       scores,
       average,
       priority,
@@ -156,13 +184,18 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(result);
-
   } catch (error) {
-    console.error('❌ AUDIT ERROR FULL:', error);
-    console.error('❌ ERROR MESSAGE:', error instanceof Error ? error.message : String(error));
+    console.error("❌ AUDIT ERROR FULL:", error);
+    console.error(
+      "❌ ERROR MESSAGE:",
+      error instanceof Error ? error.message : String(error),
+    );
     return NextResponse.json(
-      { error: 'Internal server error', details: error instanceof Error ? error.message : String(error) },
-      { status: 500 }
+      {
+        error: "Internal server error",
+        details: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 },
     );
   }
 }
