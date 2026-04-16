@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { Resend } from 'resend';
 
-const apiKey = 'AIzaSyCr6ana8T2FSaTiRtpzyzH-xsV96_3lJKQ';
-const SHEET_ID = '100SwBN-fqrpbUcpAiS8fRuA5BVDHeKWy7MgMpkF1Kjk';
+// Folosește variabile de mediu
+const apiKey = process.env.PAGESPEED_API_KEY;
 const SHEET_NAME = 'Sheet1';
+const SHEET_ID = '100SwBN-fqrpbUcpAiS8fRuA5BVDHeKWy7MgMpkF1Kjk';
 
 // Inițializează Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -100,6 +101,11 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('🔍 Running audit for:', website);
+    console.log('🔑 Using API Key:', apiKey ? 'Present' : 'MISSING');
+
+    if (!apiKey) {
+      return NextResponse.json({ error: 'API key is missing' }, { status: 500 });
+    }
 
     const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(website)}&key=${apiKey}&strategy=desktop&category=performance&category=seo&category=accessibility&category=best-practices`;
     
@@ -107,10 +113,12 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (data.error) {
+      console.error('❌ PageSpeed API error:', data.error);
       return NextResponse.json({ error: data.error.message }, { status: 500 });
     }
 
     if (!data.lighthouseResult?.categories) {
+      console.error('❌ No lighthouseResult categories');
       return NextResponse.json({ error: 'Could not complete audit' }, { status: 500 });
     }
 
@@ -150,7 +158,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(result);
 
   } catch (error) {
-    console.error('❌ Audit error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('❌ AUDIT ERROR FULL:', error);
+    console.error('❌ ERROR MESSAGE:', error instanceof Error ? error.message : String(error));
+    return NextResponse.json(
+      { error: 'Internal server error', details: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    );
   }
 }
