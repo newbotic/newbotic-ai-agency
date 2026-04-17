@@ -20,11 +20,71 @@ export default function AIChatBot() {
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
     
+    // Adaugă mesajul utilizatorului
     setMessages(prev => [...prev, { text, isUser: true }]);
     setInputValue('');
     setIsTyping(true);
 
-    setTimeout(() => {
+    try {
+      // API Key din variabila de mediu
+      const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+      
+      if (!GEMINI_API_KEY) {
+        console.error('❌ GEMINI_API_KEY is missing in .env.local');
+        throw new Error('API key not configured');
+      }
+      
+      console.log('🔑 Using Gemini API Key:', GEMINI_API_KEY.substring(0, 10) + '...');
+      
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `You are NewBotic AI assistant, an AI automation agency for local businesses in the UK.
+
+OUR SERVICES:
+- Website Audit: £75 (50% off from £150) - AI-powered analysis with speed, SEO, security checks
+- Email Marketing AI: £149/month - automated campaigns, smart follow-ups
+- Web Page Creation: £175 (50% off from £350) - custom design, mobile friendly, SEO
+- Social Media AI: £129/month - auto-reply to comments and DMs 24/7
+- Lead Qualifier AI: £99/month - score and prioritize leads automatically
+- AI Chatbot: £119/month - custom chatbot for website and WhatsApp
+- AI Suite Complete: £499/month - all 6 agents together
+
+Keep responses friendly, professional, and under 3 sentences. If asked something you don't know, say: "I'll have a team member reach out to you about that."
+
+Customer question: ${text}`
+              }]
+            }]
+          })
+        }
+      );
+      
+      const data = await response.json();
+      
+      // Verifică dacă există eroare
+      if (data.error) {
+        console.error('❌ Gemini API error:', data.error);
+        throw new Error(`API Error: ${data.error.message}`);
+      }
+      
+      // Verifică dacă răspunsul e valid
+      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+        const reply = data.candidates[0].content.parts[0].text;
+        setMessages(prev => [...prev, { text: reply, isUser: false }]);
+      } else {
+        console.error('❌ Unexpected response structure');
+        throw new Error('Invalid response structure');
+      }
+      
+    } catch (error) {
+      console.error('❌ Chat error:', error);
+      
+      // Fallback la răspunsuri predefinite
       let response = "";
       const lowerText = text.toLowerCase();
       
@@ -41,8 +101,9 @@ export default function AIChatBot() {
       }
       
       setMessages(prev => [...prev, { text: response, isUser: false }]);
+    } finally {
       setIsTyping(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -76,7 +137,7 @@ export default function AIChatBot() {
               </div>
               <div>
                 <h3 className="font-['Syne'] font-bold text-white">NewBotic AI</h3>
-                <p className="text-xs text-white/70">Online • Usually replies instantly</p>
+                <p className="text-xs text-white/70">Online • Powered by Gemini</p>
               </div>
             </div>
           </div>
