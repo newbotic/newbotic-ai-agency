@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ChatBotWrapper from "./components/ChatBotWrapper";
+import KnexaUpload from '@/src/components/dashboard/KnexaUpload';
 
 export default function Home() {
   return (
@@ -239,154 +240,69 @@ export default function Home() {
           </div>
         </div>
 
-        {/* SERVICES Section */}
-        <section id="services" className="py-20">
+        {/* ========== KNEXA UPLOAD SECTION ========== */}
+        <section className="py-12 bg-white">
           <div className="container">
-            <p className="section-label text-[#2a5cff]">Services</p>
+            <div className="text-center mb-8">
+              <span className="bg-[#2a5cff]/10 text-[#2a5cff] px-4 py-1.5 rounded-full text-sm font-medium">
+                🛟 KNEXA - Suport AI
+              </span>
+              <h2 className="font-['Syne'] text-3xl md:text-4xl font-extrabold text-[#1e3a5f] mt-4 mb-3">
+                Încarcă documentele tale
+              </h2>
+              <p className="text-[#1e40af] text-lg max-w-2xl mx-auto">
+                KNEXA va învăța din documentele tale și va răspunde automat clienților 24/7.
+              </p>
+            </div>
+            <KnexaUpload />
+          </div>
+        </section>
+        {/* ========================================== */}
+
+        {/* MEET THE AI TEAM Section */}
+        <section id="agents" className="py-20 bg-white">
+          <div className="container">
+            <p className="section-label text-[#2a5cff]">Meet Our AI Team</p>
             <h2 className="section-title text-[#1e3a5f]">
-              AI-powered tools
+              Specialized AI agents
               <br />
-              for local businesses
+              ready to work for you
             </h2>
             <p className="section-sub text-[#1e40af]">
-              Each agent is built specifically for your business and runs
-              automatically from day one.
+              Each agent is an expert in their field, working 24/7 to automate your business.
             </p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
-              {/* Website Audit */}
+              
+              {/* SELLIX - Sales Agent */}
               <div className="glass-card relative">
                 <span className="status-badge status-badge-info absolute top-4 right-4">
-                  Most Popular
+                  👔 Sales AI
                 </span>
                 <div className="w-10 h-10 bg-[#eef3ff] rounded-xl flex items-center justify-center mb-4">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <circle
-                      cx="11"
-                      cy="11"
-                      r="7"
-                      stroke="#2a5cff"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M16.5 16.5l4 4"
-                      stroke="#2a5cff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                  <span className="text-2xl">👔</span>
                 </div>
                 <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  Website Audit
+                  SELLIX
                 </h3>
                 <p className="text-sm text-[#1e40af] mb-4">
-                  AI-powered analysis with speed, SEO, security, and mobile
-                  checks. Full PDF report.
+                  Your virtual sales representative that never sleeps. Qualifies leads, follows up, and closes deals.
                 </p>
                 <ul className="space-y-1.5 mb-5">
                   {[
-                    "Speed performance",
-                    "SEO analysis",
-                    "PDF report included",
+                    "Lead qualification (Hot/Warm/Cold)",
+                    "Automated follow-ups",
+                    "Meeting scheduler",
                   ].map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-center gap-2 text-xs text-[#1e40af]"
-                    >
+                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
                       <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg
-                          width="8"
-                          height="8"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                        >
-                          <path
-                            d="M2 5l2 2 4-4"
-                            stroke="#2a5cff"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
+                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </span>
                       {f}
                     </li>
                   ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £75
-                  </span>
-                  <span className="text-sm text-[#7a7a8a] line-through ml-2">
-                    £150
-                  </span>
-                </div>
-                <a
-                  href="https://calendly.com/hello-newbotic/30min"
-                  target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
-                >
-                  Get Audit →
-                </a>
-              </div>
-
-              {/* Email Marketing AI */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-info absolute top-4 right-4">
-                  AI Agent
-                </span>
-                <div className="w-10 h-10 bg-[#efffea] rounded-xl flex items-center justify-center mb-4">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect
-                      x="2"
-                      y="4"
-                      width="20"
-                      height="16"
-                      rx="2"
-                      stroke="#1a7a3a"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M2 8l10 7 10-7"
-                      stroke="#1a7a3a"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  Email Marketing AI
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Automated campaigns that nurture leads and drive sales on
-                  autopilot.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {["AI lead nurturing", "Smart follow-ups", "A/B testing"].map(
-                    (f) => (
-                      <li
-                        key={f}
-                        className="flex items-center gap-2 text-xs text-[#1e40af]"
-                      >
-                        <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                          <svg
-                            width="8"
-                            height="8"
-                            viewBox="0 0 10 10"
-                            fill="none"
-                          >
-                            <path
-                              d="M2 5l2 2 4-4"
-                              stroke="#2a5cff"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </span>
-                        {f}
-                      </li>
-                    ),
-                  )}
                 </ul>
                 <div className="mb-4">
                   <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
@@ -394,280 +310,35 @@ export default function Home() {
                   </span>
                   <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
                 </div>
-                <a
-                  href="https://calendly.com/hello-newbotic/30min"
-                  target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
-                >
-                  Get Email AI →
+                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
+                  Hire SELLIX →
                 </a>
               </div>
 
-              {/* Web Page Creation */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-best absolute top-4 right-4">
-                  Best Value
+              {/* KNEXA - Support Agent (Featured) */}
+              <div className="glass-card relative border-2 border-[#2a5cff] shadow-xl">
+                <span className="status-badge absolute top-4 right-4" style={{background: '#2a5cff', color: 'white'}}>
+                  🛟 MOST POPULAR
                 </span>
-                <div className="w-10 h-10 bg-[#f5f0ff] rounded-xl flex items-center justify-center mb-4">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect
-                      x="3"
-                      y="3"
-                      width="18"
-                      height="18"
-                      rx="2"
-                      stroke="#6a3acf"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M7 8h10M7 12h7"
-                      stroke="#6a3acf"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                <div className="w-10 h-10 bg-[#eef3ff] rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">🛟</span>
                 </div>
                 <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  Web Page Creation
+                  KNEXA
                 </h3>
                 <p className="text-sm text-[#1e40af] mb-4">
-                  Professional custom-designed website built and live in 7 days.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {["Custom design", "SEO optimized", "Mobile friendly"].map(
-                    (f) => (
-                      <li
-                        key={f}
-                        className="flex items-center gap-2 text-xs text-[#1e40af]"
-                      >
-                        <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                          <svg
-                            width="8"
-                            height="8"
-                            viewBox="0 0 10 10"
-                            fill="none"
-                          >
-                            <path
-                              d="M2 5l2 2 4-4"
-                              stroke="#2a5cff"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </span>
-                        {f}
-                      </li>
-                    ),
-                  )}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £175
-                  </span>
-                  <span className="text-sm text-[#7a7a8a] line-through ml-2">
-                    £350
-                  </span>
-                </div>
-                <a
-                  href="https://calendly.com/hello-newbotic/30min"
-                  target="_blank"
-                  className="block text-center bg-[#1e3a5f] text-white font-['Syne'] font-bold text-xs py-2.5 rounded-full hover:bg-[#1e40af] transition"
-                >
-                  Create Website →
-                </a>
-              </div>
-
-              {/* Social Media AI */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-info absolute top-4 right-4">
-                  AI Agent
-                </span>
-                <div className="w-10 h-10 bg-[#fff0f3] rounded-xl flex items-center justify-center mb-4">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect
-                      x="5"
-                      y="2"
-                      width="14"
-                      height="20"
-                      rx="2"
-                      stroke="#a3003a"
-                      strokeWidth="1.5"
-                    />
-                    <circle cx="12" cy="17" r="1" fill="#a3003a" />
-                  </svg>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  Social Media AI
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Auto-reply to comments and DMs on Instagram and Facebook 24/7.
+                  Your 24/7 AI support agent. Learns from your documents and answers customer questions instantly.
                 </p>
                 <ul className="space-y-1.5 mb-5">
                   {[
-                    "Auto DM replies",
-                    "Lead qualification",
-                    "Meeting scheduler",
+                    "Learns from your PDFs & docs",
+                    "24/7 chat & WhatsApp support",
+                    "Smart escalation to humans",
                   ].map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-center gap-2 text-xs text-[#1e40af]"
-                    >
+                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
                       <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg
-                          width="8"
-                          height="8"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                        >
-                          <path
-                            d="M2 5l2 2 4-4"
-                            stroke="#2a5cff"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £129
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a
-                  href="https://calendly.com/hello-newbotic/30min"
-                  target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
-                >
-                  Get Social AI →
-                </a>
-              </div>
-
-              {/* Lead Qualifier AI */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-warning absolute top-4 right-4">
-                  AI Agent
-                </span>
-                <div className="w-10 h-10 bg-[#fffbea] rounded-xl flex items-center justify-center mb-4">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <circle
-                      cx="12"
-                      cy="8"
-                      r="5"
-                      stroke="#9a6500"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M4 20c0-4 3.6-7 8-7s8 3 8 7"
-                      stroke="#9a6500"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  Lead Qualifier AI
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Score and prioritize leads automatically so you focus on the
-                  best ones.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "Lead scoring",
-                    "CRM integration",
-                    "Instant notifications",
-                  ].map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-center gap-2 text-xs text-[#1e40af]"
-                    >
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg
-                          width="8"
-                          height="8"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                        >
-                          <path
-                            d="M2 5l2 2 4-4"
-                            stroke="#2a5cff"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £99
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a
-                  href="https://calendly.com/hello-newbotic/30min"
-                  target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
-                >
-                  Get Qualifier AI →
-                </a>
-              </div>
-
-              {/* AI Chatbot */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-info absolute top-4 right-4">
-                  AI Agent
-                </span>
-                <div className="w-10 h-10 bg-[#e8f8ff] rounded-xl flex items-center justify-center mb-4">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-                      stroke="#006fa3"
-                      strokeWidth="1.5"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  AI Chatbot
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Custom chatbot trained on your business, live on your site and
-                  WhatsApp.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "Custom knowledge base",
-                    "WhatsApp / Telegram",
-                    "Lead capture",
-                  ].map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-center gap-2 text-xs text-[#1e40af]"
-                    >
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg
-                          width="8"
-                          height="8"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                        >
-                          <path
-                            d="M2 5l2 2 4-4"
-                            stroke="#2a5cff"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
+                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </span>
                       {f}
@@ -680,12 +351,172 @@ export default function Home() {
                   </span>
                   <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
                 </div>
-                <a
-                  href="https://calendly.com/hello-newbotic/30min"
-                  target="_blank"
-                  className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition"
-                >
-                  Get Chatbot →
+                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#2a5cff] text-white font-['Syne'] font-bold text-xs py-2.5 rounded-full hover:bg-[#1e40af] transition">
+                  Hire KNEXA →
+                </a>
+              </div>
+
+              {/* VYRAL - Marketing Agent */}
+              <div className="glass-card relative">
+                <span className="status-badge status-badge-info absolute top-4 right-4">
+                  📣 Marketing AI
+                </span>
+                <div className="w-10 h-10 bg-[#efffea] rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">📣</span>
+                </div>
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
+                  VYRAL
+                </h3>
+                <p className="text-sm text-[#1e40af] mb-4">
+                  Your social media manager. Creates and schedules content, and engages with your audience.
+                </p>
+                <ul className="space-y-1.5 mb-5">
+                  {[
+                    "Content creation & scheduling",
+                    "Auto-reply to comments/DMs",
+                    "Hashtag & trend optimization",
+                  ].map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
+                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
+                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-4">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
+                    £129
+                  </span>
+                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
+                </div>
+                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
+                  Hire VYRAL →
+                </a>
+              </div>
+
+              {/* OPTIMUS - Personal Assistant */}
+              <div className="glass-card relative">
+                <span className="status-badge status-badge-info absolute top-4 right-4">
+                  🧠 Personal AI
+                </span>
+                <div className="w-10 h-10 bg-[#f5f0ff] rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">🧠</span>
+                </div>
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
+                  OPTIMUS
+                </h3>
+                <p className="text-sm text-[#1e40af] mb-4">
+                  Your personal assistant. Manages your calendar, tasks, and emails, all through voice or text.
+                </p>
+                <ul className="space-y-1.5 mb-5">
+                  {[
+                    "Calendar & task management",
+                    "Email summaries",
+                    "Voice commands",
+                  ].map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
+                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
+                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-4">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
+                    £99
+                  </span>
+                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
+                </div>
+                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
+                  Hire OPTIMUS →
+                </a>
+              </div>
+
+              {/* METRIX - Business Manager */}
+              <div className="glass-card relative">
+                <span className="status-badge status-badge-warning absolute top-4 right-4">
+                  📊 Business AI
+                </span>
+                <div className="w-10 h-10 bg-[#fffbea] rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">📊</span>
+                </div>
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
+                  METRIX
+                </h3>
+                <p className="text-sm text-[#1e40af] mb-4">
+                  Your business manager. Analyzes KPIs, generates reports, and provides actionable insights.
+                </p>
+                <ul className="space-y-1.5 mb-5">
+                  {[
+                    "KPI dashboard & reports",
+                    "Anomaly detection",
+                    "Predictive analytics",
+                  ].map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
+                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
+                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-4">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
+                    £199
+                  </span>
+                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
+                </div>
+                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
+                  Hire METRIX →
+                </a>
+              </div>
+
+              {/* AI Chatbot - Lead Generation */}
+              <div className="glass-card relative">
+                <span className="status-badge status-badge-info absolute top-4 right-4">
+                  🤖 Lead Gen AI
+                </span>
+                <div className="w-10 h-10 bg-[#e8f8ff] rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">🤖</span>
+                </div>
+                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
+                  Lead Qualifier AI
+                </h3>
+                <p className="text-sm text-[#1e40af] mb-4">
+                  Captures and qualifies leads 24/7. Integrates with your CRM and notifies your sales team.
+                </p>
+                <ul className="space-y-1.5 mb-5">
+                  {[
+                    "24/7 lead capture",
+                    "Automatic lead scoring",
+                    "CRM integration",
+                  ].map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
+                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
+                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-4">
+                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
+                    £99
+                  </span>
+                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
+                </div>
+                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
+                  Get Lead Qualifier →
                 </a>
               </div>
             </div>
@@ -1059,7 +890,7 @@ export default function Home() {
         }}
       />
 
-      {/* Exit Intent Script - ONLY on mouse leave (no timer) */}
+      {/* Exit Intent Script - Fixed */}
       <script dangerouslySetInnerHTML={{
         __html: `
           (function() {
@@ -1068,15 +899,16 @@ export default function Home() {
             const form = document.getElementById('exitAuditForm');
             let shown = false;
             
-            // DOAR exit intent - când mouse-ul iese din pagină
             document.addEventListener('mouseleave', function(e) {
+              const chatOpen = document.querySelector('[aria-expanded="true"]');
+              if (chatOpen) return;
+              
               if (e.clientY < 0 && !shown && popup) {
                 popup.classList.remove('hidden');
                 shown = true;
               }
             });
             
-            // Close popup
             if (closeBtn) {
               closeBtn.addEventListener('click', function() {
                 popup.classList.add('hidden');
@@ -1091,7 +923,6 @@ export default function Home() {
               });
             }
             
-            // Handle form submission
             if (form) {
               form.addEventListener('submit', async function(e) {
                 e.preventDefault();
