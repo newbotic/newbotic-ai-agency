@@ -459,25 +459,25 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* AI Chatbot - Lead Generation */}
+              {/* APPO - Booking Agent */}
               <div className="glass-card relative">
                 <span className="status-badge status-badge-info absolute top-4 right-4">
-                  🤖 Lead Gen AI
+                  📅 Booking AI
                 </span>
-                <div className="w-10 h-10 bg-[#e8f8ff] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">🤖</span>
+                <div className="w-10 h-10 bg-[#e6f7ff] rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">📅</span>
                 </div>
                 <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  Lead Qualifier AI
+                  APPO
                 </h3>
                 <p className="text-sm text-[#1e40af] mb-4">
-                  Captures and qualifies leads 24/7. Integrates with your CRM and notifies your sales team.
+                  Your 24/7 booking assistant. Manages appointments, sends reminders, and syncs with your calendar.
                 </p>
                 <ul className="space-y-1.5 mb-5">
                   {[
-                    "24/7 lead capture",
-                    "Automatic lead scoring",
-                    "CRM integration",
+                    "24/7 appointment booking",
+                    "Automatic reminders",
+                    "Calendar sync (Google, Outlook)",
                   ].map((f) => (
                     <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
                       <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
@@ -491,12 +491,12 @@ export default function Home() {
                 </ul>
                 <div className="mb-4">
                   <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £99
+                    £129
                   </span>
                   <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
                 </div>
                 <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
-                  Get Lead Qualifier →
+                  Hire APPO →
                 </a>
               </div>
             </div>
