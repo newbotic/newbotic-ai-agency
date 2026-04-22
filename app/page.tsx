@@ -1,7 +1,6 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ChatBotWrapper from "./components/ChatBotWrapper";
-import KnexaUpload from '@/src/components/dashboard/KnexaUpload';
 
 export default function Home() {
   return (
@@ -239,25 +238,6 @@ export default function Home() {
             <span className="text-xs text-white/50">Always running</span>
           </div>
         </div>
-
-        {/* ========== KNEXA UPLOAD SECTION ========== */}
-        <section className="py-12 bg-white">
-          <div className="container">
-            <div className="text-center mb-8">
-              <span className="bg-[#2a5cff]/10 text-[#2a5cff] px-4 py-1.5 rounded-full text-sm font-medium">
-                🛟 KNEXA - Suport AI
-              </span>
-              <h2 className="font-['Syne'] text-3xl md:text-4xl font-extrabold text-[#1e3a5f] mt-4 mb-3">
-                Încarcă documentele tale
-              </h2>
-              <p className="text-[#1e40af] text-lg max-w-2xl mx-auto">
-                KNEXA va învăța din documentele tale și va răspunde automat clienților 24/7.
-              </p>
-            </div>
-            <KnexaUpload />
-          </div>
-        </section>
-        {/* ========================================== */}
 
         {/* MEET THE AI TEAM Section */}
         <section id="agents" className="py-20 bg-white">
