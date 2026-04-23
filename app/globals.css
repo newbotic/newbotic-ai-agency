@@ -236,3 +236,29 @@ select option {
 select option:first-child {
   color: #7a7a8a !important;
 }
+/* Futurist scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00f0ff, #b000ff);
+  border-radius: 4px;
+}
+
+/* Selection color */
+::selection {
+  background: #00f0ff;
+  color: #0a0a0f;
+}
+/* Elimină orice subliniere pe link-uri */
+a {
+  text-decoration: none !important;
+}
+
+/* Dar păstrează efectul hover dacă vrei */
+a:hover {
+  text-decoration: none !important;
+}

@@ -6,23 +6,29 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#f8f8fc]">
+      <main className="bg-[#0a0a0f]">
         {/* HERO Section */}
         <section className="pt-28 pb-16">
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="hero-badge">
-                  <span className="badge-dot"></span>7 spots left this week
+                <div className="hero-badge bg-[#00f0ff]/10 border border-[#00f0ff]/30 text-[#00f0ff] inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-6">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00f0ff] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00f0ff]"></span>
+                  </span>
+                  7 spots left this week
                 </div>
-                <h1 className="font-['Syne'] text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-[-0.03em] text-[#1e3a5f] mb-5">
+                <h1 className="font-['Syne'] text-5xl lg:text-7xl font-extrabold leading-[1.05] tracking-[-0.03em] text-white mb-5">
                   AI that runs
                   <br />
                   your business
                   <br />
-                  <span className="text-[#2a5cff]">24/7</span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#b000ff]">
+                    24/7
+                  </span>
                 </h1>
-                <p className="text-lg text-[#1e40af] font-light leading-relaxed mb-8 max-w-md">
+                <p className="text-lg text-gray-300 font-light leading-relaxed mb-8 max-w-md">
                   Your Business, On Autopilot — email automation, lead
                   qualification, social media AI. All running while you focus on
                   growth.
@@ -31,173 +37,51 @@ export default function Home() {
                   <a
                     href="https://calendly.com/hello-newbotic/30min"
                     target="_blank"
-                    className="btn-primary bg-[#1e3a5f] hover:bg-[#1e40af]"
+                    rel="noopener noreferrer"
+                    className="relative overflow-hidden group bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_#00f0ff]"
                   >
-                    Book Free Strategy Call
+                    📅 Book Free Strategy Call
                   </a>
                   <a
-                    href="https://wa.me/447891897558"
+                    href="https://wa.me/447891897558?text=Hi%2C%20I'm%20interested%20in%20your%20AI%20agents"
                     target="_blank"
-                    className="btn-secondary border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white"
+                    rel="noopener noreferrer"
+                    className="border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff]/10 hover:shadow-[0_0_10px_#00f0ff] font-bold py-3 px-6 rounded-full transition-all duration-300"
                   >
-                    WhatsApp Us
+                    💬 WhatsApp Us
                   </a>
                 </div>
                 <div className="flex flex-wrap gap-6">
-                  <span className="flex items-center gap-2 text-sm text-[#7a7a8a]">
-                    <span className="w-4 h-4 bg-[#00e5a0] rounded-full flex items-center justify-center">
-                      <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-                        <path
-                          d="M2 5l2 2 4-4"
-                          stroke="#0a0a0f"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                  {["15+ businesses", "Ready in 7 days", "50% OFF now"].map((text) => (
+                    <span key={text} className="flex items-center gap-2 text-sm text-gray-400">
+                      <span className="w-2 h-2 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"></span>
+                      {text}
                     </span>
-                    15+ businesses
-                  </span>
-                  <span className="flex items-center gap-2 text-sm text-[#7a7a8a]">
-                    <span className="w-4 h-4 bg-[#00e5a0] rounded-full flex items-center justify-center">
-                      <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-                        <path
-                          d="M2 5l2 2 4-4"
-                          stroke="#0a0a0f"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                    Ready in 7 days
-                  </span>
-                  <span className="flex items-center gap-2 text-sm text-[#7a7a8a]">
-                    <span className="w-4 h-4 bg-[#00e5a0] rounded-full flex items-center justify-center">
-                      <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-                        <path
-                          d="M2 5l2 2 4-4"
-                          stroke="#0a0a0f"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                    50% OFF now
-                  </span>
+                  ))}
                 </div>
               </div>
 
-              <div className="glass-card">
-                <div className="flex justify-between items-center mb-5">
-                  <span className="font-['Syne'] font-bold text-sm text-[#1e3a5f]">
-                    AI Dashboard
-                  </span>
-                  <span className="status-badge status-badge-success flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 bg-[#1a7a3a] rounded-full animate-pulse"></span>
-                    Live
-                  </span>
-                </div>
-                <div className="grid grid-cols-3 gap-3 mb-4">
-                  <div className="bg-[#f8f8fc] rounded-xl p-3 text-center">
-                    <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f] block">
-                      142
-                    </span>
-                    <span className="text-xs text-[#7a7a8a] mt-1 block">
-                      Leads this week
-                    </span>
-                  </div>
-                  <div className="bg-[#f8f8fc] rounded-xl p-3 text-center">
-                    <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f] block">
-                      98%
-                    </span>
-                    <span className="text-xs text-[#7a7a8a] mt-1 block">
-                      Reply rate
-                    </span>
-                  </div>
-                  <div className="bg-[#f8f8fc] rounded-xl p-3 text-center">
-                    <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f] block">
-                      £8.4k
-                    </span>
-                    <span className="text-xs text-[#7a7a8a] mt-1 block">
-                      Revenue
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 p-2.5 bg-[#f8f8fc] rounded-xl">
-                    <div className="w-7 h-7 bg-[#eef3ff] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <path
-                          d="M4 4h16v16H4z"
-                          stroke="#2a5cff"
-                          strokeWidth="1.5"
-                        />
-                        <path
-                          d="M4 8l8 6 8-6"
-                          stroke="#2a5cff"
-                          strokeWidth="1.5"
-                        />
-                      </svg>
+              {/* VIDEO DEMO THUMBNAIL - futurist */}
+              <div className="relative group cursor-pointer">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-300"></div>
+                <div className="relative glass-card-futuristic p-0 overflow-hidden rounded-xl bg-[#111115] border border-[#00f0ff]/20">
+                  <div className="relative">
+                    <div className="bg-gradient-to-br from-[#111115] to-[#0a0a0f] h-64 rounded-t-xl flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-6xl mb-3 animate-pulse">🤖</div>
+                        <p className="text-sm font-medium text-[#00f0ff]">Demo Video</p>
+                        <p className="text-xs text-gray-500 mt-1">See AI in action</p>
+                      </div>
                     </div>
-                    <span className="text-xs text-[#1e3a5f] flex-1">
-                      Email sent to Sarah M. — Audit inquiry
-                    </span>
-                    <span className="text-xs text-[#7a7a8a]">2m ago</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-2.5 bg-[#f8f8fc] rounded-xl">
-                    <div className="w-7 h-7 bg-[#efffea] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <circle
-                          cx="12"
-                          cy="12"
-                          r="8"
-                          stroke="#1a7a3a"
-                          strokeWidth="1.5"
-                        />
-                        <path
-                          d="M9 12l2 2 4-4"
-                          stroke="#1a7a3a"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                        />
-                      </svg>
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <div className="w-16 h-16 bg-[#00f0ff] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_#00f0ff]">
+                        <div className="w-0 h-0 border-t-8 border-b-8 border-l-12 border-transparent border-l-black ml-1"></div>
+                      </div>
                     </div>
-                    <span className="text-xs text-[#1e3a5f] flex-1">
-                      Lead qualified — Plumbing Co. (Hot)
-                    </span>
-                    <span className="text-xs text-[#7a7a8a]">8m ago</span>
                   </div>
-                  <div className="flex items-center gap-3 p-2.5 bg-[#f8f8fc] rounded-xl">
-                    <div className="w-7 h-7 bg-[#fff0f3] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <path
-                          d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-                          stroke="#a3003a"
-                          strokeWidth="1.5"
-                        />
-                      </svg>
-                    </div>
-                    <span className="text-xs text-[#1e3a5f] flex-1">
-                      Instagram DM auto-replied — @lux_cafe
-                    </span>
-                    <span className="text-xs text-[#7a7a8a]">12m ago</span>
+                  <div className="p-4 text-center border-t border-[#00f0ff]/10">
+                    <p className="text-sm font-medium text-[#00f0ff]">Watch how it works →</p>
+                    <p className="text-xs text-gray-500 mt-1">30-second demo</p>
                   </div>
                 </div>
               </div>
@@ -205,750 +89,199 @@ export default function Home() {
           </div>
         </section>
 
-        {/* STATS BAR */}
-        <div className="bg-[#1e3a5f] py-6 flex justify-center gap-8 flex-wrap">
-          <div className="text-center text-white">
-            <span className="font-['Syne'] font-extrabold text-2xl block">
-              7
-            </span>
-            <span className="text-xs text-white/50">Days delivery</span>
-          </div>
-          <div className="text-center text-white">
-            <span className="font-['Syne'] font-extrabold text-2xl block">
-              50%
-            </span>
-            <span className="text-xs text-white/50">Off right now</span>
-          </div>
-          <div className="text-center text-white">
-            <span className="font-['Syne'] font-extrabold text-2xl block">
-              15+
-            </span>
-            <span className="text-xs text-white/50">Clients in 2025</span>
-          </div>
-          <div className="text-center text-white">
-            <span className="font-['Syne'] font-extrabold text-2xl block">
-              6
-            </span>
-            <span className="text-xs text-white/50">AI agents ready</span>
-          </div>
-          <div className="text-center text-white">
-            <span className="font-['Syne'] font-extrabold text-2xl block">
-              24/7
-            </span>
-            <span className="text-xs text-white/50">Always running</span>
-          </div>
+        {/* STATS BAR - futurist */}
+        <div className="bg-[#111115] border-y border-[#00f0ff]/10 py-6 flex justify-center gap-12 flex-wrap">
+          {[
+            { value: "7", label: "Days delivery" },
+            { value: "50%", label: "Off right now" },
+            { value: "15+", label: "Clients in 2025" },
+            { value: "6", label: "AI agents" },
+            { value: "24/7", label: "Always running" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <span className="font-['Syne'] font-extrabold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#b000ff] block">
+                {stat.value}
+              </span>
+              <span className="text-xs text-gray-500">{stat.label}</span>
+            </div>
+          ))}
         </div>
 
         {/* MEET THE AI TEAM Section */}
-        <section id="agents" className="py-20 bg-white">
+        <section id="agents" className="py-20">
           <div className="container">
-            <p className="section-label text-[#2a5cff]">Meet Our AI Team</p>
-            <h2 className="section-title text-[#1e3a5f]">
+            <p className="text-[#00f0ff] text-sm uppercase tracking-wider text-center mb-2">Meet Our AI Team</p>
+            <h2 className="font-['Syne'] text-4xl lg:text-5xl font-bold text-center text-white mb-4">
               Specialized AI agents
               <br />
               ready to work for you
             </h2>
-            <p className="section-sub text-[#1e40af]">
+            <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
               Each agent is an expert in their field, working 24/7 to automate your business.
             </p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
-              
-              {/* SELLIX - Sales Agent */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-info absolute top-4 right-4">
-                  👔 Sales AI
-                </span>
-                <div className="w-10 h-10 bg-[#eef3ff] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">👔</span>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  SELLIX
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Your virtual sales representative that never sleeps. Qualifies leads, follows up, and closes deals.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "Lead qualification (Hot/Warm/Cold)",
-                    "Automated follow-ups",
-                    "Meeting scheduler",
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+              {agents.map((agent, idx) => (
+                <div key={agent.name} className="relative group">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-2xl blur opacity-20 group-hover:opacity-100 transition duration-300"></div>
+                  <div className="relative bg-[#111115] rounded-2xl p-6 border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 transition-all duration-300">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="w-12 h-12 bg-[#00f0ff]/10 rounded-xl flex items-center justify-center border border-[#00f0ff]/30">
+                        <span className="text-2xl">{agent.icon}</span>
+                      </div>
+                      <span className="text-[10px] px-2 py-1 rounded-full bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/30">
+                        {agent.badge}
                       </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £149
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
-                  Hire SELLIX →
-                </a>
-              </div>
-
-              {/* KNEXA - Support Agent (Featured) */}
-              <div className="glass-card relative border-2 border-[#2a5cff] shadow-xl">
-                <span className="status-badge absolute top-4 right-4" style={{background: '#2a5cff', color: 'white'}}>
-                  🛟 MOST POPULAR
-                </span>
-                <div className="w-10 h-10 bg-[#eef3ff] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">🛟</span>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  KNEXA
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Your 24/7 AI support agent. Learns from your documents and answers customer questions instantly.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "Learns from your PDFs & docs",
-                    "24/7 chat & WhatsApp support",
-                    "Smart escalation to humans",
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £119
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#2a5cff] text-white font-['Syne'] font-bold text-xs py-2.5 rounded-full hover:bg-[#1e40af] transition">
-                  Hire KNEXA →
-                </a>
-              </div>
-
-              {/* VYRAL - Marketing Agent */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-info absolute top-4 right-4">
-                  📣 Marketing AI
-                </span>
-                <div className="w-10 h-10 bg-[#efffea] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">📣</span>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  VYRAL
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Your social media manager. Creates and schedules content, and engages with your audience.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "Content creation & scheduling",
-                    "Auto-reply to comments/DMs",
-                    "Hashtag & trend optimization",
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £129
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
-                  Hire VYRAL →
-                </a>
-              </div>
-
-              {/* OPTIMUS - Personal Assistant */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-info absolute top-4 right-4">
-                  🧠 Personal AI
-                </span>
-                <div className="w-10 h-10 bg-[#f5f0ff] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">🧠</span>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  OPTIMUS
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Your personal assistant. Manages your calendar, tasks, and emails, all through voice or text.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "Calendar & task management",
-                    "Email summaries",
-                    "Voice commands",
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £99
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
-                  Hire OPTIMUS →
-                </a>
-              </div>
-
-              {/* METRIX - Business Manager */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-warning absolute top-4 right-4">
-                  📊 Business AI
-                </span>
-                <div className="w-10 h-10 bg-[#fffbea] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">📊</span>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  METRIX
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Your business manager. Analyzes KPIs, generates reports, and provides actionable insights.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "KPI dashboard & reports",
-                    "Anomaly detection",
-                    "Predictive analytics",
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £199
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
-                  Hire METRIX →
-                </a>
-              </div>
-
-              {/* APPO - Booking Agent */}
-              <div className="glass-card relative">
-                <span className="status-badge status-badge-info absolute top-4 right-4">
-                  📅 Booking AI
-                </span>
-                <div className="w-10 h-10 bg-[#e6f7ff] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">📅</span>
-                </div>
-                <h3 className="font-['Syne'] font-bold text-lg text-[#1e3a5f] mb-1">
-                  APPO
-                </h3>
-                <p className="text-sm text-[#1e40af] mb-4">
-                  Your 24/7 booking assistant. Manages appointments, sends reminders, and syncs with your calendar.
-                </p>
-                <ul className="space-y-1.5 mb-5">
-                  {[
-                    "24/7 appointment booking",
-                    "Automatic reminders",
-                    "Calendar sync (Google, Outlook)",
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-[#1e40af]">
-                      <span className="w-3.5 h-3.5 bg-[#eef6ff] rounded-full flex items-center justify-center">
-                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                          <path d="M2 5l2 2 4-4" stroke="#2a5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4">
-                  <span className="font-['Syne'] font-extrabold text-2xl text-[#1e3a5f]">
-                    £129
-                  </span>
-                  <span className="text-xs text-[#7a7a8a] ml-1">/month</span>
-                </div>
-                <a href="https://calendly.com/hello-newbotic/30min" target="_blank" className="block text-center bg-[#f8f8fc] text-[#1e3a5f] font-['Syne'] font-bold text-xs py-2.5 rounded-full border border-[#1e3a5f]/10 hover:bg-[#1e3a5f] hover:text-white transition">
-                  Hire APPO →
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* PROCESS Section */}
-        <section id="process" className="py-20 bg-white">
-          <div className="container">
-            <p className="section-label text-[#2a5cff]">Process</p>
-            <h2 className="section-title text-[#1e3a5f]">
-              Up and running
-              <br />
-              in 4 simple steps
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 relative">
-              <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#1e3a5f]/10 to-transparent -z-0"></div>
-              {[
-                {
-                  num: 1,
-                  title: "Discovery Call",
-                  desc: "15-min call to understand your business and goals. Same-day booking available.",
-                },
-                {
-                  num: 2,
-                  title: "AI Analysis",
-                  desc: "Our AI agents analyse your requirements and create a custom plan.",
-                },
-                {
-                  num: 3,
-                  title: "Build & Design",
-                  desc: "We build everything with regular updates. You see progress every step.",
-                },
-                {
-                  num: 4,
-                  title: "Launch & Support",
-                  desc: "Live in 7 days. 30 days support included. 100% satisfaction guaranteed.",
-                },
-              ].map((step) => (
-                <div key={step.num} className="glass-card relative z-10">
-                  <div className="w-10 h-10 bg-[#1e3a5f] text-white font-['Syne'] font-extrabold text-base rounded-full flex items-center justify-center mb-4">
-                    {step.num}
+                    </div>
+                    <h3 className="font-['Syne'] font-bold text-xl text-white mb-2">{agent.name}</h3>
+                    <p className="text-gray-400 text-sm mb-4">{agent.description}</p>
+                    <ul className="space-y-2 mb-6">
+                      {agent.features.map((feature) => (
+                        <li key={feature} className="flex items-center gap-2 text-xs text-gray-300">
+                          <span className="w-1.5 h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_6px_#00f0ff]"></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mb-4">
+                      <span className="font-['Syne'] font-extrabold text-3xl text-white">{agent.price}</span>
+                      <span className="text-gray-500 ml-1">/month</span>
+                    </div>
+                    <a
+                      href="https://calendly.com/hello-newbotic/30min"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-center border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black font-bold text-sm py-3 rounded-full transition-all duration-300"
+                    >
+                      Hire {agent.name} →
+                    </a>
                   </div>
-                  <h3 className="font-['Syne'] font-bold text-base text-[#1e3a5f] mb-1">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-[#1e40af] leading-relaxed">
-                    {step.desc}
-                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-12 md:py-20">
+        {/* PROCESS Section - futurist */}
+        <section id="process" className="py-20 bg-[#0a0a0f]">
+          <div className="container">
+            <p className="text-[#00f0ff] text-sm uppercase tracking-wider text-center mb-2">Process</p>
+            <h2 className="font-['Syne'] text-4xl lg:text-5xl font-bold text-center text-white mb-4">
+              Up and running
+              <br />
+              in 4 simple steps
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+              {[
+                { num: "01", title: "Discovery Call", desc: "15-min call to understand your business and goals." },
+                { num: "02", title: "AI Analysis", desc: "Our AI agents analyse your requirements and create a custom plan." },
+                { num: "03", title: "Build & Design", desc: "We build everything with regular updates." },
+                { num: "04", title: "Launch & Support", desc: "Live in 7 days. 30 days support included." },
+              ].map((step) => (
+                <div key={step.num} className="relative group">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-2xl blur opacity-20 group-hover:opacity-100 transition"></div>
+                  <div className="relative bg-[#111115] rounded-2xl p-6 border border-[#00f0ff]/20">
+                    <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#b000ff] mb-4">
+                      {step.num}
+                    </div>
+                    <h3 className="font-['Syne'] font-bold text-xl text-white mb-2">{step.title}</h3>
+                    <p className="text-gray-400 text-sm">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section - futurist */}
+        <section className="py-20">
           <div className="container px-4">
-            <div className="bg-[#1e3a5f] rounded-2xl md:rounded-3xl p-6 md:p-12 text-center">
-              <h2 className="font-['Syne'] text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3 tracking-[-0.025em] leading-tight break-words">
-                Ready to automate your business?
-              </h2>
-              <p className="text-white/60 font-light mb-6 text-sm sm:text-base md:text-lg max-w-md mx-auto">
-                Join 15+ UK businesses already running on AI. Limited spots at
-                50% off.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center max-w-sm mx-auto">
-                <a
-                  href="https://calendly.com/hello-newbotic/30min"
-                  target="_blank"
-                  className="bg-white text-[#1e3a5f] font-['Syne'] font-bold text-sm px-6 py-3 rounded-full hover:bg-gray-100 transition text-center"
-                >
-                  Book Free Strategy Call
-                </a>
-                <a
-                  href="https://wa.me/447891897558"
-                  target="_blank"
-                  className="bg-transparent text-white font-['Syne'] font-bold text-sm px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition text-center"
-                >
-                  Chat on WhatsApp
-                </a>
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-3xl blur-xl opacity-50"></div>
+              <div className="relative bg-[#111115] rounded-3xl p-12 text-center border border-[#00f0ff]/20">
+                <h2 className="font-['Syne'] text-3xl md:text-5xl font-bold text-white mb-4">
+                  Ready to automate your business?
+                </h2>
+                <p className="text-gray-400 mb-8 max-w-md mx-auto">
+                  Join 15+ UK businesses already running on AI. Limited spots at 50% off.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a
+                    href="https://calendly.com/hello-newbotic/30min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-white font-bold px-8 py-3 rounded-full hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.5)]"
+                  >
+                    📅 Book Free Strategy Call
+                  </a>
+                  <a
+                    href="https://wa.me/447891897558?text=Hi%2C%20I'm%20interested%20in%20your%20AI%20agents"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff]/10 px-8 py-3 rounded-full transition-all duration-300"
+                  >
+                    💬 Chat on WhatsApp
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </section>
-
-        {/* CONTACT Section */}
-        <section id="contact" className="py-20 bg-white">
-          <div className="container max-w-3xl">
-            <div className="text-center mb-10">
-              <p className="section-label text-[#2a5cff]">Contact</p>
-              <h2 className="section-title text-[#1e3a5f]">
-                Start Your Project Today
-              </h2>
-              <p className="text-[#1e40af]">
-                Book a call, WhatsApp, or fill the form — I&apos;ll reply within
-                24h
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
-              <a
-                href="tel:+4407891897558"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#1e3a5f"
-                  strokeWidth="1.5"
-                  className="group-hover:stroke-[#2a5cff] transition-colors"
-                >
-                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                </svg>
-                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
-                  Call Us
-                </span>
-              </a>
-
-              <a
-                href="https://wa.me/447891897558"
-                target="_blank"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#1e3a5f"
-                  strokeWidth="1.5"
-                  className="group-hover:stroke-[#2a5cff] transition-colors"
-                >
-                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.32-1.4c1.45.79 3.08 1.21 4.77 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.9-9.91-9.9z" />
-                </svg>
-                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
-                  WhatsApp
-                </span>
-              </a>
-
-              <a
-                href="https://instagram.com/newbotic"
-                target="_blank"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#1e3a5f"
-                  strokeWidth="1.5"
-                  className="group-hover:stroke-[#2a5cff] transition-colors"
-                >
-                  <rect x="2" y="2" width="20" height="20" rx="4" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle
-                    cx="17.5"
-                    cy="6.5"
-                    r="1.5"
-                    fill="#1e3a5f"
-                    className="group-hover:fill-[#2a5cff] transition-colors"
-                  />
-                </svg>
-                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
-                  @newbotic
-                </span>
-              </a>
-
-              <a
-                href="mailto:hello@newbotic.co.uk"
-                className="glass-card p-4 flex items-center justify-center gap-3 hover:border-[#1e3a5f] group"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#1e3a5f"
-                  strokeWidth="1.5"
-                  className="group-hover:stroke-[#2a5cff] transition-colors"
-                >
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-                <span className="text-sm text-[#1e3a5f] group-hover:text-[#2a5cff] transition-colors">
-                  Email Us
-                </span>
-              </a>
-            </div>
-            <form id="contactForm" className="space-y-4">
-              <input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Your name"
-                required
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
-              />
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Your email"
-                required
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
-              />
-              <label htmlFor="service" className="sr-only">
-                Select a service
-              </label>
-              <select
-                name="service"
-                id="service"
-                required
-                aria-label="Select a service"
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
-              >
-                <option value="">Select service</option>
-                <option value="audit">Website Audit (£75)</option>
-                <option value="email">Email Marketing AI (£149/mo)</option>
-                <option value="website">Web Page Creation (£175)</option>
-                <option value="social">Social Media AI (£129/mo)</option>
-                <option value="leads">Lead Qualifier AI (£99/mo)</option>
-                <option value="chatbot">AI Chatbot (£119/mo)</option>
-              </select>
-              <textarea
-                name="message"
-                id="message"
-                placeholder="Tell me about your project..."
-                rows={4}
-                required
-                className="w-full p-4 rounded-xl bg-white border border-[#1e3a5f]/10 focus:outline-none focus:border-[#1e3a5f] transition"
-              ></textarea>
-              <button
-                type="submit"
-                id="submitBtn"
-                className="w-full bg-[#1e3a5f] hover:bg-[#1e40af] text-white font-['Syne'] font-bold text-sm py-4 rounded-full transition"
-              >
-                Send Message → I'll reply within 24h
-              </button>
-            </form>
-          </div>
-        </section>
-
-        {/* Popup Modal */}
-        <div
-          id="popupMessage"
-          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 hidden transition-all duration-300"
-        >
-          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
-            <div className="text-center">
-              <div className="text-5xl mb-4">✅</div>
-              <h3 className="font-['Syne'] text-2xl font-bold text-[#1e3a5f] mb-2">
-                Message Sent!
-              </h3>
-              <p className="text-[#1e40af] mb-6">
-                Thank you for reaching out. I&apos;ll reply within 24 hours.
-              </p>
-              <button
-                id="closePopup"
-                className="bg-[#1e3a5f] hover:bg-[#1e40af] text-white font-['Syne'] font-bold text-sm px-8 py-2.5 rounded-full transition"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Exit Intent Popup - Free Website Audit */}
-        <div
-          id="exitPopup"
-          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 hidden transition-all duration-300"
-        >
-          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl border border-[#1e3a5f]/10 relative">
-            <button
-              id="closeExitPopup"
-              className="absolute top-4 right-4 text-[#7a7a8a] hover:text-[#1e3a5f] transition"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
-
-            <div className="text-center">
-              <span className="text-4xl mb-4 block">🔍</span>
-              <h3 className="font-['Syne'] text-2xl font-bold text-[#1e3a5f] mb-2">
-                Wait! Get a Free Website Audit
-              </h3>
-              <p className="text-[#1e40af] mb-6">
-                Enter your website URL and email. We'll send you a professional
-                audit report in 60 seconds.
-              </p>
-
-              <form id="exitAuditForm" className="space-y-3">
-                <input
-                  type="url"
-                  name="website"
-                  id="exitWebsite"
-                  placeholder="https://your-website.com"
-                  required
-                  className="w-full p-3 rounded-xl bg-[#f8f8fc] border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#1e3a5f] transition"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  id="exitEmail"
-                  placeholder="Your email"
-                  required
-                  className="w-full p-3 rounded-xl bg-[#f8f8fc] border border-[#1e3a5f]/10 text-[#1e3a5f] placeholder-[#7a7a8a] focus:outline-none focus:border-[#1e3a5f] transition"
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-[#1e3a5f] hover:bg-[#1e40af] text-white font-['Syne'] font-bold text-sm py-3 rounded-full transition"
-                >
-                  Get Free Audit Report →
-                </button>
-              </form>
-
-              <p className="text-xs text-[#7a7a8a] mt-4">
-                We'll analyze your site and send the report to your email. No
-                spam.
-              </p>
-            </div>
-          </div>
-        </div>
       </main>
       <Footer />
       <ChatBotWrapper />
-
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-          (function() {
-            const form = document.getElementById('contactForm');
-            const popup = document.getElementById('popupMessage');
-            const closeBtn = document.getElementById('closePopup');
-            const submitBtn = document.getElementById('submitBtn');
-            if (!form) return;
-            form.addEventListener('submit', async function(e) {
-              e.preventDefault();
-              const name = document.getElementById('name')?.value.trim();
-              const email = document.getElementById('email')?.value.trim();
-              const service = document.getElementById('service')?.value;
-              const message = document.getElementById('message')?.value.trim();
-              if (!name || !email || !service || !message) { alert('Please fill in all fields.'); return; }
-              const emailRegex = /^[^\\s@]+@([^\\s@]+\\.)+[^\\s@]+$/;
-              if (!emailRegex.test(email)) { alert('Please enter a valid email address.'); return; }
-              const originalText = submitBtn.innerHTML;
-              submitBtn.innerHTML = 'Sending...';
-              submitBtn.disabled = true;
-              const formData = new FormData(form);
-              try {
-                const response = await fetch('https://formspree.io/f/mlgoapje', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-                if (response.ok) { popup.classList.remove('hidden'); form.reset(); }
-                else { alert('Something went wrong. Please email hello@newbotic.co.uk'); }
-              } catch (error) { alert('Network error. Please try again or email hello@newbotic.co.uk'); }
-              finally { submitBtn.innerHTML = originalText; submitBtn.disabled = false; }
-            });
-            if (closeBtn) { closeBtn.addEventListener('click', () => popup.classList.add('hidden')); }
-            if (popup) { popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.add('hidden'); }); }
-          })();
-        `,
-        }}
-      />
-
-      {/* Exit Intent Script - Fixed */}
-      <script dangerouslySetInnerHTML={{
-        __html: `
-          (function() {
-            const popup = document.getElementById('exitPopup');
-            const closeBtn = document.getElementById('closeExitPopup');
-            const form = document.getElementById('exitAuditForm');
-            let shown = false;
-            
-            document.addEventListener('mouseleave', function(e) {
-              const chatOpen = document.querySelector('[aria-expanded="true"]');
-              if (chatOpen) return;
-              
-              if (e.clientY < 0 && !shown && popup) {
-                popup.classList.remove('hidden');
-                shown = true;
-              }
-            });
-            
-            if (closeBtn) {
-              closeBtn.addEventListener('click', function() {
-                popup.classList.add('hidden');
-              });
-            }
-            
-            if (popup) {
-              popup.addEventListener('click', function(e) {
-                if (e.target === popup) {
-                  popup.classList.add('hidden');
-                }
-              });
-            }
-            
-            if (form) {
-              form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const website = document.getElementById('exitWebsite')?.value;
-                const email = document.getElementById('exitEmail')?.value;
-                const submitBtn = form.querySelector('button[type="submit"]');
-                
-                if (!website || !email) { 
-                  alert('Please fill in all fields.'); 
-                  return; 
-                }
-                
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = 'Analyzing...';
-                submitBtn.disabled = true;
-                
-                try {
-                  const response = await fetch('/api/audit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ website, email })
-                  });
-                  
-                  if (response.ok) {
-                    submitBtn.innerHTML = '✓ Report Sent!';
-                    setTimeout(() => {
-                      popup.classList.add('hidden');
-                      form.reset();
-                      submitBtn.innerHTML = originalText;
-                      submitBtn.disabled = false;
-                    }, 2000);
-                  } else {
-                    throw new Error('Failed');
-                  }
-                } catch (error) {
-                  alert('Something went wrong. Please try again.');
-                  submitBtn.innerHTML = originalText;
-                  submitBtn.disabled = false;
-                }
-              });
-            }
-          })();
-        `
-      }} />
     </>
   );
 }
 
-
+// AI Agents Data
+const agents = [
+  {
+    name: "SELLIX",
+    icon: "👔",
+    badge: "Sales AI",
+    price: "£149",
+    description: "Your virtual sales representative that never sleeps.",
+    features: ["Lead qualification", "Automated follow-ups", "Meeting scheduler"],
+  },
+  {
+    name: "KNEXA",
+    icon: "🛟",
+    badge: "MOST POPULAR",
+    price: "£119",
+    description: "Your 24/7 AI support agent. Learns from your documents.",
+    features: ["Learns from PDFs & docs", "24/7 chat & WhatsApp", "Smart escalation"],
+  },
+  {
+    name: "VYRAL",
+    icon: "📣",
+    badge: "Marketing AI",
+    price: "£129",
+    description: "Your social media manager. Creates and schedules content.",
+    features: ["Content creation", "Auto-reply to comments", "Hashtag optimization"],
+  },
+  {
+    name: "OPTIMUS",
+    icon: "🧠",
+    badge: "Personal AI",
+    price: "£99",
+    description: "Your personal assistant. Manages calendar, tasks, emails.",
+    features: ["Calendar management", "Email summaries", "Voice commands"],
+  },
+  {
+    name: "METRIX",
+    icon: "📊",
+    badge: "Business AI",
+    price: "£199",
+    description: "Your business manager. Analyzes KPIs and provides insights.",
+    features: ["KPI dashboard", "Anomaly detection", "Predictive analytics"],
+  },
+  {
+    name: "APPO",
+    icon: "📅",
+    badge: "Booking AI",
+    price: "£129",
+    description: "Your 24/7 booking assistant. Manages appointments.",
+    features: ["24/7 appointment booking", "Automatic reminders", "Calendar sync"],
+  },
+];
