@@ -1,40 +1,42 @@
-import { useState, useCallback } from 'react'
-import { Upload, File, X, CheckCircle } from 'lucide-react'
+"use client";
+
+import { useState, useCallback } from 'react';
+import { Upload, File, X, CheckCircle } from 'lucide-react';
 
 export default function KnexaUpload() {
-  const [files, setFiles] = useState<File[]>([])
-  const [uploading, setUploading] = useState(false)
-  const [uploaded, setUploaded] = useState<string[]>([])
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState<string[]>([]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    const droppedFiles = Array.from(e.dataTransfer.files)
-    setFiles(prev => [...prev, ...droppedFiles])
-  }, [])
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    setFiles(prev => [...prev, ...droppedFiles]);
+  }, []);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files)
-      setFiles(prev => [...prev, ...selectedFiles])
+      const selectedFiles = Array.from(e.target.files);
+      setFiles(prev => [...prev, ...selectedFiles]);
     }
-  }
+  };
 
   const removeFile = (index: number) => {
-    setFiles(prev => prev.filter((_, i) => i !== index))
-  }
+    setFiles(prev => prev.filter((_, i) => i !== index));
+  };
 
   const uploadFiles = async () => {
-    if (files.length === 0) return
+    if (files.length === 0) return;
     
-    setUploading(true)
+    setUploading(true);
     
     for (const file of files) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       
       await new Promise((resolve) => {
         reader.onload = async () => {
-          const base64 = reader.result as string
-          const base64Content = base64.split(',')[1]
+          const base64 = reader.result as string;
+          const base64Content = base64.split(',')[1];
           
           try {
             const response = await fetch('https://newbotic.app.n8n.cloud/webhook/knexa-upload', {
@@ -46,25 +48,25 @@ export default function KnexaUpload() {
                 businessId: 'test-business',
                 mimeType: file.type
               })
-            })
+            });
             
             if (response.ok) {
-              setUploaded(prev => [...prev, file.name])
+              setUploaded(prev => [...prev, file.name]);
             }
           } catch (error) {
-            console.error('Upload failed:', file.name, error)
+            console.error('Upload failed:', file.name, error);
           }
           
-          resolve(null)
-        }
+          resolve(null);
+        };
         
-        reader.readAsDataURL(file)
-      })
+        reader.readAsDataURL(file);
+      });
     }
     
-    setUploading(false)
-    setFiles([])
-  }
+    setUploading(false);
+    setFiles([]);
+  };
 
   return (
     <div className="glass-effect rounded-2xl p-6">
@@ -136,5 +138,5 @@ export default function KnexaUpload() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -5,52 +5,49 @@ import { useState } from 'react';
 export default function AIChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Array<{text: string, isUser: boolean}>>([
-    { text: "👋 Hi! I'm the NewBotic AI assistant. How can I help you today?", isUser: false }
+    { text: "👋 Hi! I'm KNEXA, your AI support assistant. Ask me anything about the documents you've uploaded!", isUser: false }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  const quickReplies = [
-    "📊 Website Audit",
-    "🌐 Web Creation",
-    "💰 Pricing",
-    "📅 Book Call"
-  ];
-
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
-    
+
     setMessages(prev => [...prev, { text, isUser: true }]);
     setInputValue('');
     setIsTyping(true);
 
-    setTimeout(() => {
-      let response = "";
-      const lowerText = text.toLowerCase();
+    try {
+      const webhookUrl = 'https://n8n-railway-production-7fd0.up.railway.app/webhook/324430ad-378e-4a17-869b-5bb061de7b45/chat';
       
-      if (lowerText.includes("audit")) {
-        response = "Our Website Audit service (50% OFF - £75) includes speed test, security check, SEO analysis, and mobile responsiveness. Would you like to book a free call?";
-      } else if (lowerText.includes("website") || lowerText.includes("creation")) {
-        response = "Our Web Page Creation service (50% OFF - £175) includes custom design, mobile optimization, SEO setup, and Google Analytics. Ready in 7 days!";
-      } else if (lowerText.includes("price") || lowerText.includes("cost")) {
-        response = "🎉 Limited 50% OFF offer:\n• Website Audit: £75 (was £150)\n• Web Creation: £175 (was £350)";
-      } else if (lowerText.includes("book") || lowerText.includes("call")) {
-        response = "Great! You can book a free 15-min call here: https://calendly.com/hello-newbotic/30min";
-      } else {
-        response = "Thanks for your message! Would you like to know about our Website Audit, Web Creation services, or book a free consultation call?";
-      }
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          chatInput: text,
+          sessionId: 'newbotic-chat'
+        })
+      });
+
+      const data = await response.json();
+      const assistantResponse = data.output || data.response || data.message || "I couldn't find that information in the documents.";
       
-      setMessages(prev => [...prev, { text: response, isUser: false }]);
+      setMessages(prev => [...prev, { text: assistantResponse, isUser: false }]);
+    } catch (error) {
+      setMessages(prev => [...prev, { 
+        text: "Sorry, I'm having connection issues. Please try again in a moment.", 
+        isUser: false 
+      }]);
+    } finally {
       setIsTyping(false);
-    }, 1000);
+    }
   };
 
   return (
     <>
-      {/* Chat Button - Navy Blue */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-[#1e3a5f] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:bg-[#1e40af] transition-all duration-300"
+        className="fixed bottom-6 right-6 z-[9999] bg-[#1e3a5f] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:bg-[#1e40af] transition-all duration-300"
         aria-label={isOpen ? "Close chat" : "Open chat"}
         aria-expanded={isOpen}
       >
@@ -65,24 +62,21 @@ export default function AIChatBot() {
         )}
       </button>
 
-      {/* Chat Window - Light Theme with Navy Accents */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-[#1e3a5f]/10 overflow-hidden">
-          {/* Header - Navy Blue */}
-          <div className="bg-[#1e3a5f] p-4">
+        <div className="fixed bottom-24 right-6 z-[9999] w-80 sm:w-96 max-h-[80vh] bg-white rounded-2xl shadow-xl border border-[#1e3a5f]/10 flex flex-col overflow-hidden">
+          <div className="bg-[#1e3a5f] p-4 shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white text-xl">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white text-xl">      
                 🤖
               </div>
               <div>
-                <h3 className="font-['Syne'] font-bold text-white">NewBotic AI</h3>
+                <h3 className="font-['Syne'] font-bold text-white">KNEXA AI</h3>
                 <p className="text-xs text-white/70">Online • Usually replies instantly</p>
               </div>
             </div>
           </div>
 
-          {/* Messages */}
-          <div className="h-80 overflow-y-auto p-4 space-y-3 bg-[#f8f8fc]">
+          <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3 bg-[#f8f8fc]">
             {messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -112,21 +106,7 @@ export default function AIChatBot() {
             )}
           </div>
 
-          {/* Quick Replies */}
-          <div className="p-2 bg-white border-t border-[#1e3a5f]/10 flex flex-wrap gap-1">
-            {quickReplies.map((reply) => (
-              <button
-                key={reply}
-                onClick={() => handleSendMessage(reply)}
-                className="text-xs bg-[#f8f8fc] hover:bg-[#eef3ff] text-[#1e3a5f] px-3 py-1.5 rounded-full transition border border-[#1e3a5f]/10"
-              >
-                {reply}
-              </button>
-            ))}
-          </div>
-
-          {/* Input */}
-          <div className="p-3 bg-white border-t border-[#1e3a5f]/10">
+          <div className="p-3 bg-white border-t border-[#1e3a5f]/10 shrink-0">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -144,7 +124,7 @@ export default function AIChatBot() {
               />
               <button
                 type="submit"
-                className="bg-[#1e3a5f] hover:bg-[#1e40af] text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+                className="bg-[#1e3a5f] hover:bg-[#1e40af] text-white px-4 py-2 rounded-lg text-sm font-medium transition"  
                 aria-label="Send message"
               >
                 Send
