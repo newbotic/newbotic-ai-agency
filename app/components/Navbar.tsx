@@ -1,18 +1,22 @@
+import Link from 'next/link';
+
 export default function Navbar() {
   return (
     <nav className="bg-[#0a0a0f]/80 backdrop-blur-md border-b border-[#00f0ff]/20 sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="/" className="font-['Syne'] font-extrabold text-xl text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#b000ff]">
+        {/* Logo */}
+        <Link href="/" className="font-['Syne'] font-extrabold text-xl text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#b000ff]">
           NEWBOTIC
-        </a>
+        </Link>
 
+        {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          <a href="/" className="text-gray-300 hover:text-[#00f0ff] transition duration-300 no-underline visited:text-gray-300">
+          <Link href="/" className="text-gray-300 hover:text-[#00f0ff] transition duration-300 no-underline visited:text-gray-300">
             Home
-          </a>
-          <a href="#agents" className="text-gray-300 hover:text-[#00f0ff] transition duration-300 no-underline visited:text-gray-300">
+          </Link>
+          <Link href="#agents" className="text-gray-300 hover:text-[#00f0ff] transition duration-300 no-underline visited:text-gray-300">
             Agents
-          </a>
+          </Link>
           <a
             href="https://calendly.com/hello-newbotic/30min"
             target="_blank"
@@ -23,6 +27,7 @@ export default function Navbar() {
           </a>
         </div>
 
+        {/* Mobile menu button */}
         <button className="md:hidden text-[#00f0ff] hover:text-[#b000ff] transition">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M3 12h18M3 6h18M3 18h18" />
