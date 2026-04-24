@@ -4,15 +4,12 @@ export async function POST(request: Request) {
   try {
     const { name, email, date, time } = await request.json();
     
-    // Validare date
-    if (!name || !email || !date || !time) {
-      return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
-    }
+    console.log('📅 Booking received:', { name, email, date, time });
     
-    // 1. Trimite la n8n workflow (creează eveniment Google Calendar + email)
+    // Trimite la n8n pentru procesare
     const n8nWebhook = 'https://n8n-railway-production-7fd0.up.railway.app/webhook/booking';
     
-    const n8nResponse = await fetch(n8nWebhook, {
+    const response = await fetch(n8nWebhook, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -25,12 +22,15 @@ export async function POST(request: Request) {
       })
     });
     
-    if (!n8nResponse.ok) {
-      console.error('n8n error:', await n8nResponse.text());
+    if (!response.ok) {
+      console.error('n8n error:', await response.text());
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Booking service unavailable' 
+      }, { status: 500 });
     }
     
-    // 2. Salvează în Google Sheets (backup)
-    // TODO: Adaugă Google Sheets API
+    const result = await response.json();
     
     return NextResponse.json({ 
       success: true, 
