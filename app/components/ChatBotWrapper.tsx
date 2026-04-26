@@ -1,18 +1,71 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function ChatBotWrapper() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Array<{text: string, isUser: boolean}>>([
-    { text: "👋 *Hi! I'm KNEXA, your AI assistant.*\n\n💡 *I understand natural language!*\n\n• Ask me anything about Newbotic AI\n• Just say 'book a call' or 'schedule meeting'\n• Type 'help' to see what I can do\n\n*Go ahead, ask me anything...* 🤖", isUser: false }
+    { text: "👋 *Hi! I'm KNEXA, your AI assistant.*\n\n💡 *I understand natural language!*\n\n• Ask me anything about Newbotic AI\n• Just say 'book a call' or 'schedule meeting'\n• Type 'help' to see what I can do\n• Click the 🎙️ button to use voice!\n\n*Go ahead, ask me anything...* 🤖", isUser: false }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   
+  // Voice input states
+  const [isListening, setIsListening] = useState(false);
+  const [recognition, setRecognition] = useState<any>(null);
+  
   const [mode, setMode] = useState<'general' | 'booking'>('general');
   const [bookingStep, setBookingStep] = useState(0);
   const [bookingData, setBookingData] = useState({ name: '', date: '', time: '', email: '' });
+  
+  // Ref pentru scroll automat
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Scroll automat la ultimul mesaj
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
+
+  // Initialize voice recognition
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+      
+      if (SpeechRecognition) {
+        const recognitionInstance = new SpeechRecognition();
+        recognitionInstance.continuous = false;
+        recognitionInstance.interimResults = false;
+        recognitionInstance.lang = 'ro-RO';
+        
+        recognitionInstance.onresult = (event: any) => {
+          const transcript = event.results[0][0].transcript;
+          setInputValue(transcript);
+          setIsListening(false);
+        };
+        
+        recognitionInstance.onerror = () => {
+          setIsListening(false);
+        };
+        
+        recognitionInstance.onend = () => {
+          setIsListening(false);
+        };
+        
+        setRecognition(recognitionInstance);
+      }
+    }
+  }, []);
+
+  const startListening = () => {
+    if (recognition) {
+      setIsListening(true);
+      recognition.start();
+    }
+  };
 
   // Detect booking intent from natural language
   const isBookingIntent = (text: string): boolean => {
@@ -217,13 +270,13 @@ export default function ChatBotWrapper() {
                   {mode === 'booking' ? '📅 APPO - Booking' : 'KNEXA AI'}
                 </h3>
                 <p className="text-xs text-black/70">
-                  {mode === 'booking' ? 'Setting up your call...' : 'UK Support • 24/7'}
+                  {mode === 'booking' ? 'Setting up your call...' : 'UK Support • 24/7 • 🎙️ Voice ready'}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Messages */}
+          {/* Messages with auto-scroll */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0a0a0f] min-h-[300px] max-h-[350px]">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
@@ -247,9 +300,11 @@ export default function ChatBotWrapper() {
                 </div>
               </div>
             )}
+            {/* Auto-scroll anchor */}
+            <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Field - only input, no buttons */}
+          {/* Input Field with Voice Button */}
           <div className="p-3 bg-[#111115] border-t border-[#00f0ff]/20 shrink-0">
             <form onSubmit={(e) => {
               e.preventDefault();
@@ -263,6 +318,22 @@ export default function ChatBotWrapper() {
                 className="flex-1 p-2 bg-[#0a0a0f] border border-[#00f0ff]/30 rounded-lg text-white text-sm focus:outline-none focus:border-[#00f0ff] focus:shadow-[0_0_10px_#00f0ff]"
                 disabled={isTyping}
               />
+              
+              {/* Voice Input Button */}
+              <button
+                type="button"
+                onClick={startListening}
+                disabled={isListening || !recognition}
+                className={`w-10 h-10 rounded-lg transition-all duration-300 flex items-center justify-center ${
+                  isListening 
+                    ? 'bg-red-500 text-white animate-pulse' 
+                    : 'bg-[#1a1a22] border border-[#00f0ff]/30 text-[#00f0ff] hover:bg-[#00f0ff]/10'
+                }`}
+                title="Voice input (click and speak)"
+              >
+                {isListening ? '🎤' : '🎙️'}
+              </button>
+              
               <button
                 type="submit"
                 className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black px-4 py-2 rounded-lg text-sm font-medium hover:scale-105 transition-all duration-300"

@@ -8,7 +8,15 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; connect-src 'self' https://n8n-railway-production-7fd0.up.railway.app https://*.railway.app https://*.railway.app; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.chatbotai.cloud https://*.chatbotai.cloud; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src 'self' https://calendly.com;",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.chatbotai.cloud https://*.chatbotai.cloud https://www.googletagmanager.com https://www.google-analytics.com https://*.googleapis.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com",
+              "connect-src 'self' https://n8n-railway-production-7fd0.up.railway.app https://*.railway.app https://*.googleapis.com",
+              "frame-src 'self' https://calendly.com",
+              "img-src 'self' data: https://*.googleapis.com https://*.gstatic.com"
+            ].join('; ')
           },
         ],
       },
