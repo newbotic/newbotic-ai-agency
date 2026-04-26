@@ -24,6 +24,14 @@ export default function ChatBotWrapper() {
   const [bookingData, setBookingData] = useState({ name: '', date: '', time: '', email: '' });
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null); // 🔥 Ref pentru input
+
+  // Focus pe input după fiecare mesaj
+  useEffect(() => {
+    if (inputRef.current && !isTyping) {
+      inputRef.current.focus();
+    }
+  }, [messages, isTyping]); // Rulează după fiecare mesaj nou
 
   // Sincronizează UI cu ref-uri
   const updateMode = (newMode: 'general' | 'booking') => {
@@ -144,7 +152,6 @@ export default function ChatBotWrapper() {
 
     // 🔥 FIRST: If in booking mode, process booking
     if (modeRef.current === 'booking') {
-      console.log('🔵 BOOKING ACTIVE');
       await handleBookingFlow(text);
       setIsTyping(false);
       return;
@@ -152,7 +159,6 @@ export default function ChatBotWrapper() {
 
     // SECOND: Start new booking
     if (isBookingIntent(text)) {
-      console.log('🔵 START BOOKING');
       updateMode('booking');
       updateBookingStep(1);
       setMessages(prev => [...prev, { text: "📅 *Let's schedule a call!*\n\nWhat's your name?", isUser: false }]);
@@ -281,6 +287,7 @@ export default function ChatBotWrapper() {
               handleSendMessage(inputValue);
             }} className="flex gap-2">
               <input
+                ref={inputRef}
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
