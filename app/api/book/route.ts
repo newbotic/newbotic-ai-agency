@@ -2,14 +2,16 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, date, time } = await request.json();
+    const body = await request.json();
+    const { name, email, date, time } = body;
     
     console.log('📅 Booking received:', { name, email, date, time });
     
-    // Trimite la n8n pentru procesare
+    // Optional: trimite la n8n (nu așteptăm răspuns)
     const n8nWebhook = 'https://n8n-railway-production-7fd0.up.railway.app/webhook/booking';
     
-    const response = await fetch(n8nWebhook, {
+    // Fire and forget - nu folosim await ca să nu blocăm
+    fetch(n8nWebhook, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -20,18 +22,9 @@ export async function POST(request: Request) {
         source: 'chat',
         timestamp: new Date().toISOString()
       })
-    });
+    }).catch(err => console.error('n8n error:', err));
     
-    if (!response.ok) {
-      console.error('n8n error:', await response.text());
-      return NextResponse.json({ 
-        success: false, 
-        error: 'Booking service unavailable' 
-      }, { status: 500 });
-    }
-    
-    const result = await response.json();
-    
+    // Return success immediately - NU mai așteptăm response.json()
     return NextResponse.json({ 
       success: true, 
       message: `Booking confirmed for ${date} at ${time}` 
@@ -39,6 +32,9 @@ export async function POST(request: Request) {
     
   } catch (error) {
     console.error('Booking error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Booking failed' 
+    }, { status: 500 });
   }
 }
