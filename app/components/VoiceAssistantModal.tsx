@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { useGeminiLive } from '../hooks/useGeminiLive';
-import { Mic, MicOff, Terminal, X, Activity, ShieldCheck, Cpu } from 'lucide-react';
+import { Mic, MicOff, Terminal, X } from 'lucide-react';
 
 interface VoiceAssistantModalProps {
   isOpen: boolean;
   onClose: () => void;
+  // initialMessage este opțional, nu afectează funcționalitatea
+  initialMessage?: string | null;
 }
 
-export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantModalProps) {
+export default function VoiceAssistantModal({ isOpen, onClose, initialMessage }: VoiceAssistantModalProps) {
   const { active, transcript, volume, start, stop } = useGeminiLive();
   const [isConnecting, setIsConnecting] = useState(false);
 
@@ -74,11 +76,6 @@ export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantM
           </p>
         </div>
 
-        <div className="text-[10px] text-gray-500 text-center mb-3 space-y-1">
-          <p>💡 Say: <span className="text-[#00f0ff]">"Book a call tomorrow at 10am"</span></p>
-          <p>👤 Say: <span className="text-[#b000ff]">"Talk to a human"</span> for escalation</p>
-        </div>
-
         <button
           onClick={active ? stop : () => start()}
           disabled={isConnecting}
@@ -91,18 +88,6 @@ export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantM
           {active ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
           {active ? 'Stop Conversation' : 'Start Voice Conversation'}
         </button>
-        
-        <div className="flex justify-between items-center mt-4 pt-2 border-t border-white/5">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-3 h-3 text-green-500/60" />
-            <span className="text-[8px] text-gray-600">Encrypted</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Activity className="w-3 h-3 text-[#00f0ff]/60" />
-            <span className="text-[8px] text-gray-600">Gemini Live</span>
-          </div>
-          <Cpu className="w-3 h-3 text-gray-600" />
-        </div>
       </div>
     </div>
   );

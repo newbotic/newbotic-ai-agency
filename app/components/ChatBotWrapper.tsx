@@ -1,31 +1,24 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import VoiceAssistantModal from './VoiceAssistantModal';
 
 export default function ChatBotWrapper() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Array<{text: string, isUser: boolean}>>([
-    { text: "👋 *Hi! I'm KNEXA, your AI assistant.*\n\n• Click 📞 below to start a voice conversation\n• Or type your question\n• Say 'book a call' to schedule\n• Say 'help' for commands\n\n*Go ahead...* 🤖", isUser: false }
+    { text: "👋 *Hi! I'm KNEXA, your AI assistant.*\n\n• Click 📞 below to start a voice conversation\n• Or type your question\n• Say 'book a call' to schedule\n*Go ahead...* 🤖", isUser: false }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
-  
-  // Voice modal state
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   
-  // 🔥 Stare pentru pre-filled message în voice
-  const [prefillMessage, setPrefillMessage] = useState<string | null>(null);
-  
-  // Folosește useRef pentru a persista starea
   const modeRef = useRef<'general' | 'booking'>('general');
   const bookingStepRef = useRef(0);
   const bookingDataRef = useRef({ name: '', date: '', time: '', email: '', availableSlots: [] as string[] });
   
-  // State-uri pentru UI
   const [mode, setMode] = useState<'general' | 'booking'>('general');
   const [bookingStep, setBookingStep] = useState(0);
   const [bookingData, setBookingData] = useState({ name: '', date: '', time: '', email: '', availableSlots: [] as string[] });
@@ -33,7 +26,6 @@ export default function ChatBotWrapper() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Focus automat
   useEffect(() => {
     if (inputRef.current && !isTyping) {
       inputRef.current.focus();
@@ -98,24 +90,20 @@ export default function ChatBotWrapper() {
 
   const handleBookingFlow = async (text: string) => {
     const currentStep = bookingStepRef.current;
-    console.log('📅 BOOKING STEP:', currentStep, 'Text:', text);
     
     if (currentStep === 1) {
       updateBookingData({ name: text });
-      setMessages(prev => [...prev, { text: `✅ Got it! What date works for you? (e.g., tomorrow, Friday)`, isUser: false }]);
+      setMessages(prev => [...prev, { text: `✅ Got it! What date works for you?`, isUser: false }]);
       updateBookingStep(2);
       return;
     }
     
     if (currentStep === 2) {
-      setMessages(prev => [...prev, { text: `🔍 Checking availability...`, isUser: false }]);
-      
       const slots = await checkAvailability(text);
       updateBookingData({ date: text, availableSlots: slots });
       
       if (slots.length > 0) {
-        const slotList = slots.map(s => `• ${s}`).join('\n');
-        setMessages(prev => [...prev, { text: `📅 Available slots:\n${slotList}\n\nWhich time works for you?`, isUser: false }]);
+        setMessages(prev => [...prev, { text: `📅 Available slots: ${slots.join(', ')}\n\nWhich time works for you?`, isUser: false }]);
       } else {
         setMessages(prev => [...prev, { text: `😕 No available slots for ${text}. Try a different day?`, isUser: false }]);
       }
@@ -124,15 +112,7 @@ export default function ChatBotWrapper() {
     }
     
     if (currentStep === 3) {
-      const selectedTime = text;
-      const availableSlots = bookingDataRef.current.availableSlots;
-      
-      if (availableSlots.length > 0 && !availableSlots.includes(selectedTime)) {
-        setMessages(prev => [...prev, { text: `Please choose from: ${availableSlots.join(', ')}`, isUser: false }]);
-        return;
-      }
-      
-      updateBookingData({ time: selectedTime });
+      updateBookingData({ time: text });
       setMessages(prev => [...prev, { text: `⏰ Time noted. What's your email address?`, isUser: false }]);
       updateBookingStep(4);
       return;
@@ -157,9 +137,9 @@ export default function ChatBotWrapper() {
         const result = await response.json();
         
         if (result.success) {
-          setMessages(prev => [...prev, { text: `🎉 *Booking confirmed!*\n\n📅 ${bookingDataRef.current.date} at ${bookingDataRef.current.time}\n👤 ${bookingDataRef.current.name}\n📧 ${text}\n\nYou'll receive a calendar invite.`, isUser: false }]);
+          setMessages(prev => [...prev, { text: `🎉 *Booking confirmed!*\n\n📅 ${bookingDataRef.current.date} at ${bookingDataRef.current.time}\n👤 ${bookingDataRef.current.name}`, isUser: false }]);
         } else {
-          setMessages(prev => [...prev, { text: `❌ Booking failed. Please use voice or Calendly.`, isUser: false }]);
+          setMessages(prev => [...prev, { text: `❌ Booking failed. Please try voice 📞`, isUser: false }]);
         }
       } catch (error) {
         setMessages(prev => [...prev, { text: `🔌 Connection issue. Please try voice 📞`, isUser: false }]);
@@ -173,16 +153,10 @@ export default function ChatBotWrapper() {
 
   const isBookingIntent = (text: string): boolean => {
     const lower = text.toLowerCase();
-    return lower.includes('book') || lower.includes('call') || lower.includes('schedule') || lower.includes('booking');
+    return lower.includes('book') || lower.includes('call') || lower.includes('schedule');
   };
 
-  // 🔥 Deschide modalul voice cu un mesaj predefinit
-  const openVoiceWithMessage = (message: string) => {
-    setPrefillMessage(message);
-    setIsVoiceModalOpen(true);
-  };
-
-  const handleSendMessage = async (text: string) => {
+  const handleSendMessage = useCallback(async (text: string) => {
     if (!text.trim() || isTyping) return;
 
     setMessages(prev => [...prev, { text, isUser: true }]);
@@ -209,28 +183,17 @@ export default function ChatBotWrapper() {
       return;
     }
 
-    if (text.toLowerCase().includes('agents')) {
-      setMessages(prev => [...prev, { text: "🤖 SELLIX (£149), KNEXA (£119), VYRAL (£129), OPTIMUS (£99), METRIX (£199), APPO (£129)", isUser: false }]);
-      setIsTyping(false);
-      return;
-    }
-
-    if (text.toLowerCase().includes('price')) {
-      setMessages(prev => [...prev, { text: "💰 £99-199/month. 50% OFF first month!", isUser: false }]);
-      setIsTyping(false);
-      return;
-    }
-
     const response = await sendToN8n(text);
     setMessages(prev => [...prev, { text: response, isUser: false }]);
     setIsTyping(false);
-  };
+  }, [isTyping]);
 
+  // Voice recognition - fără dependențe problematice
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
       
-      if (SpeechRecognition) {
+      if (SpeechRecognition && !recognition) {
         const recognitionInstance = new SpeechRecognition();
         recognitionInstance.continuous = false;
         recognitionInstance.interimResults = false;
@@ -252,7 +215,7 @@ export default function ChatBotWrapper() {
         setRecognition(recognitionInstance);
       }
     }
-  }, []);
+  }, [recognition, handleSendMessage]);
 
   const startListening = () => {
     if (recognition) {
@@ -328,10 +291,9 @@ export default function ChatBotWrapper() {
                 disabled={isTyping}
               />
               
-              {/* 🔥 Buton Voice (Gemini Live) - principal */}
               <button
                 type="button"
-                onClick={() => openVoiceWithMessage('')}
+                onClick={() => setIsVoiceModalOpen(true)}
                 className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black hover:opacity-90 transition-all duration-300"
                 title="Voice Conversation"
               >
@@ -350,15 +312,10 @@ export default function ChatBotWrapper() {
         </div>
       )}
       
-      {/* Voice Assistant Modal */}
       {isVoiceModalOpen && (
         <VoiceAssistantModal 
           isOpen={isVoiceModalOpen} 
-          onClose={() => {
-            setIsVoiceModalOpen(false);
-            setPrefillMessage(null);
-          }} 
-          initialMessage={prefillMessage}
+          onClose={() => setIsVoiceModalOpen(false)} 
         />
       )}
     </>

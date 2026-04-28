@@ -1,23 +1,35 @@
 import { useState, useCallback, useRef } from 'react';
-import { GoogleGenAI, Modality, LiveServerMessage } from "@google/genai";
+import { GoogleGenAI, Modality, LiveServerMessage, Type } from "@google/genai";
 import { AudioPlayer } from '../lib/audio-player';
 
 const CONFIG = {
   model: "gemini-3.1-flash-live-preview",
   systemInstruction: `You are KNEXA, the voice assistant for Newbotic AI. You are friendly, helpful, and professional.
 
-YOUR CAPABILITIES:
-- Answer questions about Newbotic AI agents (SELLIX, KNEXA, VYRAL, OPTIMUS, METRIX, APPO)
+Your capabilities:
+- Answer questions about Newbotic AI agents
 - Provide pricing information
-- HELP SCHEDULE APPOINTMENTS using the schedule_appointment function
+- Help schedule appointments
 
-RULES:
-- Be concise and natural for voice conversation
-- When user says "book a call", "schedule appointment", or similar, ALWAYS call schedule_appointment
-- Ask for name, date, and time before booking
-- Always be helpful and warm
+RULES FOR BOOKING:
+- When user says "book a call" or "schedule appointment", you MUST ask for: name, date, time, AND email
+- DO NOT proceed without email
+- Ask for email after getting name, date, and time
+- Call schedule_appointment ONLY after you have ALL FOUR: name, date, time, email
 
-CRITICAL: Use the schedule_appointment function whenever user wants to book a call.`,
+Example flow:
+1. User: "book a call"
+2. You: "What's your name?"
+3. User: "John"
+4. You: "What date works for you?"
+5. User: "tomorrow"
+6. You: "What time?"
+7. User: "10am"
+8. You: "What's your email address?"
+9. User: "john@example.com"
+10. Call schedule_appointment
+
+Always be concise and natural for voice conversation.`,
   voiceName: "Zephyr",
   sampleRate: 16000
 };
@@ -99,16 +111,16 @@ export function useGeminiLive() {
             functionDeclarations: [
               {
                 name: "schedule_appointment",
-                description: "Schedule an appointment. MUST use this when user wants to book a call.",
+                description: "Schedule an appointment. Call ONLY when you have name, date, time, AND email.",
                 parameters: {
-                  type: "OBJECT",
+                  type: Type.OBJECT,
                   properties: {
-                    name: { type: "STRING", description: "Customer full name" },
-                    email: { type: "STRING", description: "Customer email address" },
-                    date: { type: "STRING", description: "Appointment date (YYYY-MM-DD or tomorrow)" },
-                    time: { type: "STRING", description: "Appointment time (HH:MM or 10am)" }
+                    name: { type: Type.STRING, description: "Customer full name" },
+                    email: { type: Type.STRING, description: "Customer email address - REQUIRED" },
+                    date: { type: Type.STRING, description: "Appointment date" },
+                    time: { type: Type.STRING, description: "Appointment time" }
                   },
-                  required: ["name", "date", "time"]
+                  required: ["name", "email", "date", "time"]
                 }
               }
             ]
@@ -129,10 +141,10 @@ export function useGeminiLive() {
             const modelText = (message as any).outputTranscription?.text;
 
             if (userText) {
-              setTranscript(prev => (prev + "\nUser: " + userText).slice(-1500));
+              setTranscript(prev => (prev + "\n👤 " + userText).slice(-1500));
             }
             if (modelText) {
-              setTranscript(prev => (prev + "\nKNEXA: " + modelText).slice(-1500));
+              setTranscript(prev => (prev + "\n🤖 " + modelText).slice(-1500));
             }
 
             if (message.toolCall?.functionCalls) {
@@ -141,23 +153,22 @@ export function useGeminiLive() {
                 
                 if (toolCall.name === 'schedule_appointment') {
                   const args = toolCall.args;
+                  console.log('📅 Booking with email:', args.email);
                   
-                  // Apelează API-ul de booking
                   const response = await fetch('/api/book', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: args.name,
-                      email: args.email || 'voice@customer.com',
+                      email: args.email,
                       date: args.date,
                       time: args.time,
                       source: 'voice'
                     })
                   });
-                  
                   const result = await response.json();
                   const reply = result.success 
-                    ? `Booking confirmed for ${args.name} on ${args.date} at ${args.time}` 
+                    ? `Booking confirmed for ${args.name} on ${args.date} at ${args.time}. A confirmation email has been sent to ${args.email}.` 
                     : "Booking failed. Please try again.";
                   
                   if (sessionRef.current) {
