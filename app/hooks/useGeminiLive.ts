@@ -6,82 +6,17 @@ const CONFIG = {
   model: "gemini-3.1-flash-live-preview",
   systemInstruction: `You are KNEXA, the AI voice assistant for Newbotic AI. You are friendly, helpful, and professional.
 
-## YOUR CAPABILITIES:
+Your capabilities:
 - Answer questions about Newbotic AI agents (SELLIX, KNEXA, VYRAL, OPTIMUS, METRIX, APPO)
 - Provide pricing information
-- Book appointments using the schedule_appointment function
-- Escalate to human when user requests
+- Help schedule appointments
 
-## WHEN TO USE TOOLS:
-
-1. **schedule_appointment** - Call this when user wants to book a call/appointment
-   - Required: name, date, time
-   - Optional: email, phone, reason
-
-2. **escalate_to_human** - Call this when:
-   - User says "talk to a human", "operator", "real person", "speak to someone"
-   - User is frustrated or angry
-
-## RULES:
+Rules:
 - Be concise and natural for voice conversation
-- After booking, confirm the details
-- Always ask for name, date, and time before booking
-- Always be helpful and warm
-
-## CONTACT INFO:
-- WhatsApp: +44 7891 897558
-- Email: hello@newbotic.co.uk
-- Calendly: https://calendly.com/hello-newbotic/30min`,
+- Always be helpful and warm.`,
   voiceName: "Zephyr",
   sampleRate: 16000
 };
-
-async function handleBooking(args: any) {
-  try {
-    console.log('📅 Booking request:', args);
-    
-    const response = await fetch('/api/book', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: args.name,
-        email: args.email || 'customer@example.com',
-        date: args.date,
-        time: args.time,
-        phone: args.phone || '',
-        notes: args.reason || 'Booking via voice'
-      })
-    });
-    
-    const result = await response.json();
-    if (result.success) {
-      return `Booking confirmed for ${args.name} on ${args.date} at ${args.time}. You will receive a calendar invite.`;
-    } else {
-      return 'Booking failed. Please try again or use Calendly.';
-    }
-  } catch (error) {
-    console.error('Booking error:', error);
-    return 'There was an issue with booking. Please try again or use Calendly.';
-  }
-}
-
-async function handleEscalation(reason: string) {
-  try {
-    await fetch('/api/escalate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        reason: reason,
-        timestamp: new Date().toISOString(),
-        source: 'Gemini Live Voice'
-      })
-    });
-    
-    return "I'm connecting you with a human agent right now. They will contact you shortly via WhatsApp or email.";
-  } catch (error) {
-    return "I'll have someone contact you as soon as possible. Please WhatsApp us at +44 7891 897558.";
-  }
-}
 
 export function useGeminiLive() {
   const [active, setActive] = useState(false);
@@ -156,35 +91,6 @@ export function useGeminiLive() {
           },
           outputAudioTranscription: {},
           inputAudioTranscription: {},
-          tools: [{
-            functionDeclarations: [
-              {
-                name: "schedule_appointment",
-                description: "Schedule an appointment in Google Calendar",
-                parameters: {
-                  type: "OBJECT",
-                  properties: {
-                    name: { type: "STRING", description: "Customer full name" },
-                    email: { type: "STRING", description: "Customer email address" },
-                    date: { type: "STRING", description: "Appointment date (YYYY-MM-DD)" },
-                    time: { type: "STRING", description: "Appointment time (HH:MM)" }
-                  },
-                  required: ["name", "date", "time"]
-                }
-              },
-              {
-                name: "escalate_to_human",
-                description: "Escalate conversation to a human agent",
-                parameters: {
-                  type: "OBJECT",
-                  properties: {
-                    reason: { type: "STRING", description: "Reason for escalation" }
-                  },
-                  required: ["reason"]
-                }
-              }
-            ]
-          }]
         },
         callbacks: {
           onopen: () => {
@@ -205,30 +111,6 @@ export function useGeminiLive() {
             }
             if (modelText) {
               setTranscript(prev => (prev + "\nKNEXA: " + modelText).slice(-1500));
-            }
-
-            if (message.toolCall?.functionCalls) {
-              for (const toolCall of message.toolCall.functionCalls) {
-                console.log('🔧 Tool call:', toolCall.name, toolCall.args);
-                
-                let result = '';
-                if (toolCall.name === 'schedule_appointment') {
-                  result = await handleBooking(toolCall.args);
-                }
-                if (toolCall.name === 'escalate_to_human') {
-                  result = await handleEscalation(toolCall.args.reason);
-                }
-                
-                if (sessionRef.current && result) {
-                  sessionRef.current.sendToolResponse({
-                    functionResponses: [{
-                      id: toolCall.id,
-                      name: toolCall.name,
-                      response: { result }
-                    }]
-                  });
-                }
-              }
             }
 
             if (message.serverContent?.interrupted) {

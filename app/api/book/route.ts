@@ -7,10 +7,9 @@ export async function POST(request: Request) {
     
     console.log('📅 Booking received:', { name, email, date, time });
     
-    // Optional: trimite la n8n (nu așteptăm răspuns)
+    // Trimite la n8n (fire and forget)
     const n8nWebhook = 'https://n8n-railway-production-7fd0.up.railway.app/webhook/booking';
     
-    // Fire and forget - nu folosim await ca să nu blocăm
     fetch(n8nWebhook, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -24,7 +23,7 @@ export async function POST(request: Request) {
       })
     }).catch(err => console.error('n8n error:', err));
     
-    // Return success immediately - NU mai așteptăm response.json()
+    // Return success immediately
     return NextResponse.json({ 
       success: true, 
       message: `Booking confirmed for ${date} at ${time}` 
