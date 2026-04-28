@@ -10,7 +10,6 @@ const CONFIG = {
 - Answer questions about Newbotic AI agents (SELLIX, KNEXA, VYRAL, OPTIMUS, METRIX, APPO)
 - Provide pricing information
 - Book appointments using the schedule_appointment function
-- Check document knowledge base for company info
 - Escalate to human when user requests
 
 ## WHEN TO USE TOOLS:
@@ -22,17 +21,12 @@ const CONFIG = {
 2. **escalate_to_human** - Call this when:
    - User says "talk to a human", "operator", "real person", "speak to someone"
    - User is frustrated or angry
-   - User asks for something you cannot help with
 
 ## RULES:
 - Be concise and natural for voice conversation
 - After booking, confirm the details
-- If user asks about company documents, use your knowledge base
+- Always ask for name, date, and time before booking
 - Always be helpful and warm
-
-## KNOWLEDGE BASE:
-- You have access to company documents in Google Drive
-- Use this information to answer questions about Newbotic
 
 ## CONTACT INFO:
 - WhatsApp: +44 7891 897558
@@ -42,9 +36,10 @@ const CONFIG = {
   sampleRate: 16000
 };
 
-// Funcția pentru booking (APPO)
 async function handleBooking(args: any) {
   try {
+    console.log('📅 Booking request:', args);
+    
     const response = await fetch('/api/book', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -59,14 +54,17 @@ async function handleBooking(args: any) {
     });
     
     const result = await response.json();
-    return result.success ? `Booking confirmed for ${args.date} at ${args.time}` : 'Booking failed';
+    if (result.success) {
+      return `Booking confirmed for ${args.name} on ${args.date} at ${args.time}. You will receive a calendar invite.`;
+    } else {
+      return 'Booking failed. Please try again or use Calendly.';
+    }
   } catch (error) {
     console.error('Booking error:', error);
     return 'There was an issue with booking. Please try again or use Calendly.';
   }
 }
 
-// Funcția pentru escalare la om
 async function handleEscalation(reason: string) {
   try {
     await fetch('/api/escalate', {
@@ -81,8 +79,7 @@ async function handleEscalation(reason: string) {
     
     return "I'm connecting you with a human agent right now. They will contact you shortly via WhatsApp or email.";
   } catch (error) {
-    console.error('Escalation error:', error);
-    return "I'll have someone contact you as soon as possible. Please WhatsApp us at +44 7891 897558 for immediate assistance.";
+    return "I'll have someone contact you as soon as possible. Please WhatsApp us at +44 7891 897558.";
   }
 }
 
@@ -170,9 +167,7 @@ export function useGeminiLive() {
                     name: { type: "STRING", description: "Customer full name" },
                     email: { type: "STRING", description: "Customer email address" },
                     date: { type: "STRING", description: "Appointment date (YYYY-MM-DD)" },
-                    time: { type: "STRING", description: "Appointment time (HH:MM)" },
-                    phone: { type: "STRING", description: "Customer phone number" },
-                    reason: { type: "STRING", description: "Reason for appointment" }
+                    time: { type: "STRING", description: "Appointment time (HH:MM)" }
                   },
                   required: ["name", "date", "time"]
                 }
@@ -197,13 +192,11 @@ export function useGeminiLive() {
             setActive(true);
           },
           onmessage: async (message: LiveServerMessage) => {
-            // Audio playback
             const base64Audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (base64Audio) {
               await playerRef.current?.playChunk(base64Audio);
             }
 
-            // Transcript
             const userText = (message as any).inputTranscription?.text;
             const modelText = (message as any).outputTranscription?.text;
 
@@ -214,25 +207,18 @@ export function useGeminiLive() {
               setTranscript(prev => (prev + "\nKNEXA: " + modelText).slice(-1500));
             }
 
-            // 🔥 Tool calls - args este deja obiect, nu trebuie parsat
             if (message.toolCall?.functionCalls) {
               for (const toolCall of message.toolCall.functionCalls) {
                 console.log('🔧 Tool call:', toolCall.name, toolCall.args);
                 
                 let result = '';
-                
                 if (toolCall.name === 'schedule_appointment') {
-                  // toolCall.args este deja un obiect!
-                  const args = toolCall.args;
-                  result = await handleBooking(args);
+                  result = await handleBooking(toolCall.args);
                 }
-                
                 if (toolCall.name === 'escalate_to_human') {
-                  const args = toolCall.args;
-                  result = await handleEscalation(args.reason);
+                  result = await handleEscalation(toolCall.args.reason);
                 }
                 
-                // Trimite răspunsul înapoi
                 if (sessionRef.current && result) {
                   sessionRef.current.sendToolResponse({
                     functionResponses: [{
@@ -263,7 +249,6 @@ export function useGeminiLive() {
       const session = await sessionPromise;
       sessionRef.current = session;
 
-      // Configurare microfon
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       

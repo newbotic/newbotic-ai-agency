@@ -6,7 +6,7 @@ import VoiceAssistantModal from './VoiceAssistantModal';
 export default function ChatBotWrapper() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Array<{text: string, isUser: boolean}>>([
-    { text: "👋 *Hi! I'm KNEXA, your AI assistant.*\n\n• Just say 'book a call' to schedule\n• Say 'tomorrow morning' to see available slots\n• Type 'help' for commands\n• Click 🎙️ and speak - auto sends!\n• Click 📞 for Live Voice Conversation\n\n*Go ahead...* 🤖", isUser: false }
+    { text: "👋 *Hi! I'm KNEXA, your AI assistant.*\n\n• Click 📞 below to start a voice conversation\n• Or type your question\n• Say 'book a call' to schedule\n• Say 'help' for commands\n\n*Go ahead...* 🤖", isUser: false }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -16,6 +16,9 @@ export default function ChatBotWrapper() {
   
   // Voice modal state
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
+  
+  // 🔥 Stare pentru pre-filled message în voice
+  const [prefillMessage, setPrefillMessage] = useState<string | null>(null);
   
   // Folosește useRef pentru a persista starea
   const modeRef = useRef<'general' | 'booking'>('general');
@@ -61,7 +64,6 @@ export default function ChatBotWrapper() {
     setBookingData({ name: '', date: '', time: '', email: '', availableSlots: [] });
   };
 
-  // Verifică disponibilitatea în calendar
   const checkAvailability = async (date: string): Promise<string[]> => {
     try {
       const response = await fetch('/api/calendar', {
@@ -94,21 +96,19 @@ export default function ChatBotWrapper() {
     }
   };
 
-  // BOOKING FLOW HANDLER cu verificare calendar
   const handleBookingFlow = async (text: string) => {
     const currentStep = bookingStepRef.current;
     console.log('📅 BOOKING STEP:', currentStep, 'Text:', text);
     
     if (currentStep === 1) {
       updateBookingData({ name: text });
-      setMessages(prev => [...prev, { text: `✅ Got it! What date works for you? (e.g., tomorrow, Friday, or say 'tomorrow morning')`, isUser: false }]);
+      setMessages(prev => [...prev, { text: `✅ Got it! What date works for you? (e.g., tomorrow, Friday)`, isUser: false }]);
       updateBookingStep(2);
       return;
     }
     
     if (currentStep === 2) {
-      // Verifică disponibilitatea în calendar
-      setMessages(prev => [...prev, { text: `🔍 Checking availability for ${text}...`, isUser: false }]);
+      setMessages(prev => [...prev, { text: `🔍 Checking availability...`, isUser: false }]);
       
       const slots = await checkAvailability(text);
       updateBookingData({ date: text, availableSlots: slots });
@@ -117,24 +117,23 @@ export default function ChatBotWrapper() {
         const slotList = slots.map(s => `• ${s}`).join('\n');
         setMessages(prev => [...prev, { text: `📅 Available slots:\n${slotList}\n\nWhich time works for you?`, isUser: false }]);
       } else {
-        setMessages(prev => [...prev, { text: `😕 No available slots for ${text}. Try tomorrow or a different day?`, isUser: false }]);
+        setMessages(prev => [...prev, { text: `😕 No available slots for ${text}. Try a different day?`, isUser: false }]);
       }
       updateBookingStep(3);
       return;
     }
     
     if (currentStep === 3) {
-      // Verifică dacă utilizatorul a ales un slot valid
       const selectedTime = text;
       const availableSlots = bookingDataRef.current.availableSlots;
       
       if (availableSlots.length > 0 && !availableSlots.includes(selectedTime)) {
-        setMessages(prev => [...prev, { text: `Please choose from the available slots: ${availableSlots.join(', ')}`, isUser: false }]);
+        setMessages(prev => [...prev, { text: `Please choose from: ${availableSlots.join(', ')}`, isUser: false }]);
         return;
       }
       
       updateBookingData({ time: selectedTime });
-      setMessages(prev => [...prev, { text: `⏰ Time noted: ${selectedTime}. What's your email address?`, isUser: false }]);
+      setMessages(prev => [...prev, { text: `⏰ Time noted. What's your email address?`, isUser: false }]);
       updateBookingStep(4);
       return;
     }
@@ -158,12 +157,12 @@ export default function ChatBotWrapper() {
         const result = await response.json();
         
         if (result.success) {
-          setMessages(prev => [...prev, { text: `🎉 *Booking confirmed!*\n\n📅 ${bookingDataRef.current.date} at ${bookingDataRef.current.time}\n👤 ${bookingDataRef.current.name}\n📧 ${text}\n\nYou'll receive a calendar invite.\n\nType anything to continue.`, isUser: false }]);
+          setMessages(prev => [...prev, { text: `🎉 *Booking confirmed!*\n\n📅 ${bookingDataRef.current.date} at ${bookingDataRef.current.time}\n👤 ${bookingDataRef.current.name}\n📧 ${text}\n\nYou'll receive a calendar invite.`, isUser: false }]);
         } else {
-          setMessages(prev => [...prev, { text: `❌ Booking failed. Please use Calendly`, isUser: false }]);
+          setMessages(prev => [...prev, { text: `❌ Booking failed. Please use voice or Calendly.`, isUser: false }]);
         }
       } catch (error) {
-        setMessages(prev => [...prev, { text: `🔌 Connection issue. Please book directly via Calendly.`, isUser: false }]);
+        setMessages(prev => [...prev, { text: `🔌 Connection issue. Please try voice 📞`, isUser: false }]);
       }
       
       resetBooking();
@@ -177,7 +176,12 @@ export default function ChatBotWrapper() {
     return lower.includes('book') || lower.includes('call') || lower.includes('schedule') || lower.includes('booking');
   };
 
-  // MAIN HANDLER
+  // 🔥 Deschide modalul voice cu un mesaj predefinit
+  const openVoiceWithMessage = (message: string) => {
+    setPrefillMessage(message);
+    setIsVoiceModalOpen(true);
+  };
+
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isTyping) return;
 
@@ -222,7 +226,6 @@ export default function ChatBotWrapper() {
     setIsTyping(false);
   };
 
-  // Voice recognition
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
@@ -231,7 +234,7 @@ export default function ChatBotWrapper() {
         const recognitionInstance = new SpeechRecognition();
         recognitionInstance.continuous = false;
         recognitionInstance.interimResults = false;
-        recognitionInstance.lang = 'ro-RO';
+        recognitionInstance.lang = 'en-US';
         
         recognitionInstance.onresult = (event: any) => {
           const transcript = event.results[0][0].transcript;
@@ -278,7 +281,7 @@ export default function ChatBotWrapper() {
                   {mode === 'booking' ? '📅 APPO - Booking' : 'KNEXA AI'}
                 </h3>
                 <p className="text-xs text-black/70">
-                  {mode === 'booking' ? 'Setting up...' : 'UK Support • 🎙️ Calendar ready • 📞 Voice Live'}
+                  {mode === 'booking' ? 'Setting up...' : 'UK Support • 📞 Voice ready'}
                 </p>
               </div>
             </div>
@@ -320,30 +323,21 @@ export default function ChatBotWrapper() {
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder={mode === 'booking' ? "Type answer..." : "Say 'book a call'..."}
+                placeholder="Type or use voice 📞..."
                 className="flex-1 p-2 bg-[#0a0a0f] border border-[#00f0ff]/30 rounded-lg text-white text-sm focus:outline-none focus:border-[#00f0ff]"
                 disabled={isTyping}
               />
+              
+              {/* 🔥 Buton Voice (Gemini Live) - principal */}
               <button
                 type="button"
-                onClick={startListening}
-                disabled={isListening || !recognition}
-                className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  isListening 
-                    ? 'bg-red-500 text-white animate-pulse' 
-                    : 'bg-[#1a1a22] border border-[#00f0ff]/30 text-[#00f0ff]'
-                }`}
-              >
-                {isListening ? '🎤' : '🎙️'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsVoiceModalOpen(true)}
-                className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#1a1a22] border border-[#00f0ff]/30 text-[#00f0ff] hover:bg-[#00f0ff]/10 transition-all duration-300"
-                title="Live Voice Conversation"
+                onClick={() => openVoiceWithMessage('')}
+                className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black hover:opacity-90 transition-all duration-300"
+                title="Voice Conversation"
               >
                 📞
               </button>
+              
               <button
                 type="submit"
                 className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black px-4 py-2 rounded-lg text-sm font-medium hover:scale-105 transition-all duration-300"
@@ -360,7 +354,11 @@ export default function ChatBotWrapper() {
       {isVoiceModalOpen && (
         <VoiceAssistantModal 
           isOpen={isVoiceModalOpen} 
-          onClose={() => setIsVoiceModalOpen(false)} 
+          onClose={() => {
+            setIsVoiceModalOpen(false);
+            setPrefillMessage(null);
+          }} 
+          initialMessage={prefillMessage}
         />
       )}
     </>

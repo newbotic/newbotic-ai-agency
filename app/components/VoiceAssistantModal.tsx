@@ -37,7 +37,6 @@ export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantM
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
       <div className="bg-[#111115] rounded-2xl border border-[#00f0ff]/30 p-6 w-96 max-w-full shadow-2xl">
-        {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-xl flex items-center justify-center">
@@ -55,7 +54,6 @@ export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantM
           </button>
         </div>
 
-        {/* Volume Bar */}
         <div className="mb-4">
           <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
             <div 
@@ -66,7 +64,6 @@ export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantM
           <p className="text-[10px] text-gray-500 text-center mt-1">Voice level</p>
         </div>
 
-        {/* Transcript */}
         <div className="bg-black/30 rounded-lg p-3 mb-3 min-h-[120px] max-h-40 overflow-y-auto border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <Terminal className="w-3 h-3 text-[#00f0ff]" />
@@ -77,13 +74,11 @@ export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantM
           </p>
         </div>
 
-        {/* Instructions */}
         <div className="text-[10px] text-gray-500 text-center mb-3 space-y-1">
           <p>💡 Say: <span className="text-[#00f0ff]">"Book a call tomorrow at 10am"</span></p>
-          <p>📞 Say: <span className="text-[#b000ff]">"Talk to a human"</span> for escalation</p>
+          <p>👤 Say: <span className="text-[#b000ff]">"Talk to a human"</span> for escalation</p>
         </div>
 
-        {/* Action Button */}
         <button
           onClick={active ? stop : () => start()}
           disabled={isConnecting}
@@ -97,7 +92,6 @@ export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantM
           {active ? 'Stop Conversation' : 'Start Voice Conversation'}
         </button>
         
-        {/* Footer */}
         <div className="flex justify-between items-center mt-4 pt-2 border-t border-white/5">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-3 h-3 text-green-500/60" />
