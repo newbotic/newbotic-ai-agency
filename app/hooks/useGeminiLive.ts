@@ -4,10 +4,10 @@ import { AudioPlayer } from '../lib/audio-player';
 
 const CONFIG = {
   model: "gemini-3.1-flash-live-preview",
-  systemInstruction: `You are KNEXA, the AI voice assistant for Newbotic AI. You are friendly, helpful, and professional.
+  systemInstruction: `You are KNEXA, the voice assistant for Newbotic AI. You are friendly, helpful, and professional.
 
 Your capabilities:
-- Answer questions about Newbotic AI agents (SELLIX, KNEXA, VYRAL, OPTIMUS, METRIX, APPO)
+- Answer questions about Newbotic AI agents
 - Provide pricing information
 - Help schedule appointments
 

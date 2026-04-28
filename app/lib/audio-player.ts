@@ -1,6 +1,3 @@
-/**
- * AudioPlayer - exact ca în proiectul Google AI Studio care merge
- */
 export class AudioPlayer {
   private context: AudioContext | null = null;
   private nextStartTime: number = 0;
@@ -8,7 +5,7 @@ export class AudioPlayer {
   constructor() {
     if (typeof window !== 'undefined') {
       this.context = new (window.AudioContext || (window as any).webkitAudioContext)({
-        sampleRate: 24000, // 🔥 24000 Hz, nu 16000
+        sampleRate: 24000,
       });
     }
   }
@@ -20,7 +17,6 @@ export class AudioPlayer {
       await this.context.resume();
     }
 
-    // 🔥 Decodificare exact ca în proiectul Google
     const binaryString = atob(base64);
     const len = binaryString.length;
     const bytes = new Uint8Array(len);

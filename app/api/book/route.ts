@@ -2,15 +2,13 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, email, date, time } = body;
+    const { name, email, date, time, source } = await request.json();
     
-    console.log('📅 Booking received:', { name, email, date, time });
+    console.log('📅 Booking received:', { name, email, date, time, source });
     
-    // Trimite la n8n (fire and forget)
     const n8nWebhook = 'https://n8n-railway-production-7fd0.up.railway.app/webhook/booking';
     
-    fetch(n8nWebhook, {
+    const response = await fetch(n8nWebhook, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -18,22 +16,20 @@ export async function POST(request: Request) {
         email,
         date,
         time,
-        source: 'chat',
+        source: source || 'chat',
         timestamp: new Date().toISOString()
       })
-    }).catch(err => console.error('n8n error:', err));
+    });
     
-    // Return success immediately
+    await response.json();
+    
     return NextResponse.json({ 
       success: true, 
-      message: `Booking confirmed for ${date} at ${time}` 
+      message: `Booking confirmed for ${name} on ${date} at ${time}` 
     });
     
   } catch (error) {
     console.error('Booking error:', error);
-    return NextResponse.json({ 
-      success: false, 
-      error: 'Booking failed' 
-    }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Booking failed' }, { status: 500 });
   }
 }
