@@ -4,22 +4,87 @@ import { AudioPlayer } from '../lib/audio-player';
 
 const CONFIG = {
   model: "gemini-3.1-flash-live-preview",
-  systemInstruction: `You are KNEXA, the voice assistant for Newbotic AI. You are friendly, helpful, and professional.
+  systemInstruction: `You are KNEXA, the AI voice assistant for Newbotic AI. You are friendly, helpful, and professional.
 
-Your capabilities:
+## YOUR CAPABILITIES:
 - Answer questions about Newbotic AI agents (SELLIX, KNEXA, VYRAL, OPTIMUS, METRIX, APPO)
 - Provide pricing information
-- Help schedule appointments
+- Book appointments using the schedule_appointment function
+- Check document knowledge base for company info
+- Escalate to human when user requests
 
-Rules:
+## WHEN TO USE TOOLS:
+
+1. **schedule_appointment** - Call this when user wants to book a call/appointment
+   - Required: name, date, time
+   - Optional: email, phone, reason
+
+2. **escalate_to_human** - Call this when:
+   - User says "talk to a human", "operator", "real person", "speak to someone"
+   - User is frustrated or angry
+   - User asks for something you cannot help with
+
+## RULES:
 - Be concise and natural for voice conversation
-- If user wants to schedule an appointment, ask for name, date, and time
-- If user asks to speak to a human, escalate
+- After booking, confirm the details
+- If user asks about company documents, use your knowledge base
+- Always be helpful and warm
 
-Always be helpful and warm.`,
+## KNOWLEDGE BASE:
+- You have access to company documents in Google Drive
+- Use this information to answer questions about Newbotic
+
+## CONTACT INFO:
+- WhatsApp: +44 7891 897558
+- Email: hello@newbotic.co.uk
+- Calendly: https://calendly.com/hello-newbotic/30min`,
   voiceName: "Zephyr",
   sampleRate: 16000
 };
+
+// Funcția pentru booking (APPO)
+async function handleBooking(args: any) {
+  try {
+    const response = await fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: args.name,
+        email: args.email || 'customer@example.com',
+        date: args.date,
+        time: args.time,
+        phone: args.phone || '',
+        notes: args.reason || 'Booking via voice'
+      })
+    });
+    
+    const result = await response.json();
+    return result.success ? `Booking confirmed for ${args.date} at ${args.time}` : 'Booking failed';
+  } catch (error) {
+    console.error('Booking error:', error);
+    return 'There was an issue with booking. Please try again or use Calendly.';
+  }
+}
+
+// Funcția pentru escalare la om
+async function handleEscalation(reason: string) {
+  try {
+    await fetch('/api/escalate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        reason: reason,
+        timestamp: new Date().toISOString(),
+        source: 'Gemini Live Voice'
+      })
+    });
+    
+    return "I'm connecting you with a human agent right now. They will contact you shortly via WhatsApp or email.";
+  } catch (error) {
+    console.error('Escalation error:', error);
+    return "I'll have someone contact you as soon as possible. Please WhatsApp us at +44 7891 897558 for immediate assistance.";
+  }
+}
 
 export function useGeminiLive() {
   const [active, setActive] = useState(false);
@@ -94,6 +159,37 @@ export function useGeminiLive() {
           },
           outputAudioTranscription: {},
           inputAudioTranscription: {},
+          tools: [{
+            functionDeclarations: [
+              {
+                name: "schedule_appointment",
+                description: "Schedule an appointment in Google Calendar",
+                parameters: {
+                  type: "OBJECT",
+                  properties: {
+                    name: { type: "STRING", description: "Customer full name" },
+                    email: { type: "STRING", description: "Customer email address" },
+                    date: { type: "STRING", description: "Appointment date (YYYY-MM-DD)" },
+                    time: { type: "STRING", description: "Appointment time (HH:MM)" },
+                    phone: { type: "STRING", description: "Customer phone number" },
+                    reason: { type: "STRING", description: "Reason for appointment" }
+                  },
+                  required: ["name", "date", "time"]
+                }
+              },
+              {
+                name: "escalate_to_human",
+                description: "Escalate conversation to a human agent",
+                parameters: {
+                  type: "OBJECT",
+                  properties: {
+                    reason: { type: "STRING", description: "Reason for escalation" }
+                  },
+                  required: ["reason"]
+                }
+              }
+            ]
+          }]
         },
         callbacks: {
           onopen: () => {
@@ -101,12 +197,13 @@ export function useGeminiLive() {
             setActive(true);
           },
           onmessage: async (message: LiveServerMessage) => {
-            // 🔥 Folosește AudioPlayer exact ca în proiectul Google
+            // Audio playback
             const base64Audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (base64Audio) {
               await playerRef.current?.playChunk(base64Audio);
             }
 
+            // Transcript
             const userText = (message as any).inputTranscription?.text;
             const modelText = (message as any).outputTranscription?.text;
 
@@ -115,6 +212,37 @@ export function useGeminiLive() {
             }
             if (modelText) {
               setTranscript(prev => (prev + "\nKNEXA: " + modelText).slice(-1500));
+            }
+
+            // 🔥 Tool calls - args este deja obiect, nu trebuie parsat
+            if (message.toolCall?.functionCalls) {
+              for (const toolCall of message.toolCall.functionCalls) {
+                console.log('🔧 Tool call:', toolCall.name, toolCall.args);
+                
+                let result = '';
+                
+                if (toolCall.name === 'schedule_appointment') {
+                  // toolCall.args este deja un obiect!
+                  const args = toolCall.args;
+                  result = await handleBooking(args);
+                }
+                
+                if (toolCall.name === 'escalate_to_human') {
+                  const args = toolCall.args;
+                  result = await handleEscalation(args.reason);
+                }
+                
+                // Trimite răspunsul înapoi
+                if (sessionRef.current && result) {
+                  sessionRef.current.sendToolResponse({
+                    functionResponses: [{
+                      id: toolCall.id,
+                      name: toolCall.name,
+                      response: { result }
+                    }]
+                  });
+                }
+              }
             }
 
             if (message.serverContent?.interrupted) {
@@ -135,7 +263,7 @@ export function useGeminiLive() {
       const session = await sessionPromise;
       sessionRef.current = session;
 
-      // Configurează microfonul
+      // Configurare microfon
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       
