@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { GoogleGenAI, Modality, LiveServerMessage, Type } from "@google/genai";
+import { GoogleGenAI, Modality, LiveServerMessage } from "@google/genai";
 import { AudioPlayer } from '../lib/audio-player';
 
 const CONFIG = {
@@ -16,18 +16,6 @@ RULES FOR BOOKING:
 - DO NOT proceed without email
 - Ask for email after getting name, date, and time
 - Call schedule_appointment ONLY after you have ALL FOUR: name, date, time, email
-
-Example flow:
-1. User: "book a call"
-2. You: "What's your name?"
-3. User: "John"
-4. You: "What date works for you?"
-5. User: "tomorrow"
-6. You: "What time?"
-7. User: "10am"
-8. You: "What's your email address?"
-9. User: "john@example.com"
-10. Call schedule_appointment
 
 Always be concise and natural for voice conversation.`,
   voiceName: "Zephyr",
@@ -113,12 +101,12 @@ export function useGeminiLive() {
                 name: "schedule_appointment",
                 description: "Schedule an appointment. Call ONLY when you have name, date, time, AND email.",
                 parameters: {
-                  type: Type.OBJECT,
+                  type: "object",
                   properties: {
-                    name: { type: Type.STRING, description: "Customer full name" },
-                    email: { type: Type.STRING, description: "Customer email address - REQUIRED" },
-                    date: { type: Type.STRING, description: "Appointment date" },
-                    time: { type: Type.STRING, description: "Appointment time" }
+                    name: { type: "string", description: "Customer full name" },
+                    email: { type: "string", description: "Customer email address - REQUIRED" },
+                    date: { type: "string", description: "Appointment date" },
+                    time: { type: "string", description: "Appointment time" }
                   },
                   required: ["name", "email", "date", "time"]
                 }
@@ -132,7 +120,7 @@ export function useGeminiLive() {
             setActive(true);
           },
           onmessage: async (message: LiveServerMessage) => {
-            const base64Audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
+            const base64Audio = (message as any).serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (base64Audio) {
               await playerRef.current?.playChunk(base64Audio);
             }
@@ -147,8 +135,9 @@ export function useGeminiLive() {
               setTranscript(prev => (prev + "\n🤖 " + modelText).slice(-1500));
             }
 
-            if (message.toolCall?.functionCalls) {
-              for (const toolCall of message.toolCall.functionCalls) {
+            const toolCalls = (message as any).toolCall?.functionCalls;
+            if (toolCalls && toolCalls.length > 0) {
+              for (const toolCall of toolCalls) {
                 console.log('🔧 Tool call:', toolCall.name, toolCall.args);
                 
                 if (toolCall.name === 'schedule_appointment') {
@@ -172,19 +161,23 @@ export function useGeminiLive() {
                     : "Booking failed. Please try again.";
                   
                   if (sessionRef.current) {
-                    sessionRef.current.sendToolResponse({
-                      functionResponses: [{
-                        id: toolCall.id,
-                        name: toolCall.name,
-                        response: { result: reply }
-                      }]
-                    });
+                    try {
+                      sessionRef.current.sendToolResponse({
+                        functionResponses: [{
+                          id: toolCall.id,
+                          name: toolCall.name,
+                          response: { result: reply }
+                        }]
+                      });
+                    } catch (err) {
+                      console.error('Error sending tool response:', err);
+                    }
                   }
                 }
               }
             }
 
-            if (message.serverContent?.interrupted) {
+            if ((message as any).serverContent?.interrupted) {
               await playerRef.current?.stop();
             }
           },
@@ -192,7 +185,7 @@ export function useGeminiLive() {
             console.log('Gemini Live disconnected');
             stop();
           },
-          onerror: (err) => {
+          onerror: (err: any) => {
             console.error("Gemini Live Error:", err);
             stop();
           }
