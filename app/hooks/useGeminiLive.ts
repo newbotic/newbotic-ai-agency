@@ -6,14 +6,18 @@ const CONFIG = {
   model: "gemini-3.1-flash-live-preview",
   systemInstruction: `You are KNEXA, the voice assistant for Newbotic AI. You are friendly, helpful, and professional.
 
-Your capabilities:
-- Answer questions about Newbotic AI agents
+YOUR CAPABILITIES:
+- Answer questions about Newbotic AI agents (SELLIX, KNEXA, VYRAL, OPTIMUS, METRIX, APPO)
 - Provide pricing information
-- Help schedule appointments
+- HELP SCHEDULE APPOINTMENTS using the schedule_appointment function
 
-Rules:
+RULES:
 - Be concise and natural for voice conversation
-- Always be helpful and warm.`,
+- When user says "book a call", "schedule appointment", or similar, ALWAYS call schedule_appointment
+- Ask for name, date, and time before booking
+- Always be helpful and warm
+
+CRITICAL: Use the schedule_appointment function whenever user wants to book a call.`,
   voiceName: "Zephyr",
   sampleRate: 16000
 };
@@ -91,6 +95,24 @@ export function useGeminiLive() {
           },
           outputAudioTranscription: {},
           inputAudioTranscription: {},
+          tools: [{
+            functionDeclarations: [
+              {
+                name: "schedule_appointment",
+                description: "Schedule an appointment. MUST use this when user wants to book a call.",
+                parameters: {
+                  type: "OBJECT",
+                  properties: {
+                    name: { type: "STRING", description: "Customer full name" },
+                    email: { type: "STRING", description: "Customer email address" },
+                    date: { type: "STRING", description: "Appointment date (YYYY-MM-DD or tomorrow)" },
+                    time: { type: "STRING", description: "Appointment time (HH:MM or 10am)" }
+                  },
+                  required: ["name", "date", "time"]
+                }
+              }
+            ]
+          }]
         },
         callbacks: {
           onopen: () => {
@@ -111,6 +133,44 @@ export function useGeminiLive() {
             }
             if (modelText) {
               setTranscript(prev => (prev + "\nKNEXA: " + modelText).slice(-1500));
+            }
+
+            if (message.toolCall?.functionCalls) {
+              for (const toolCall of message.toolCall.functionCalls) {
+                console.log('🔧 Tool call:', toolCall.name, toolCall.args);
+                
+                if (toolCall.name === 'schedule_appointment') {
+                  const args = toolCall.args;
+                  
+                  // Apelează API-ul de booking
+                  const response = await fetch('/api/book', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      name: args.name,
+                      email: args.email || 'voice@customer.com',
+                      date: args.date,
+                      time: args.time,
+                      source: 'voice'
+                    })
+                  });
+                  
+                  const result = await response.json();
+                  const reply = result.success 
+                    ? `Booking confirmed for ${args.name} on ${args.date} at ${args.time}` 
+                    : "Booking failed. Please try again.";
+                  
+                  if (sessionRef.current) {
+                    sessionRef.current.sendToolResponse({
+                      functionResponses: [{
+                        id: toolCall.id,
+                        name: toolCall.name,
+                        response: { result: reply }
+                      }]
+                    });
+                  }
+                }
+              }
             }
 
             if (message.serverContent?.interrupted) {
