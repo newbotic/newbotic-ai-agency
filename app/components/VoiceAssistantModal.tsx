@@ -7,9 +7,10 @@ import { Mic, MicOff, Terminal, X, Activity, ShieldCheck, Cpu } from 'lucide-rea
 interface VoiceAssistantModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialMessage?: string | null;
 }
 
-export default function VoiceAssistantModal({ isOpen, onClose }: VoiceAssistantModalProps) {
+export default function VoiceAssistantModal({ isOpen, onClose, initialMessage }: VoiceAssistantModalProps) {
   const { active, transcript, volume, start, stop } = useGeminiLive();
   const [isConnecting, setIsConnecting] = useState(false);
 
