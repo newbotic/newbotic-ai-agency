@@ -9,7 +9,6 @@ import ChatModal from "./components/ChatModal";
 import MarketingModal from "./components/MarketingModal";
 
 export default function Home() {
-  // State pentru modal activ
   const [activeModal, setActiveModal] = useState<string | null>(null);
   
   const openModal = (modalName: string) => setActiveModal(modalName);
@@ -79,7 +78,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* VIDEO - micșorat și centrat */}
+              {/* VIDEO */}
               <div className="flex-1 lg:flex-1 max-w-md lg:max-w-md mx-auto lg:mx-0">
                 <div className="relative group cursor-pointer">
                   <div className="absolute -inset-1 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-300"></div>
@@ -166,7 +165,6 @@ export default function Home() {
                       <span className="text-gray-500 text-xs sm:text-sm ml-1">/month</span>
                     </div>
                     
-                    {/* BUTON DIFERIT PENTRU FIECARE TIP DE AGENT */}
                     {agent.name === "KNEXA" && (
                       <button
                         onClick={() => openModal('knexa')}
