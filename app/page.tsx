@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ChatBotWrapper from "./components/ChatBotWrapper";
 import VoiceAssistantModal from "./components/VoiceAssistantModal";
-import ChatModal from "./components/ChatModal";
+import SmartChatModal from "./components/SmartChatModal";
 import MarketingModal from "./components/MarketingModal";
 
 export default function Home() {
@@ -135,6 +135,8 @@ export default function Home() {
             </h2>
             <p className="text-gray-400 text-sm sm:text-base text-center max-w-2xl mx-auto mb-8 sm:mb-12 px-4">
               Each agent is an expert in their field, working 24/7 to automate your business.
+              <br />
+              <span className="text-xs text-[#00f0ff] mt-1 block">✨ Agents can transfer calls hierarchically | Sellix → KNEWA → Metrix → Human</span>
             </p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -185,7 +187,7 @@ export default function Home() {
                     
                     {(agent.name === "SELLIX" || agent.name === "OPTIMUS" || agent.name === "METRIX" || agent.name === "APPO") && (
                       <button
-                        onClick={() => openModal('chat')}
+                        onClick={() => openModal('smart-chat')}
                         className="w-full text-center border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black font-bold text-xs sm:text-sm py-2.5 sm:py-3 rounded-full transition-all duration-300"
                       >
                         💬 Chat with {agent.name} →
@@ -194,6 +196,26 @@ export default function Home() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Hierarchical System Info */}
+        <section className="py-8">
+          <div className="container px-4">
+            <div className="bg-[#111115] rounded-xl border border-[#00f0ff]/20 p-6 text-center">
+              <div className="flex justify-center items-center gap-2 flex-wrap">
+                <span className="px-3 py-1 bg-[#00f0ff]/10 rounded-full text-xs text-[#00f0ff]">👔 SELLIX (Sales)</span>
+                <span className="text-gray-500">→</span>
+                <span className="px-3 py-1 bg-[#00f0ff]/10 rounded-full text-xs text-[#00f0ff]">🛟 KNEXA (Support)</span>
+                <span className="text-gray-500">→</span>
+                <span className="px-3 py-1 bg-[#00f0ff]/10 rounded-full text-xs text-[#00f0ff]">📊 METRIX (Supervisor)</span>
+                <span className="text-gray-500">→</span>
+                <span className="px-3 py-1 bg-yellow-500/20 rounded-full text-xs text-yellow-400">👤 HUMAN (Operator)</span>
+              </div>
+              <p className="text-xs text-gray-500 mt-3">
+                Agents automatically escalate complex issues. Try saying "I want to talk to a human" or "escalate this issue"
+              </p>
             </div>
           </div>
         </section>
@@ -272,8 +294,8 @@ export default function Home() {
         isOpen={activeModal === 'knexa'} 
         onClose={closeModal} 
       />
-      <ChatModal 
-        isOpen={activeModal === 'chat'} 
+      <SmartChatModal 
+        isOpen={activeModal === 'smart-chat'} 
         onClose={closeModal} 
       />
       <MarketingModal 

@@ -16,7 +16,6 @@ export function useChatAI() {
 
     setLoading(true);
     
-    // Adaugă mesajul utilizatorului
     setMessages(prev => [...prev, {
       role: 'user',
       content: text,
@@ -25,21 +24,20 @@ export function useChatAI() {
 
     try {
       const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+      if (!apiKey) {
+        throw new Error('API key missing');
+      }
+      
       const ai = new GoogleGenAI({ apiKey });
 
       const prompt = `You are KNEXA, a helpful AI assistant for Newbotic AI.
-You can help with:
-- Answering questions about AI agents
-- Explaining how voice assistants work
-- Providing general information
-
 Be friendly, concise, and helpful.
 
 User: ${text}
 Assistant:`;
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash-exp',
+        model: 'gemini-2.5-pro',
         contents: prompt,
       });
 
