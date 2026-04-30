@@ -1,13 +1,25 @@
+'use client';
+
+import { useState } from 'react';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ChatBotWrapper from "./components/ChatBotWrapper";
+import VoiceAssistantModal from "./components/VoiceAssistantModal";
+import ChatModal from "./components/ChatModal";
+import MarketingModal from "./components/MarketingModal";
 
 export default function Home() {
+  // State pentru modal activ
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+  
+  const openModal = (modalName: string) => setActiveModal(modalName);
+  const closeModal = () => setActiveModal(null);
+
   return (
     <>
       <Navbar />
       <main className="bg-[#0a0a0f]">
-        {/* HERO Section - REPARAT COMPLET */}
+        {/* HERO Section */}
         <section className="pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16">
           <div className="container px-4 sm:px-6">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
@@ -153,14 +165,34 @@ export default function Home() {
                       <span className="font-['Syne'] font-extrabold text-2xl sm:text-3xl text-white">{agent.price}</span>
                       <span className="text-gray-500 text-xs sm:text-sm ml-1">/month</span>
                     </div>
-                    <a
-                      href="https://calendly.com/hello-newbotic/30min"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-center border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black font-bold text-xs sm:text-sm py-2.5 sm:py-3 rounded-full transition-all duration-300"
-                    >
-                      Hire {agent.name} →
-                    </a>
+                    
+                    {/* BUTON DIFERIT PENTRU FIECARE TIP DE AGENT */}
+                    {agent.name === "KNEXA" && (
+                      <button
+                        onClick={() => openModal('knexa')}
+                        className="w-full text-center border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black font-bold text-xs sm:text-sm py-2.5 sm:py-3 rounded-full transition-all duration-300"
+                      >
+                        🎤 Open KNEXA Voice →
+                      </button>
+                    )}
+                    
+                    {agent.name === "VYRAL" && (
+                      <button
+                        onClick={() => openModal('vyral')}
+                        className="w-full text-center border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black font-bold text-xs sm:text-sm py-2.5 sm:py-3 rounded-full transition-all duration-300"
+                      >
+                        📱 Open VYRAL Marketing →
+                      </button>
+                    )}
+                    
+                    {(agent.name === "SELLIX" || agent.name === "OPTIMUS" || agent.name === "METRIX" || agent.name === "APPO") && (
+                      <button
+                        onClick={() => openModal('chat')}
+                        className="w-full text-center border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black font-bold text-xs sm:text-sm py-2.5 sm:py-3 rounded-full transition-all duration-300"
+                      >
+                        💬 Chat with {agent.name} →
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -236,6 +268,20 @@ export default function Home() {
       </main>
       <Footer />
       <ChatBotWrapper />
+
+      {/* MODALS */}
+      <VoiceAssistantModal 
+        isOpen={activeModal === 'knexa'} 
+        onClose={closeModal} 
+      />
+      <ChatModal 
+        isOpen={activeModal === 'chat'} 
+        onClose={closeModal} 
+      />
+      <MarketingModal 
+        isOpen={activeModal === 'vyral'} 
+        onClose={closeModal} 
+      />
     </>
   );
 }
