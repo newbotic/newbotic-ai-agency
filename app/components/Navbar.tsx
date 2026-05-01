@@ -29,13 +29,6 @@ export default function Navbar({ user }: NavbarProps) {
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/#agents" className="text-gray-300 hover:text-[#00f0ff] transition text-sm">
-              AI Agents
-            </Link>
-            <Link href="/#process" className="text-gray-300 hover:text-[#00f0ff] transition text-sm">
-              Process
-            </Link>
-            
             {user ? (
               <>
                 <Link href="/dashboard" className="text-[#00f0ff] text-sm font-medium">
@@ -62,13 +55,6 @@ export default function Navbar({ user }: NavbarProps) {
 
         {isOpen && (
           <div className="md:hidden mt-4 pt-4 border-t border-gray-800 flex flex-col gap-3">
-            <Link href="/#agents" className="text-gray-300 py-2" onClick={() => setIsOpen(false)}>
-              AI Agents
-            </Link>
-            <Link href="/#process" className="text-gray-300 py-2" onClick={() => setIsOpen(false)}>
-              Process
-            </Link>
-            
             {user ? (
               <>
                 <Link href="/dashboard" className="text-[#00f0ff] py-2" onClick={() => setIsOpen(false)}>

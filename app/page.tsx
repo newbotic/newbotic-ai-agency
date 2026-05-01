@@ -136,7 +136,7 @@ export default function Home() {
                         <span className="text-xl">🤖</span>
                       </div>
                       <div>
-                        <h3 className="text-white font-bold text-sm">6 Specialized Agents</h3>
+                        <h3 className="text-white font-bold text-sm">6 Specialised Agents</h3>
                         <p className="text-gray-400 text-xs">Sales, Support, Marketing & more</p>
                       </div>
                     </div>
@@ -165,12 +165,12 @@ export default function Home() {
           ))}
         </div>
 
-        {/* AI AGENTS Section - SELLIX are 4 feature-uri, restul 3 */}
+        {/* AI AGENTS Section - British English */}
         <section id="agents" className="py-16 sm:py-20">
           <div className="container px-4 sm:px-6">
             <p className="text-[#00f0ff] text-xs sm:text-sm uppercase tracking-wider text-center mb-2">Meet Our AI Team</p>
             <h2 className="font-['Syne'] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center text-white mb-3 sm:mb-4">
-              Specialized AI agents
+              Specialised AI agents
               <br />
               ready to work for you
             </h2>
@@ -208,7 +208,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA Section - doar Book Call aici */}
+        {/* CTA Section */}
         <section className="py-16 sm:py-20">
           <div className="container px-4">
             <div className="relative group">
@@ -241,7 +241,7 @@ export default function Home() {
   );
 }
 
-// AI Agents Data - SELLIX are 4 feature-uri (poate închide deal-uri)
+// AI Agents Data - British English
 const agents = [
   {
     name: "SELLIX",
@@ -267,7 +267,7 @@ const agents = [
     icon: "📣",
     role: "Marketing AI",
     description: "Your social media manager. Creates and schedules content.",
-    features: ["Content creation", "Auto-reply to comments", "Hashtag optimization"],
+    features: ["Content creation", "Auto-reply to comments", "Hashtag optimisation"],
   },
   {
     name: "OPTIMUS",
@@ -280,7 +280,7 @@ const agents = [
     name: "METRIX",
     icon: "📊",
     role: "Business AI",
-    description: "Your business manager. Analyzes KPIs and provides insights.",
+    description: "Your business manager. Analyses KPIs and provides insights.",
     features: ["KPI dashboard", "Anomaly detection", "Predictive analytics"],
   },
   {

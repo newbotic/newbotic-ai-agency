@@ -1,264 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --ink: #1e3a5f;
-    --ink2: #1e40af;
-    --ink3: #7a7a8a;
-    --surface: #f8f8fc;
-    --card: #ffffff;
-    --accent: #2a5cff;
-    --accent2: #00e5a0;
-    --accent3: #ff4d6d;
-    --border: rgba(30, 58, 95, 0.08);
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--surface);
-    color: var(--ink);
-    line-height: 1.6;
-  }
-
-  h1, h2, h3, h4 {
-    font-family: 'Syne', sans-serif;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
+body {
+  background-color: #0a0a0f;
+  color: #ffffff;
 }
 
-@layer components {
-  .container {
-    @apply max-w-7xl mx-auto px-5 lg:px-10;
-  }
-
-  .btn-primary {
-    background: #1e3a5f;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.875rem;
-    padding: 0.85rem 1.75rem;
-    border-radius: 100px;
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    display: inline-block;
-    transition: all 0.2s;
-  }
-
-  .btn-primary:hover {
-    background: #1e40af;
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: #1e3a5f;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.875rem;
-    padding: 0.85rem 1.75rem;
-    border-radius: 100px;
-    text-decoration: none;
-    border: 1.5px solid #1e3a5f;
-    letter-spacing: 0.01em;
-    display: inline-block;
-    transition: all 0.2s;
-  }
-
-  .btn-secondary:hover {
-    background: #1e3a5f;
-    color: white;
-  }
-
-  .section-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #2a5cff;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.25rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    color: #1e3a5f;
-    margin-bottom: 0.75rem;
-    line-height: 1.15;
-  }
-
-  .section-sub {
-    font-size: 1rem;
-    color: #1e40af;
-    font-weight: 300;
-    max-width: 500px;
-    line-height: 1.7;
-  }
-
-  .glass-card {
-    background: #ffffff;
-    border: 0.5px solid rgba(30, 58, 95, 0.08);
-    border-radius: 16px;
-    padding: 1.5rem;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .glass-card:hover {
-    border-color: #2a5cff;
-    transform: translateY(-2px);
-  }
-
-  .status-badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 0.25rem 0.6rem;
-    border-radius: 100px;
-    display: inline-block;
-  }
-
-  .status-badge-success {
-    background: #efffea;
-    color: #1a7a3a;
-  }
-
-  .status-badge-warning {
-    background: #fffbea;
-    color: #9a6500;
-  }
-
-  .status-badge-info {
-    background: #eef3ff;
-    color: #1a3aa3;
-  }
-
-  .status-badge-purple {
-    background: #f5f0ff;
-    color: #6a3acf;
-  }
-
-  .status-badge-hot {
-    background: #fff0f3;
-    color: #a3003a;
-  }
-
-  .status-badge-best {
-    background: #f0fff8;
-    color: #006640;
-  }
-
-  .stats-bar {
-    background: #1e3a5f;
-    padding: 1.5rem 2.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    text-align: center;
-    color: white;
-  }
-
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.75rem;
-    display: block;
-  }
-
-  .stat-lbl {
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 2px;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: white;
-    border: 0.5px solid rgba(30, 58, 95, 0.08);
-    border-radius: 100px;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #1e40af;
-    margin-bottom: 1.5rem;
-  }
-
-  .badge-dot {
-    width: 7px;
-    height: 7px;
-    background: #00e5a0;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
+/* Butoanele normale */
+button {
+  cursor: pointer;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+/* Inputuri */
+input, textarea {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 8px 12px;
 }
 
-/* Force form text colors */
-input,
-select,
-textarea {
-  color: #1e3a5f !important;
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #00f0ff;
 }
 
-input::placeholder,
-select::placeholder,
-textarea::placeholder {
-  color: #7a7a8a !important;
-  opacity: 1 !important;
-}
-
-select option {
-  color: #1e3a5f !important;
-}
-
-select option:first-child {
-  color: #7a7a8a !important;
-}
-/* Futurist scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #0a0a0f;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #00f0ff, #b000ff);
-  border-radius: 4px;
-}
-
-/* Selection color */
-::selection {
-  background: #00f0ff;
-  color: #0a0a0f;
-}
-/* Elimină orice subliniere pe link-uri */
+/* Link-uri */
 a {
-  text-decoration: none !important;
+  color: #00f0ff;
+  text-decoration: none;
 }
 
-/* Dar păstrează efectul hover dacă vrei */
 a:hover {
-  text-decoration: none !important;
+  opacity: 0.8;
 }
