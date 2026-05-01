@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useGeminiLive } from '../hooks/useGeminiLive';
 import { Mic, MicOff, Terminal, X, Activity, ShieldCheck, Cpu } from 'lucide-react';
 
@@ -13,17 +13,22 @@ interface VoiceAssistantModalProps {
 export default function VoiceAssistantModal({ isOpen, onClose, initialMessage }: VoiceAssistantModalProps) {
   const { active, transcript, volume, start, stop } = useGeminiLive();
   const [isConnecting, setIsConnecting] = useState(false);
-  const isMounted = useRef(true);
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
     return () => {
-      isMounted.current = false;
+      setIsMounted(false);
+      // Oprește voice-ul când componenta se unmountează
+      if (active) {
+        stop();
+      }
     };
-  }, []);
+  }, [active, stop]);
 
-  // Oprire la închidere
+  // Oprește voice-ul când modalul se închide
   useEffect(() => {
     if (!isOpen && active) {
+      console.log('🛑 Stopping voice because modal closed');
       stop();
     }
   }, [isOpen, active, stop]);
@@ -36,7 +41,7 @@ export default function VoiceAssistantModal({ isOpen, onClose, initialMessage }:
     } catch (error) {
       console.error('Start failed:', error);
     } finally {
-      if (isMounted.current) setIsConnecting(false);
+      if (isMounted) setIsConnecting(false);
     }
   }, [active, isConnecting, start]);
 
@@ -49,9 +54,14 @@ export default function VoiceAssistantModal({ isOpen, onClose, initialMessage }:
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#111115] rounded-2xl border border-[#00f0ff]/30 p-6 w-96 max-w-full shadow-2xl">
-        {/* Header */}
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-[#111115] rounded-2xl border border-[#00f0ff]/30 p-6 w-96 max-w-full shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-xl flex items-center justify-center">
@@ -69,15 +79,16 @@ export default function VoiceAssistantModal({ isOpen, onClose, initialMessage }:
           </button>
         </div>
 
-        {/* Volum meter */}
         <div className="mb-4">
           <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-[#00f0ff] to-[#b000ff] transition-all duration-100" style={{ width: `${volumePercent}%` }} />
+            <div 
+              className="h-full bg-gradient-to-r from-[#00f0ff] to-[#b000ff] transition-all duration-100"
+              style={{ width: `${volumePercent}%` }}
+            />
           </div>
           <p className="text-[10px] text-gray-500 text-center mt-1">Voice level</p>
         </div>
 
-        {/* Transcript */}
         <div className="bg-black/30 rounded-lg p-3 mb-3 min-h-[120px] max-h-40 overflow-y-auto border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <Terminal className="w-3 h-3 text-[#00f0ff]" />
@@ -88,25 +99,24 @@ export default function VoiceAssistantModal({ isOpen, onClose, initialMessage }:
           </p>
         </div>
 
-        {/* Tips */}
         <div className="text-[10px] text-gray-500 text-center mb-3 space-y-1">
           <p>💡 Say: <span className="text-[#00f0ff]">"Book a call tomorrow at 10am"</span></p>
           <p>👤 Say: <span className="text-[#b000ff]">"Talk to a human"</span> for escalation</p>
         </div>
 
-        {/* Buton Start/Stop */}
         <button
           onClick={active ? handleStop : handleStart}
           disabled={isConnecting}
           className={`w-full py-3 rounded-full font-bold transition-all flex items-center justify-center gap-2 ${
-            active ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black hover:opacity-90'
+            active 
+              ? 'bg-red-500 text-white hover:bg-red-600' 
+              : 'bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black hover:opacity-90'
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {active ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
           {active ? 'Stop Conversation' : 'Start Voice Conversation'}
         </button>
         
-        {/* Footer */}
         <div className="flex justify-between items-center mt-4 pt-2 border-t border-white/5">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-3 h-3 text-green-500/60" />
