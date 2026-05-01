@@ -60,12 +60,20 @@ export default function Home() {
                 
                 <div className="flex flex-wrap gap-3 mb-8 sm:mb-10">
                   {!user ? (
-                    <a
-                      href="/login"
-                      className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105"
-                    >
-                      Get Started →
-                    </a>
+                    <>
+                      <a
+                        href="/login"
+                        className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105"
+                      >
+                        Get Started →
+                      </a>
+                      <a
+                        href="/login"
+                        className="border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff]/10 font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300"
+                      >
+                        Login
+                      </a>
+                    </>
                   ) : (
                     <a
                       href="/dashboard"
@@ -86,26 +94,51 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* VIDEO */}
+              {/* RIGHT SIDE - AI Features Cards */}
               <div className="flex-1 lg:flex-1 max-w-md lg:max-w-md mx-auto lg:mx-0">
-                <div className="relative group cursor-pointer">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-300"></div>
-                  <div className="relative overflow-hidden rounded-xl bg-[#111115] border border-[#00f0ff]/20">
-                    <div className="bg-gradient-to-br from-[#111115] to-[#0a0a0f] h-40 sm:h-44 md:h-48 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-3xl sm:text-4xl md:text-5xl mb-2 animate-pulse">🤖</div>
-                        <p className="text-xs sm:text-sm font-medium text-[#00f0ff]">Demo Video</p>
-                        <p className="text-[10px] sm:text-xs text-gray-500 mt-1">See AI in action</p>
+                <div className="grid gap-4">
+                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🎤</span>
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold text-sm">Voice Assistant</h3>
+                        <p className="text-gray-400 text-xs">24/7 customer support</p>
                       </div>
                     </div>
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#00f0ff] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_#00f0ff]">
-                        <div className="w-0 h-0 border-t-5 border-b-5 border-l-7 border-transparent border-l-black ml-1"></div>
+                  </div>
+                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">📱</span>
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold text-sm">Social Media AI</h3>
+                        <p className="text-gray-400 text-xs">Auto-generate posts</p>
                       </div>
                     </div>
-                    <div className="p-2 sm:p-3 text-center border-t border-[#00f0ff]/10">
-                      <p className="text-[10px] sm:text-xs font-medium text-[#00f0ff]">Watch how it works →</p>
-                      <p className="text-[9px] sm:text-[10px] text-gray-500 mt-0.5">30-second demo</p>
+                  </div>
+                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">📊</span>
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold text-sm">Smart Analytics</h3>
+                        <p className="text-gray-400 text-xs">KPI tracking & insights</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🤖</span>
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold text-sm">6 Specialized Agents</h3>
+                        <p className="text-gray-400 text-xs">Sales, Support, Marketing & more</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -132,7 +165,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* AI AGENTS Section - 6 carduri */}
+        {/* AI AGENTS Section - SELLIX are 4 feature-uri, restul 3 */}
         <section id="agents" className="py-16 sm:py-20">
           <div className="container px-4 sm:px-6">
             <p className="text-[#00f0ff] text-xs sm:text-sm uppercase tracking-wider text-center mb-2">Meet Our AI Team</p>
@@ -150,17 +183,17 @@ export default function Home() {
                 <div key={i} className="relative group">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-2xl blur opacity-20 group-hover:opacity-100 transition duration-300"></div>
                   <div className="relative bg-[#111115] rounded-2xl p-5 sm:p-6 border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 transition-all duration-300">
-                    <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#00f0ff]/10 rounded-xl flex items-center justify-center border border-[#00f0ff]/30">
                         <span className="text-xl sm:text-2xl">{agent.icon}</span>
                       </div>
-                      <span className="text-[8px] sm:text-[10px] px-2 py-1 rounded-full bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/30">
-                        {agent.badge}
-                      </span>
+                      <div>
+                        <h3 className="font-['Syne'] font-bold text-lg sm:text-xl text-white">{agent.name}</h3>
+                        <p className="text-gray-400 text-xs">{agent.role}</p>
+                      </div>
                     </div>
-                    <h3 className="font-['Syne'] font-bold text-lg sm:text-xl text-white mb-2">{agent.name}</h3>
                     <p className="text-gray-400 text-xs sm:text-sm mb-4">{agent.description}</p>
-                    <ul className="space-y-1.5 sm:space-y-2 mb-5 sm:mb-6">
+                    <ul className="space-y-1.5 sm:space-y-2">
                       {agent.features.map((feature, idx) => (
                         <li key={idx} className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-300">
                           <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_6px_#00f0ff]"></span>
@@ -168,13 +201,6 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                    <div className="mb-4">
-                      <span className="font-['Syne'] font-extrabold text-2xl sm:text-3xl text-white">{agent.price}</span>
-                      <span className="text-gray-500 text-xs sm:text-sm ml-1">/month</span>
-                    </div>
-                    <button className="w-full text-center border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black font-bold text-xs sm:text-sm py-2.5 sm:py-3 rounded-full transition-all duration-300">
-                      Hire {agent.name} →
-                    </button>
                   </div>
                 </div>
               ))}
@@ -182,7 +208,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section - doar Book Call aici */}
         <section className="py-16 sm:py-20">
           <div className="container px-4">
             <div className="relative group">
@@ -203,14 +229,6 @@ export default function Home() {
                   >
                     📅 Book Free Strategy Call
                   </a>
-                  {!user && (
-                    <a
-                      href="/login"
-                      className="border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff]/10 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base transition-all duration-300"
-                    >
-                      🔐 Login / Sign Up
-                    </a>
-                  )}
                 </div>
               </div>
             </div>
@@ -223,53 +241,52 @@ export default function Home() {
   );
 }
 
-// AI Agents Data
+// AI Agents Data - SELLIX are 4 feature-uri (poate închide deal-uri)
 const agents = [
   {
     name: "SELLIX",
     icon: "👔",
-    badge: "Sales AI",
-    price: "£149",
+    role: "Sales AI",
     description: "Your virtual sales representative that never sleeps.",
-    features: ["Lead qualification", "Automated follow-ups", "Meeting scheduler"],
+    features: [
+      "Lead qualification", 
+      "Automated follow-ups", 
+      "Meeting scheduler",
+      "🚀 Can close deals up to £500"
+    ],
   },
   {
     name: "KNEXA",
     icon: "🛟",
-    badge: "MOST POPULAR",
-    price: "£119",
+    role: "Support AI",
     description: "Your 24/7 AI support agent. Learns from your documents.",
     features: ["Learns from PDFs & docs", "24/7 chat & WhatsApp", "Smart escalation"],
   },
   {
     name: "VYRAL",
     icon: "📣",
-    badge: "Marketing AI",
-    price: "£129",
+    role: "Marketing AI",
     description: "Your social media manager. Creates and schedules content.",
     features: ["Content creation", "Auto-reply to comments", "Hashtag optimization"],
   },
   {
     name: "OPTIMUS",
     icon: "🧠",
-    badge: "Personal AI",
-    price: "£99",
+    role: "Personal AI",
     description: "Your personal assistant. Manages calendar, tasks, emails.",
     features: ["Calendar management", "Email summaries", "Voice commands"],
   },
   {
     name: "METRIX",
     icon: "📊",
-    badge: "Business AI",
-    price: "£199",
+    role: "Business AI",
     description: "Your business manager. Analyzes KPIs and provides insights.",
     features: ["KPI dashboard", "Anomaly detection", "Predictive analytics"],
   },
   {
     name: "APPO",
     icon: "📅",
-    badge: "Booking AI",
-    price: "£129",
+    role: "Booking AI",
     description: "Your 24/7 booking assistant. Manages appointments.",
     features: ["24/7 booking", "Auto reminders", "Calendar sync"],
   },
