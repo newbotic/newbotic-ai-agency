@@ -24,6 +24,23 @@ export default function DashboardPage() {
       } else {
         setUser(session.user);
         
+        // Verifică dacă există profil, dacă nu, creează unul
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('name')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (profileError || !profileData) {
+          // Creează profilul dacă nu există
+          const userName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0];
+          await supabase.from('profiles').insert({
+            id: session.user.id,
+            name: userName,
+            email: session.user.email
+          });
+        }
+        
         // Încarcă statisticile din baza de date
         const { count: convCount } = await supabase
           .from('conversations')
@@ -56,12 +73,18 @@ export default function DashboardPage() {
     router.push('/');
   };
 
+  // Obține numele din mai multe surse
+  const displayName = user?.user_metadata?.full_name || 
+                       user?.user_metadata?.name ||
+                       user?.email?.split('@')[0] ||
+                       'User';
+
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-[#00f0ff] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p>Loading dashboard...</p>
+          <p className="text-gray-400">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -78,7 +101,7 @@ export default function DashboardPage() {
               Dashboard
             </h1>
             <p className="text-gray-400 mt-1">
-              Welcome back, {user?.user_metadata?.full_name || user?.email?.split('@')[0]}
+              Welcome back, <span className="text-[#00f0ff] font-medium">{displayName}</span>
             </p>
           </div>
           <button
@@ -192,11 +215,11 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-400">
                   <span className="w-2 h-2 bg-[#00f0ff] rounded-full"></span>
-                  <span>Yesterday - Generated 3 posts for Instagram</span>
+                  <span>Connected to Supabase</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-400">
                   <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
-                  <span>2 days ago - Chat with KNEXA about pricing</span>
+                  <span>Account created</span>
                 </div>
               </div>
             </div>
