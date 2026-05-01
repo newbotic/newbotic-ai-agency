@@ -1,0 +1,15 @@
+[33m8b6f7a1[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/marketing-dashboard[m[33m, [m[1;33mtag: v1.2.0-auth[m[33m, [m[1;31morigin/feature/marketing-dashboard[m[33m)[m feat: Supabase authentication and database integration
+[33m1c22a4c[m feat: hierarchical AI agent system with smart routing
+[33m87b8069[m fix: stop AI when modals close, prevent creepy behavior
+[33m80e606a[m feat: integrate modal buttons for each AI agent on homepage
+[33m7e9324e[m[33m ([m[1;33mtag: v1.1.0-marketing[m[33m)[m feat: add AI Marketing Dashboard - post generator working
+[33mf30db16[m[33m ([m[1;31morigin/railway-version[m[33m, [m[1;32mrailway-version[m[33m)[m feat: AI marketing assistant - post generator working with gemini-2.5-pro
+[33mfcfdc45[m[33m ([m[1;33mtag: v1.0.1-live[m[33m, [m[1;33mtag: v1.0.0-stable[m[33m, [m[1;33mtag: stable-base[m[33m, [m[1;33mtag: stable-2024-04-30[m[33m)[m fix: sync package-lock.json with package.json
+[33m54de84f[m save project for railway migration
+[33m395e82b[m STABLE: Gemini Live with auto-language detection + booking - Voice input/output working - Auto-detects user language (English, Romanian, Polish, Spanish, etc.) - Booking flow: name → date → time → email → confirmation - Sends email to customer email address - Google Sheets backup via n8n - AudioWorklet for microphone
+[33m07e4a81[m[33m ([m[1;31morigin/working-version[m[33m, [m[1;32mworking-version[m[33m, [m[1;32mstable-voice-booking[m[33m, [m[1;32mbackup-working-version[m[33m)[m feat: Gemini Live voice working with booking - stable version - Voice input/output working with AudioPlayer - Booking via schedule_appointment function - Calls /api/book endpoint (same as text chat) - Sends email and saves to Google Sheets via n8n - Real-time transcript and volume meter - AudioWorklet for microphone processing - Stable connection
+[33m56e8c0f[m fix: voice working in English with AudioPlayer - saves current working state
+[33mfccc325[m fix: voice booking now calls /api/book endpoint - same as text chat
+[33m679a524[m feat: Gemini Live voice assistant with booking and escalation - Voice input/output with AudioPlayer (24000 Hz) - Booking via schedule_appointment function - Escalation to human via escalate_to_human - Real-time transcript and volume meter - AudioWorklet for microphone processing - Stable connection without reconnect loops - Integration with existing KNEXA workflow
+[33m772152d[m feat: Gemini Live voice integration with booking - stable version - Voice input/output working - Booking via schedule_appointment function - AudioPlayer from Google AI Studio - AudioWorklet for microphone - Real-time transcript and volume meter - Stable connection without reconnect loops
+[33m039fa16[m feat: Gemini Live API integration with AudioPlayer - Added Gemini Live voice conversation (📞 button) - AudioPlayer from working Google AI Studio project - AudioWorklet for microphone processing - CSP updated for media and Google APIs - Voice input + voice output working - Real-time transcript display - Volume meter
