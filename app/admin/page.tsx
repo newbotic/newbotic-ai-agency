@@ -16,8 +16,8 @@ export default function AdminDashboard() {
       if (!session) {
         router.push('/login');
       } else {
-        // Verifică dacă e admin (hardcodat sau din DB)
-        const isAdminUser = session.user.email === 'vasil@newbotic.ai';
+        // Verifică dacă e admin - email admin
+        const isAdminUser = session.user.email === 'hello@newbotic.co.uk';
         setIsAdmin(isAdminUser);
         
         if (isAdminUser) {
