@@ -57,39 +57,35 @@ export default function Home() {
                   qualification, social media AI. All running while you focus on
                   growth.
                 </p>
+                
                 <div className="flex flex-wrap gap-3 mb-8 sm:mb-10">
                   {!user ? (
                     <>
                       <a
-                        href="/signup"
+                        href="/login"
                         className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105"
                       >
-                        Get Started Free →
+                        Get Started →
                       </a>
                       <a
-                        href="/login"
+                        href="https://calendly.com/hello-newbotic/30min"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff]/10 font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300"
                       >
-                        Login
+                        📅 Book Free Strategy Call
                       </a>
                     </>
                   ) : (
-                    <>
-                      <a
-                        href="/dashboard"
-                        className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105"
-                      >
-                        Go to Dashboard →
-                      </a>
-                      <button
-                        onClick={() => supabase.auth.signOut()}
-                        className="border border-red-500/50 text-red-400 hover:bg-red-500/10 font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300"
-                      >
-                        Logout
-                      </button>
-                    </>
+                    <a
+                      href="/dashboard"
+                      className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105"
+                    >
+                      Go to Dashboard →
+                    </a>
                   )}
                 </div>
+                
                 <div className="flex flex-wrap gap-4 sm:gap-6">
                   {["15+ businesses", "Ready in 7 days", "50% OFF now"].map((text) => (
                     <span key={text} className="flex items-center gap-2 text-xs sm:text-sm text-gray-400">
@@ -128,7 +124,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Restul secțiunilor (AI Agents, Process, CTA) păstrează-le pe cele existente */}
+        {/* Restul secțiunilor (AI Agents, Process, CTA) le păstrăm pe cele existente */}
       </main>
       <Footer />
       <ChatBotWrapper />

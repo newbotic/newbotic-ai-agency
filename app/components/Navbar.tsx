@@ -49,17 +49,9 @@ export default function Navbar({ user }: NavbarProps) {
                 </button>
               </>
             ) : (
-              <>
-                <Link href="/login" className="text-[#00f0ff] text-sm font-medium">
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold px-4 py-2 rounded-lg text-sm hover:opacity-90 transition"
-                >
-                  Sign Up
-                </Link>
-              </>
+              <Link href="/login" className="text-[#00f0ff] text-sm font-medium">
+                Login
+              </Link>
             )}
           </div>
 
@@ -90,18 +82,9 @@ export default function Navbar({ user }: NavbarProps) {
                 </button>
               </>
             ) : (
-              <>
-                <Link href="/login" className="text-[#00f0ff] py-2" onClick={() => setIsOpen(false)}>
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold text-center py-2 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Sign Up
-                </Link>
-              </>
+              <Link href="/login" className="text-[#00f0ff] py-2" onClick={() => setIsOpen(false)}>
+                Login
+              </Link>
             )}
           </div>
         )}

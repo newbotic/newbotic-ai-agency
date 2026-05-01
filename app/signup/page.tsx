@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { supabase } from '@/app/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function SignupPage() {
   const router = useRouter();
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,28 +17,14 @@ export default function SignupPage() {
     setLoading(true);
     setError('');
 
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: {
-          full_name: name,
-        }
-      }
     });
 
     if (error) {
       setError(error.message);
     } else {
-      // Crează profilul în tabela profiles
-      if (data.user) {
-        await supabase.from('profiles').insert({
-          id: data.user.id,
-          name: name,
-          email: email,
-          plan: 'starter'
-        });
-      }
       alert('Account created! Please check your email to confirm.');
       router.push('/login');
     }
@@ -51,17 +37,6 @@ export default function SignupPage() {
         <h1 className="text-2xl font-bold text-white mb-6 text-center">Create Account</h1>
         
         <form onSubmit={handleSignup} className="space-y-4">
-          <div>
-            <label className="block text-gray-400 text-sm mb-1">Full Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full p-3 bg-black border border-gray-700 rounded-lg text-white"
-              required
-            />
-          </div>
-
           <div>
             <label className="block text-gray-400 text-sm mb-1">Email</label>
             <input
@@ -101,9 +76,9 @@ export default function SignupPage() {
         
         <p className="text-center text-gray-400 text-sm mt-6">
           Already have an account?{' '}
-          <a href="/login" className="text-[#00f0ff] hover:underline">
+          <Link href="/login" className="text-[#00f0ff] hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>
