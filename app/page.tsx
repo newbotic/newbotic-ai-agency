@@ -27,7 +27,7 @@ export default function Home() {
       <main className="bg-[#0a0a0f]">
         {/* HERO Section */}
         <section className="pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16">
-          <div className="container px-4 sm:px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
               
               {/* TEXT - stânga */}
@@ -165,9 +165,9 @@ export default function Home() {
           ))}
         </div>
 
-        {/* AI AGENTS Section - British English */}
+        {/* AI AGENTS Section - carduri centrate */}
         <section id="agents" className="py-16 sm:py-20">
-          <div className="container px-4 sm:px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <p className="text-[#00f0ff] text-xs sm:text-sm uppercase tracking-wider text-center mb-2">Meet Our AI Team</p>
             <h2 className="font-['Syne'] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center text-white mb-3 sm:mb-4">
               Specialised AI agents
@@ -178,25 +178,25 @@ export default function Home() {
               Each agent is an expert in their field, working 24/7 to automate your business.
             </p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {agents.map((agent, i) => (
                 <div key={i} className="relative group">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-2xl blur opacity-20 group-hover:opacity-100 transition duration-300"></div>
-                  <div className="relative bg-[#111115] rounded-2xl p-5 sm:p-6 border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 transition-all duration-300">
+                  <div className="relative bg-[#111115] rounded-2xl p-6 border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 transition-all duration-300">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#00f0ff]/10 rounded-xl flex items-center justify-center border border-[#00f0ff]/30">
-                        <span className="text-xl sm:text-2xl">{agent.icon}</span>
+                      <div className="w-12 h-12 bg-[#00f0ff]/10 rounded-xl flex items-center justify-center border border-[#00f0ff]/30">
+                        <span className="text-2xl">{agent.icon}</span>
                       </div>
                       <div>
-                        <h3 className="font-['Syne'] font-bold text-lg sm:text-xl text-white">{agent.name}</h3>
+                        <h3 className="font-['Syne'] font-bold text-xl text-white">{agent.name}</h3>
                         <p className="text-gray-400 text-xs">{agent.role}</p>
                       </div>
                     </div>
-                    <p className="text-gray-400 text-xs sm:text-sm mb-4">{agent.description}</p>
-                    <ul className="space-y-1.5 sm:space-y-2">
+                    <p className="text-gray-400 text-sm mb-4">{agent.description}</p>
+                    <ul className="space-y-2 mb-6">
                       {agent.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-300">
-                          <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_6px_#00f0ff]"></span>
+                        <li key={idx} className="flex items-center gap-2 text-xs text-gray-300">
+                          <span className="w-1.5 h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_6px_#00f0ff]"></span>
                           {feature}
                         </li>
                       ))}
@@ -210,7 +210,7 @@ export default function Home() {
 
         {/* CTA Section */}
         <section className="py-16 sm:py-20">
-          <div className="container px-4">
+          <div className="max-w-7xl mx-auto px-4">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-3xl blur-xl opacity-50"></div>
               <div className="relative bg-[#111115] rounded-3xl p-8 sm:p-12 text-center border border-[#00f0ff]/20">
@@ -241,7 +241,7 @@ export default function Home() {
   );
 }
 
-// AI Agents Data - British English
+// AI Agents Data
 const agents = [
   {
     name: "SELLIX",

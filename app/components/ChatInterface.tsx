@@ -4,7 +4,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useChatAI } from '../hooks/useChatAI';
 import { Send, Trash2 } from 'lucide-react';
 
-export default function ChatInterface() {
+interface ChatInterfaceProps {
+  onClose?: () => void;
+}
+
+export default function ChatInterface({ onClose }: ChatInterfaceProps) {
   const [input, setInput] = useState('');
   const { messages, loading, sendMessage, clearMessages } = useChatAI();
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -27,6 +31,10 @@ export default function ChatInterface() {
     }
   };
 
+  const handleClear = () => {
+    clearMessages();
+  };
+
   return (
     <div className="flex flex-col h-[500px] bg-[#111115]">
       <div className="flex justify-between items-center p-4 border-b border-gray-700">
@@ -36,12 +44,15 @@ export default function ChatInterface() {
           </div>
           <h3 className="text-white font-bold">KNEXA Assistant</h3>
         </div>
-        <button
-          onClick={clearMessages}
-          className="text-gray-400 hover:text-red-400 transition p-1"
-        >
-          <Trash2 className="w-4 h-4" />
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleClear}
+            className="text-gray-400 hover:text-red-400 transition p-1"
+            title="Clear chat"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-black">
@@ -85,7 +96,6 @@ export default function ChatInterface() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input - TEXT ALB pe fundal închis */}
       <div className="p-4 border-t border-gray-700 bg-[#1a1a1a]">
         <div className="flex gap-2">
           <textarea
