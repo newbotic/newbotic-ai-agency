@@ -1,38 +1,110 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
+import { supabase } from '@/app/lib/supabase/client';
 
-export default function Navbar() {
+interface NavbarProps {
+  user?: any;
+}
+
+export default function Navbar({ user }: NavbarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.href = '/';
+  };
+
   return (
-    <nav className="bg-[#0a0a0f]/80 backdrop-blur-md border-b border-[#00f0ff]/20 sticky top-0 z-50">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="font-['Syne'] font-extrabold text-xl text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#b000ff]">
-          NEWBOTIC
-        </Link>
+    <nav className="border-b border-[#00f0ff]/20 bg-[#0a0a0f]">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-[#00f0ff] to-[#b000ff] rounded-lg flex items-center justify-center">
+              <span className="font-black text-black text-sm">N</span>
+            </div>
+            <span className="text-white font-bold text-xl">NEWBOTIC</span>
+          </Link>
 
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="text-gray-300 hover:text-[#00f0ff] transition duration-300 no-underline visited:text-gray-300">
-            Home
-          </Link>
-          <Link href="#agents" className="text-gray-300 hover:text-[#00f0ff] transition duration-300 no-underline visited:text-gray-300">
-            Agents
-          </Link>
-          <a
-            href="https://calendly.com/hello-newbotic/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative overflow-hidden group bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold px-5 py-2 rounded-full text-sm transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_#00f0ff] no-underline"
-          >
-            Book a Call
-          </a>
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/#agents" className="text-gray-300 hover:text-[#00f0ff] transition text-sm">
+              AI Agents
+            </Link>
+            <Link href="/#process" className="text-gray-300 hover:text-[#00f0ff] transition text-sm">
+              Process
+            </Link>
+            
+            {user ? (
+              <>
+                <Link href="/dashboard" className="text-[#00f0ff] text-sm font-medium">
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-red-400 text-sm hover:text-red-300 transition"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-[#00f0ff] text-sm font-medium">
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold px-4 py-2 rounded-lg text-sm hover:opacity-90 transition"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
+
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
-        {/* Mobile menu button */}
-        <button className="md:hidden text-[#00f0ff] hover:text-[#b000ff] transition">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M3 12h18M3 6h18M3 18h18" />
-          </svg>
-        </button>
+        {isOpen && (
+          <div className="md:hidden mt-4 pt-4 border-t border-gray-800 flex flex-col gap-3">
+            <Link href="/#agents" className="text-gray-300 py-2" onClick={() => setIsOpen(false)}>
+              AI Agents
+            </Link>
+            <Link href="/#process" className="text-gray-300 py-2" onClick={() => setIsOpen(false)}>
+              Process
+            </Link>
+            
+            {user ? (
+              <>
+                <Link href="/dashboard" className="text-[#00f0ff] py-2" onClick={() => setIsOpen(false)}>
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => { handleLogout(); setIsOpen(false); }}
+                  className="text-red-400 text-left py-2"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-[#00f0ff] py-2" onClick={() => setIsOpen(false)}>
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold text-center py-2 rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   );
