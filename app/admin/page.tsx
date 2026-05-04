@@ -19,7 +19,14 @@ export default function AdminDashboard() {
         return;
       }
 
-      const isAdminUser = session.user.email === 'hello@newbotic.co.uk';
+      // Verifică în tabela profiles dacă e admin
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .eq('id', session.user.id)
+        .single();
+
+      const isAdminUser = profile?.is_admin === true;
       setIsAdmin(isAdminUser);
 
       if (isAdminUser) {
@@ -57,7 +64,6 @@ export default function AdminDashboard() {
       <div className="container mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6 text-red-400">Admin Dashboard</h1>
         
-        {/* Stats */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           <div className="bg-[#111115] border border-red-500/30 rounded-xl p-6">
             <div className="text-3xl mb-2">👥</div>
@@ -76,7 +82,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Users Table */}
         <div className="bg-[#111115] border border-gray-800 rounded-xl p-6 mb-6">
           <h2 className="text-xl font-bold mb-4 text-red-400">📋 Users</h2>
           <div className="overflow-x-auto">
@@ -107,7 +112,6 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
-
           <div className="bg-[#111115] border border-gray-800 rounded-xl p-6">
             <h2 className="text-xl font-bold mb-4 text-red-400">📅 Recent Bookings</h2>
             {bookings.slice(0, 5).map((booking) => (
