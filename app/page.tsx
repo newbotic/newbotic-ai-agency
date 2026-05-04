@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ChatBotWrapper from "./components/ChatBotWrapper";
 import { supabase } from './lib/supabase/client';
+import MiniDashboardPreview from './components/MiniDashboardPreview';
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
@@ -94,54 +95,9 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* RIGHT SIDE - AI Features Cards */}
+              {/* RIGHT SIDE - Mini Dashboard Preview */}
               <div className="flex-1 lg:flex-1 max-w-md lg:max-w-md mx-auto lg:mx-0">
-                <div className="grid gap-4">
-                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">🎤</span>
-                      </div>
-                      <div>
-                        <h3 className="text-white font-bold text-sm">Voice Assistant</h3>
-                        <p className="text-gray-400 text-xs">24/7 customer support</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">📱</span>
-                      </div>
-                      <div>
-                        <h3 className="text-white font-bold text-sm">Social Media AI</h3>
-                        <p className="text-gray-400 text-xs">Auto-generate posts</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">📊</span>
-                      </div>
-                      <div>
-                        <h3 className="text-white font-bold text-sm">Smart Analytics</h3>
-                        <p className="text-gray-400 text-xs">KPI tracking & insights</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-[#111115] border border-[#00f0ff]/20 rounded-xl p-4 hover:border-[#00f0ff]/50 transition-all duration-300">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#00f0ff]/10 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">🤖</span>
-                      </div>
-                      <div>
-                        <h3 className="text-white font-bold text-sm">6 Specialised Agents</h3>
-                        <p className="text-gray-400 text-xs">Sales, Support, Marketing & more</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <MiniDashboardPreview />
               </div>
             </div>
           </div>
