@@ -9,15 +9,25 @@ import ChatInterface from '../components/ChatInterface';
 export default function UserDashboard() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('marketing');
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!session) {
         router.push('/login');
       } else {
         setUser(session.user);
+        
+        // Încarcă profilul pentru nume
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('name')
+          .eq('id', session.user.id)
+          .single();
+        
+        setProfile(profileData);
       }
       setLoading(false);
     });
@@ -30,21 +40,24 @@ export default function UserDashboard() {
 
   if (loading) return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>;
 
+  // Numele de afișat (prioritate: name > email)
+  const displayName = profile?.name || user?.user_metadata?.full_name || user?.email?.split('@')[0];
+
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      {/* Header simplu */}
+      {/* Header */}
       <div className="border-b border-gray-800 bg-[#111115] px-6 py-4">
         <div className="container mx-auto flex justify-between items-center">
           <div>
             <span className="text-white font-bold text-xl">NEWBOTIC</span>
-            <p className="text-gray-500 text-sm">Welcome, {user?.email?.split('@')[0]}</p>
+            <p className="text-[#00f0ff] text-sm">Welcome, {displayName}</p>
           </div>
           <button onClick={handleLogout} className="text-red-400 text-sm">Logout</button>
         </div>
       </div>
 
       <div className="container mx-auto p-6">
-        {/* Tabs simple */}
+        {/* Tabs */}
         <div className="flex gap-4 mb-6">
           <button onClick={() => setActiveTab('marketing')} className={`px-4 py-2 rounded-lg ${activeTab === 'marketing' ? 'bg-[#00f0ff] text-black' : 'bg-gray-800 text-white'}`}>
             📱 Marketing Posts
