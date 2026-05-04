@@ -17,15 +17,23 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       setError(error.message);
-    } else {
-      router.push('/dashboard');
+    } else if (data.user) {
+      // Verifică dacă e admin
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .eq('id', data.user.id)
+        .single();
+
+      if (profile?.is_admin === true) {
+        router.push('/admin');
+      } else {
+        router.push('/dashboard');
+      }
     }
     setLoading(false);
   };
@@ -43,6 +51,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-3 bg-black border border-gray-700 rounded-lg text-white"
+              autoComplete="email"
               required
             />
           </div>
@@ -54,6 +63,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 bg-black border border-gray-700 rounded-lg text-white"
+              autoComplete="current-password"
               required
             />
           </div>
