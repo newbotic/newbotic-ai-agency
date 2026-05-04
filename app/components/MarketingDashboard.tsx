@@ -2,7 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/app/lib/supabase/client';
-import { Pencil, Save, X, Upload, FileText, Trash2 } from 'lucide-react';
+
+interface Post {
+  id: number;
+  content: string;
+  hashtags: string;
+  platform: string;
+  status: string;
+  created_at: string;
+}
+
+interface Document {
+  id: number;
+  file_name: string;
+  content: string;
+}
 
 export default function MarketingDashboard() {
   const [brand, setBrand] = useState('');
@@ -10,8 +24,9 @@ export default function MarketingDashboard() {
   const [tone, setTone] = useState('professional');
   const [platform, setPlatform] = useState('instagram');
   const [context, setContext] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [savedPosts, setSavedPosts] = useState([]);
+  const [posts, setPosts] = useState<any[]>([]);
+  const [savedPosts, setSavedPosts] = useState<Post[]>([]);
+  const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [editingPost, setEditingPost] = useState<number | null>(null);
@@ -20,44 +35,39 @@ export default function MarketingDashboard() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [documents, setDocuments] = useState([]);
+  const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
-    loadSavedPosts();
-    loadDocuments();
-    loadBrandContext();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        loadSavedPosts(session);
+        loadDocuments(session);
+        loadBrandContext(session);
+      }
+    });
   }, []);
 
-  const loadSavedPosts = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return;
-
+  const loadSavedPosts = async (session: any) => {
     const { data } = await supabase
       .from('posts')
       .select('*')
       .eq('user_id', session.user.id)
       .order('created_at', { ascending: false });
     
-    setSavedPosts(data || []);
+    setSavedPosts(data as Post[] || []);
   };
 
-  const loadDocuments = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return;
-
+  const loadDocuments = async (session: any) => {
     const { data } = await supabase
       .from('brand_documents')
       .select('*')
       .eq('user_id', session.user.id);
     
-    setDocuments(data || []);
-    console.log('Loaded documents:', data?.length || 0);
+    setDocuments(data as Document[] || []);
   };
 
-  const loadBrandContext = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return;
-
+  const loadBrandContext = async (session: any) => {
     const { data } = await supabase
       .from('brand_context')
       .select('*')
@@ -73,9 +83,7 @@ export default function MarketingDashboard() {
   };
 
   const saveBrandContext = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
     if (!session) return;
-
     const { error } = await supabase
       .from('brand_context')
       .upsert({
@@ -95,11 +103,9 @@ export default function MarketingDashboard() {
   };
 
   const uploadDocument = async (file: File) => {
-    setUploading(true);
-    const { data: { session } } = await supabase.auth.getSession();
     if (!session) return;
-
-    // Citire conținut
+    setUploading(true);
+    
     const text = await file.text();
     
     const { error } = await supabase
@@ -114,13 +120,14 @@ export default function MarketingDashboard() {
       setError('Failed to upload: ' + error.message);
     } else {
       setSuccess('Document uploaded!');
-      loadDocuments();
+      loadDocuments(session);
     }
     setUploading(false);
   };
 
   const deleteDocument = async (docId: number) => {
-    if (!confirm('Are you sure you want to delete this document?')) return;
+    if (!confirm('Are you sure?')) return;
+    if (!session) return;
     
     const { error } = await supabase
       .from('brand_documents')
@@ -131,7 +138,7 @@ export default function MarketingDashboard() {
       setError('Failed to delete: ' + error.message);
     } else {
       setSuccess('Document deleted!');
-      loadDocuments();
+      loadDocuments(session);
     }
   };
 
@@ -148,10 +155,7 @@ export default function MarketingDashboard() {
       const res = await fetch('/api/social/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          brand, industry, tone, platform, 
-          context, count: 3 
-        })
+        body: JSON.stringify({ brand, industry, tone, platform, context })
       });
       
       const data = await res.json();
@@ -180,7 +184,7 @@ export default function MarketingDashboard() {
     };
     setPosts(updatedPosts);
     setEditingPost(null);
-    setSuccess('Post updated! You can now save it.');
+    setSuccess('Post updated!');
   };
 
   const cancelEdit = () => {
@@ -188,15 +192,10 @@ export default function MarketingDashboard() {
   };
 
   const savePost = async (post: any) => {
+    if (!session) return;
     setSaving(true);
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      setError('Please login first');
-      setSaving(false);
-      return;
-    }
 
-    const { error: saveError } = await supabase
+    const { error } = await supabase
       .from('posts')
       .insert({
         user_id: session.user.id,
@@ -206,11 +205,11 @@ export default function MarketingDashboard() {
         status: 'pending'
       });
 
-    if (saveError) {
-      setError('Failed to save post: ' + saveError.message);
+    if (error) {
+      setError('Failed to save: ' + error.message);
     } else {
       setSuccess('Post saved!');
-      loadSavedPosts();
+      loadSavedPosts(session);
       setPosts(posts.filter(p => p.content !== post.content));
     }
     setSaving(false);
@@ -279,8 +278,8 @@ export default function MarketingDashboard() {
           <textarea
             value={context}
             onChange={(e) => setContext(e.target.value)}
-            placeholder="Describe your brand, products, services, unique selling points, target audience..."
-            rows={4}
+            placeholder="Describe your brand, products, services..."
+            rows={3}
             className="w-full p-2 bg-black border border-gray-700 rounded-lg text-white"
           />
         </div>
@@ -293,13 +292,12 @@ export default function MarketingDashboard() {
         </button>
       </div>
 
-      {/* RAG Documents Section - with DELETE button */}
+      {/* RAG Documents Section */}
       <div className="bg-[#111115] border border-gray-800 rounded-xl p-5">
         <h3 className="text-lg font-semibold mb-3">📄 Brand Documents (RAG)</h3>
         <div className="flex items-center gap-3">
           <label className="cursor-pointer bg-[#00f0ff] text-black px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90">
-            <Upload className="w-4 h-4 inline mr-2" />
-            Upload PDF/TXT
+            <span className="mr-1">📁</span> Upload PDF/TXT
             <input
               type="file"
               accept=".pdf,.txt"
@@ -314,27 +312,16 @@ export default function MarketingDashboard() {
         
         {documents.length > 0 && (
           <div className="mt-3 space-y-2">
-            <p className="text-sm text-gray-400">{documents.length} document(s) loaded:</p>
-            {documents.map((doc: any) => (
+            {documents.map((doc) => (
               <div key={doc.id} className="flex items-center justify-between gap-2 text-sm text-gray-400 bg-black/50 p-2 rounded">
-                <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4" />
-                  <span>{doc.file_name}</span>
-                </div>
-                <button
-                  onClick={() => deleteDocument(doc.id)}
-                  className="text-red-400 hover:text-red-300"
-                  title="Delete document"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <span>📄 {doc.file_name}</span>
+                <button onClick={() => deleteDocument(doc.id)} className="text-red-400 hover:text-red-300">✕</button>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Generate Button */}
       <button
         onClick={generatePosts}
         disabled={loading || !brand}
@@ -349,8 +336,8 @@ export default function MarketingDashboard() {
       {/* Generated Posts */}
       {posts.length > 0 && (
         <div className="mt-6">
-          <h3 className="font-semibold mb-3">📝 Generated Posts (Edit before saving):</h3>
-          {posts.map((post: any, idx: number) => (
+          <h3 className="font-semibold mb-3">📝 Generated Posts:</h3>
+          {posts.map((post, idx) => (
             <div key={idx} className="bg-black/50 p-4 rounded-lg border border-gray-800 mb-3">
               {editingPost === idx ? (
                 <div className="space-y-3">
@@ -368,8 +355,8 @@ export default function MarketingDashboard() {
                     className="w-full p-2 bg-black border border-gray-600 rounded-lg text-white text-sm"
                   />
                   <div className="flex gap-2">
-                    <button onClick={() => saveEdit(idx)} className="text-xs bg-green-600 px-3 py-1 rounded">💾 Save Edit</button>
-                    <button onClick={cancelEdit} className="text-xs bg-gray-600 px-3 py-1 rounded">❌ Cancel</button>
+                    <button onClick={() => saveEdit(idx)} className="text-xs bg-green-600 px-3 py-1 rounded">💾 Save</button>
+                    <button onClick={cancelEdit} className="text-xs bg-gray-600 px-3 py-1 rounded">Cancel</button>
                   </div>
                 </div>
               ) : (
@@ -379,7 +366,7 @@ export default function MarketingDashboard() {
                   <div className="flex gap-2 mt-3">
                     <button onClick={() => startEditing(post, idx)} className="text-xs bg-yellow-600 px-3 py-1 rounded">✏️ Edit</button>
                     <button onClick={() => copyToClipboard(post.content + '\n\n' + post.hashtags)} className="text-xs bg-gray-700 px-3 py-1 rounded">📋 Copy</button>
-                    <button onClick={() => savePost(post)} disabled={saving} className="text-xs bg-green-600 px-3 py-1 rounded disabled:opacity-50">💾 Save</button>
+                    <button onClick={() => savePost(post)} disabled={saving} className="text-xs bg-green-600 px-3 py-1 rounded">💾 Save</button>
                   </div>
                 </>
               )}
@@ -392,18 +379,13 @@ export default function MarketingDashboard() {
       {savedPosts.length > 0 && (
         <div>
           <h3 className="font-semibold mb-3">📌 Saved Posts ({savedPosts.length})</h3>
-          {savedPosts.map((post: any) => (
+          {savedPosts.map((post) => (
             <div key={post.id} className="bg-[#111115] p-4 rounded-lg border border-gray-800 mb-3">
               <p className="text-sm whitespace-pre-wrap">{post.content}</p>
               {post.hashtags && <p className="text-[#00f0ff] text-xs mt-2">{post.hashtags}</p>}
               <div className="flex justify-between items-center mt-3">
                 <span className="text-xs text-gray-500">Status: {post.status}</span>
-                <button
-                  onClick={() => copyToClipboard(post.content + '\n\n' + post.hashtags)}
-                  className="text-xs bg-gray-800 px-3 py-1 rounded"
-                >
-                  📋 Copy
-                </button>
+                <button onClick={() => copyToClipboard(post.content + '\n\n' + post.hashtags)} className="text-xs bg-gray-800 px-3 py-1 rounded">📋 Copy</button>
               </div>
             </div>
           ))}
