@@ -62,24 +62,15 @@ export default function Home() {
                 <div className="flex flex-wrap gap-3 mb-8 sm:mb-10">
                   {!user ? (
                     <>
-                      <a
-                        href="/login"
-                        className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105"
-                      >
+                      <a href="/login" className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105">
                         Get Started →
                       </a>
-                      <a
-                        href="/login"
-                        className="border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff]/10 font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300"
-                      >
+                      <a href="/login" className="border border-[#00f0ff]/50 text-[#00f0ff] hover:bg-[#00f0ff]/10 font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300">
                         Login
                       </a>
                     </>
                   ) : (
-                    <a
-                      href="/dashboard"
-                      className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105"
-                    >
+                    <a href="/dashboard" className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-black font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105">
                       Go to Dashboard →
                     </a>
                   )}
@@ -121,7 +112,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* AI AGENTS Section - carduri centrate */}
+        {/* AI AGENTS Section */}
         <section id="agents" className="py-16 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <p className="text-[#00f0ff] text-xs sm:text-sm uppercase tracking-wider text-center mb-2">Meet Our AI Team</p>
@@ -177,12 +168,7 @@ export default function Home() {
                   Join 15+ UK businesses already running on AI. Limited spots at 50% off.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                  <a
-                    href="https://calendly.com/hello-newbotic/30min"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.5)]"
-                  >
+                  <a href="https://calendly.com/hello-newbotic/30min" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#00f0ff] to-[#b000ff] text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.5)]">
                     📅 Book Free Strategy Call
                   </a>
                 </div>
@@ -191,25 +177,18 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <Footer />
       <ChatBotWrapper />
     </>
   );
 }
 
-// AI Agents Data
 const agents = [
   {
     name: "SELLIX",
     icon: "👔",
     role: "Sales AI",
     description: "Your virtual sales representative that never sleeps.",
-    features: [
-      "Lead qualification", 
-      "Automated follow-ups", 
-      "Meeting scheduler",
-      "🚀 Can close deals up to £500"
-    ],
+    features: ["Lead qualification", "Automated follow-ups", "Meeting scheduler", "🚀 Can close deals up to £500"],
   },
   {
     name: "KNEXA",

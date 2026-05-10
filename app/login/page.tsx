@@ -22,7 +22,7 @@ export default function LoginPage() {
     if (error) {
       setError(error.message);
     } else if (data.user) {
-      // Verifică dacă e admin
+      // Verifică dacă e admin în tabela profiles
       const { data: profile } = await supabase
         .from('profiles')
         .select('is_admin')

@@ -1,0 +1,58 @@
+'use client';
+
+export default function CookiesPage() {
+  return (
+    <div className="min-h-screen bg-[#0a0a0f] text-gray-300 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-[#00f0ff] mb-2">Cookie Policy</h1>
+        <p className="text-gray-500 mb-8">Last updated: May 2026</p>
+
+        <div className="space-y-6">
+          <section>
+            <h2 className="text-xl font-semibold text-[#00f0ff] mb-3">1. What Are Cookies</h2>
+            <p>Cookies are small text files stored on your device when you visit our website. They help us provide functionality and improve your experience.</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-semibold text-[#00f0ff] mb-3">2. Types of Cookies We Use</h2>
+            
+            <h3 className="text-lg font-medium text-white mt-3 mb-2">Essential Cookies</h3>
+            <p>Required for the website to function. Cannot be disabled. Used for authentication, security, and basic operations.</p>
+            
+            <h3 className="text-lg font-medium text-white mt-3 mb-2">Preference Cookies</h3>
+            <p>Remember your settings and preferences.</p>
+            
+            <h3 className="text-lg font-medium text-white mt-3 mb-2">Analytics Cookies</h3>
+            <p>Help us understand how visitors use our website (optional).</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-semibold text-[#00f0ff] mb-3">3. Third-Party Cookies</h2>
+            <ul className="list-disc pl-6 space-y-1">
+              <li><strong>Supabase:</strong> Authentication and database</li>
+              <li><strong>Google (Gemini AI):</strong> AI processing</li>
+              <li><strong>Railway:</strong> Hosting infrastructure</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-semibold text-[#00f0ff] mb-3">4. Cookie Management</h2>
+            <p>You can control cookies through your browser settings. Disabling cookies may affect service functionality.</p>
+            <ul className="list-disc pl-6 space-y-1 mt-2">
+              <li>Chrome: Settings → Privacy → Cookies</li>
+              <li>Firefox: Options → Privacy → Cookies</li>
+              <li>Safari: Preferences → Privacy → Cookies</li>
+              <li>Edge: Settings → Privacy → Cookies</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-semibold text-[#00f0ff] mb-3">5. Contact</h2>
+            <p>For questions about cookie usage, email <a href="mailto:hello@newbotic.co.uk" className="text-[#00f0ff] hover:underline">hello@newbotic.co.uk</a></p>
+          </section>
+        </div>
+
+      </div>
+    </div>
+  );
+}

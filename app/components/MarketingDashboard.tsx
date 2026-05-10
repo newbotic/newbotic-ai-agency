@@ -394,3 +394,19 @@ export default function MarketingDashboard() {
     </div>
   );
 }
+
+      {/* Butoane publicare */}
+      <div className="mt-4 flex gap-2">
+        <button
+          onClick={() => publishToFacebook(postContent)}
+          className="text-xs bg-[#1877F2] text-white px-3 py-1 rounded"
+        >
+          📘 Facebook
+        </button>
+        <button
+          onClick={() => publishToLinkedIn(postContent)}
+          className="text-xs bg-[#0A66C2] text-white px-3 py-1 rounded"
+        >
+          🔗 LinkedIn
+        </button>
+      </div>
